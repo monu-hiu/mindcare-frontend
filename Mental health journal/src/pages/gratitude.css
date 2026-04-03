@@ -1,0 +1,323 @@
+.gratitudePage {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px 20px 60px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.gratitudeHeader {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.gratitudeHeader h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+.gratitudeHeader p {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* Form */
+.gratitudeForm {
+  background: white;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border: 1.5px solid #e0e7ff;
+  margin-bottom: 30px;
+}
+
+.gratitudeForm h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 20px;
+}
+
+/* Items List */
+.itemsList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.itemRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.itemNumber {
+  width: 28px;
+  height: 28px;
+  background: #eef2ff;
+  color: #4f46e5;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.itemRow input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  outline: none;
+  transition: 0.15s;
+}
+
+.itemRow input:focus {
+  border-color: #4f46e5;
+}
+
+.removeBtn {
+  width: 28px;
+  height: 28px;
+  background: #fef2f2;
+  color: #dc2626;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: 0.15s;
+}
+
+.removeBtn:hover {
+  background: #fee2e2;
+}
+
+.addItemBtn {
+  background: transparent;
+  border: 1.5px dashed #4f46e5;
+  color: #4f46e5;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 20px;
+  transition: 0.15s;
+}
+
+.addItemBtn:hover {
+  background: #eef2ff;
+}
+
+/* Form Group */
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.formGroup label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.formGroup input {
+  padding: 10px 14px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  outline: none;
+  transition: 0.15s;
+}
+
+.formGroup input:focus {
+  border-color: #4f46e5;
+}
+
+.formGroup textarea {
+  padding: 10px 14px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  outline: none;
+  resize: vertical;
+  min-height: 80px;
+  transition: 0.15s;
+}
+
+.formGroup textarea:focus {
+  border-color: #4f46e5;
+}
+
+/* Save Button */
+.saveBtn {
+  background: #4f46e5;
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: 0.15s;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.saveBtn:hover {
+  background: #4338ca;
+}
+
+.saveBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.errorText {
+  color: #ef4444;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.successText {
+  color: #22c55e;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* History */
+.gratitudeHistory {
+  background: white;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border: 1.5px solid #e0e7ff;
+}
+
+.gratitudeHistory h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 20px;
+}
+
+.gratitudeCard {
+  background: #f9fafb;
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 14px;
+  border-left: 4px solid #4f46e5;
+}
+
+.gratitudeCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.gratitudeDate {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4f46e5;
+}
+
+.deleteBtn {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: 0.15s;
+}
+
+.deleteBtn:hover {
+  background: #fee2e2;
+}
+
+/* Gratitude Items */
+.gratitudeItems {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.gratitudeItems li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #111827;
+}
+
+.gratitudeIcon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.gratitudeMood {
+  font-size: 13px;
+  color: #4f46e5;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.gratitudeNote {
+  font-size: 13px;
+  color: #6b7280;
+  font-style: italic;
+  margin-top: 4px;
+}
+
+/* Nav */
+.navButtons {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.backBtn {
+  background: transparent;
+  border: 1.5px solid #e5e7eb;
+  color: #374151;
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: 0.15s;
+}
+
+.backBtn:hover {
+  border-color: #4f46e5;
+  color: #4f46e5;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .itemRow input {
+    font-size: 13px;
+  }
+}

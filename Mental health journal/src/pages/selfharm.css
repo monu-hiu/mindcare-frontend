@@ -1,0 +1,221 @@
+.selfharmPage {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px 20px 60px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.selfharmHeader {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.urgentBadge {
+  display: inline-block;
+  background: #eef2ff;
+  color: #4f46e5;
+  border: 1.5px solid #e0e7ff;
+  padding: 6px 16px;
+  border-radius: 99px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.selfharmHeader h1 {
+  font-size: 30px;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 10px;
+}
+
+.selfharmHeader p {
+  font-size: 14px;
+  color: #6b7280;
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+.helplineSection {
+  background: #fef2f2;
+  border: 2px solid #fecaca;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.helplineSection h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #dc2626;
+  margin-bottom: 4px;
+}
+
+.helplineSubtitle {
+  font-size: 12px;
+  color: #9ca3af;
+  margin-bottom: 16px;
+}
+
+.helplineGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.helplineCard {
+  background: white;
+  border-radius: 12px;
+  padding: 14px 16px;
+  border: 1.5px solid;
+  text-decoration: none;
+  display: block;
+  transition: 0.15s;
+}
+
+.helplineCard:hover {
+  transform: translateX(4px);
+}
+
+.helplineTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.helplineName {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.helplineBadge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 99px;
+}
+
+.helplineNumber {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.copingSection {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border: 1.5px solid #e0e7ff;
+  margin-bottom: 24px;
+}
+
+.copingSection h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.copingSubtitle {
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 16px;
+}
+
+.copingGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.copingCard {
+  background: #f8f7ff;
+  border-radius: 12px;
+  padding: 14px;
+  text-align: center;
+  border: 1px solid #e0e7ff;
+}
+
+.copingEmoji {
+  font-size: 28px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.copingCard h3 {
+  font-size: 13px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.copingCard p {
+  font-size: 11px;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.messageCard {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.messageTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.messageText {
+  font-size: 14px;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.8;
+}
+
+.navButtons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.supportBtn {
+  background: #4f46e5;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: 0.15s;
+}
+
+.supportBtn:hover { background: #4338ca; }
+
+.backBtn {
+  background: transparent;
+  border: 1.5px solid #e5e7eb;
+  color: #374151;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: 0.15s;
+}
+
+.backBtn:hover { border-color: #4f46e5; color: #4f46e5; }
+
+@media (max-width: 600px) {
+  .copingGrid { grid-template-columns: repeat(2, 1fr); }
+}

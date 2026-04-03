@@ -1,0 +1,324 @@
+.supportPage {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 30px 20px 60px;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Hero */
+.supportHero {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.supportBadge {
+  display: inline-block;
+  background: #eef2ff;
+  color: #4f46e5;
+  border: 1.5px solid #e0e7ff;
+  padding: 5px 16px;
+  border-radius: 99px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.supportHero h1 {
+  font-size: 32px;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 10px;
+}
+
+.supportSubtitle {
+  font-size: 15px;
+  color: #6b7280;
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* Emergency Banner */
+.emergencyBanner {
+  background: linear-gradient(135deg, #fef2f2, #fee2e2);
+  border: 2px solid #fecaca;
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-bottom: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.emergencyTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: #dc2626;
+  margin-bottom: 6px;
+}
+
+.emergencyDesc {
+  font-size: 14px;
+  color: #374151;
+  line-height: 1.5;
+}
+
+.emergencyBtn {
+  background: #dc2626;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: 0.15s;
+  flex-shrink: 0;
+}
+
+.emergencyBtn:hover {
+  background: #b91c1c;
+  transform: scale(1.02);
+}
+
+/* Section */
+.supportSection {
+  margin-bottom: 36px;
+}
+
+.supportSection h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.sectionDesc {
+  font-size: 13px;
+  color: #9ca3af;
+  margin-bottom: 16px;
+}
+
+/* Helpline Grid */
+.helplineGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.helplineCard {
+  background: white;
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  border: 1px solid #f3f4f6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+  transition: 0.15s;
+  gap: 16px;
+}
+
+.helplineCard:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.helplineInfo { flex: 1; }
+
+.helplineName {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 3px;
+}
+
+.helplineDesc {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.helplineRight {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.helplineNum {
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.callBadge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 99px;
+  display: inline-block;
+}
+
+/* Online Resources Grid */
+.resourceGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.onlineCard {
+  background: white;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  border: 1px solid #f3f4f6;
+  text-decoration: none;
+  transition: 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.onlineCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.onlineEmoji {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.onlineName {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.onlineDesc {
+  font-size: 12px;
+  color: #6b7280;
+  line-height: 1.5;
+  flex: 1;
+}
+
+.onlineLink {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Tools Grid */
+.toolsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.toolCard {
+  background: white;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  border: 1px solid #f3f4f6;
+  text-decoration: none;
+  transition: 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.toolCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  border-color: #e0e7ff;
+}
+
+.toolEmoji {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.toolName {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.toolDesc {
+  font-size: 12px;
+  color: #6b7280;
+  line-height: 1.5;
+  flex: 1;
+}
+
+.toolLink {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Message */
+.supportMessage {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  border-radius: 16px;
+  padding: 28px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.supportMessageTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.supportMessageText {
+  font-size: 14px;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.8;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Nav */
+.navButtons { margin-top: 20px; text-align: center; }
+
+.backBtn {
+  background: transparent;
+  border: 1.5px solid #e5e7eb;
+  color: #374151;
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: 0.15s;
+}
+
+.backBtn:hover { border-color: #4f46e5; color: #4f46e5; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .resourceGrid { grid-template-columns: repeat(2, 1fr); }
+  .toolsGrid { grid-template-columns: repeat(2, 1fr); }
+  .emergencyBanner { flex-direction: column; text-align: center; }
+  .emergencyBtn { width: 100%; text-align: center; }
+  .helplineCard { flex-direction: column; text-align: center; }
+  .helplineRight { text-align: center; }
+}
+
+@media (max-width: 480px) {
+  .resourceGrid { grid-template-columns: 1fr; }
+  .toolsGrid { grid-template-columns: 1fr; }
+}
