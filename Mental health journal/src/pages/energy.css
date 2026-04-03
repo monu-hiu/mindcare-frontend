@@ -1,0 +1,529 @@
+@import './quiz.css';
+.energyPage {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px 20px 60px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.energyHeader {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.energyHeader h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+.energyHeader p {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* Stats */
+.energyStats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.energyStatCard {
+  background: white;
+  border-radius: 14px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border: 1.5px solid #e0e7ff;
+}
+
+.energyStatValue {
+  font-size: 22px;
+  font-weight: 700;
+  color: #4f46e5;
+  margin-bottom: 4px;
+}
+
+.energyStatLabel {
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* Form */
+.energyForm {
+  background: white;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border: 1.5px solid #e0e7ff;
+  margin-bottom: 30px;
+}
+
+.energyForm h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 24px;
+}
+
+/* Slider */
+.levelSection {
+  margin-bottom: 24px;
+}
+
+.levelDisplay {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.levelNumber {
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.levelLabel {
+  font-size: 16px;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.energySlider {
+  width: 100%;
+  height: 6px;
+  border-radius: 99px;
+  outline: none;
+  cursor: pointer;
+  background: linear-gradient(to right, #ef4444, #f59e0b, #22c55e);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.energySlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--thumb-color, #4f46e5);
+  cursor: pointer;
+  border: 3px solid white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  transition: background 0.2s;
+}
+
+.sliderLabels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #9ca3af;
+  margin-top: 6px;
+}
+
+/* Mood Selection */
+.moodSection {
+  margin-bottom: 20px;
+}
+
+.moodSection label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.moodGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+
+.moodCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 8px;
+  border-radius: 12px;
+  border: 2px solid #e5e7eb;
+  cursor: pointer;
+  transition: 0.15s;
+}
+
+.moodCard:hover {
+  transform: translateY(-2px);
+  border-color: #6366f1;
+  background: #f5f3ff;
+}
+
+.moodCard.selected {
+  transform: translateY(-2px);
+  border-color: #4f46e5;
+  background: #eef2ff;
+  box-shadow: 0 4px 12px rgba(79,70,229,0.18);
+}
+
+.moodEmoji {
+  font-size: 22px;
+}
+
+.moodLabel {
+  font-size: 11px;
+  font-weight: 600;
+  color: #374151;
+  text-align: center;
+}
+
+/* Activities */
+.activitiesSection {
+  margin-bottom: 20px;
+}
+
+.activitiesSection label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.activitiesGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.activityBtn {
+  padding: 7px 14px;
+  border-radius: 99px;
+  border: 1.5px solid #e5e7eb;
+  background: white;
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: 0.15s;
+}
+
+.activityBtn:hover {
+  border-color: #4f46e5;
+  color: #4f46e5;
+}
+
+.activityBtn.selected {
+  background: #4f46e5;
+  color: white;
+  border-color: #4f46e5;
+}
+
+/* Form Group */
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.formGroup label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.formGroup textarea {
+  padding: 10px 14px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  outline: none;
+  resize: vertical;
+  min-height: 80px;
+  transition: 0.15s;
+}
+
+.formGroup textarea:focus {
+  border-color: #4f46e5;
+}
+
+/* Save Button */
+.saveBtn {
+  background: #4f46e5;
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: 0.15s;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.saveBtn:hover {
+  background: #4338ca;
+}
+
+.saveBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.errorText {
+  color: #ef4444;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.successText {
+  color: #22c55e;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* History */
+.energyHistory {
+  background: white;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border: 1.5px solid #e0e7ff;
+}
+
+.energyHistory h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 20px;
+}
+
+.energyList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.energyCard {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 12px;
+  background: #f9fafb;
+  border-left: 4px solid #4f46e5;
+}
+
+.energyCardLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px;
+}
+
+.energyLevel {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.energyMood {
+  font-size: 11px;
+  color: #6b7280;
+  font-weight: 600;
+  text-align: center;
+}
+
+.energyCardRight {
+  flex: 1;
+}
+
+.energyActivities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.activityTag {
+  background: #eef2ff;
+  color: #4f46e5;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 99px;
+}
+
+.energyNotes {
+  font-size: 13px;
+  color: #6b7280;
+  font-style: italic;
+  margin-bottom: 4px;
+}
+
+.energyDate {
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+/* Nav */
+.navButtons {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.backBtn {
+  background: transparent;
+  border: 1.5px solid #e5e7eb;
+  color: #374151;
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: 0.15s;
+}
+
+.backBtn:hover {
+  border-color: #4f46e5;
+  color: #4f46e5;
+}
+
+.loadingText,
+.emptyText {
+  text-align: center;
+  color: #6b7280;
+  font-size: 14px;
+  padding: 20px 0;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .energyStats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .moodGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .levelNumber {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 400px) {
+  .moodGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+/* Tips Box */
+.tipsBox {
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+}
+
+.tipsTitle {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.tipsList {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tipsList li {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* Time of Day */
+.timeSection {
+  margin-bottom: 20px;
+}
+
+.timeSection label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.timeGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.timeBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 8px;
+  border-radius: 10px;
+  border: 1.5px solid #e5e7eb;
+  background: white;
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: 0.15s;
+}
+
+.timeBtn span:first-child {
+  font-size: 18px;
+}
+
+.timeBtn:hover {
+  border-color: #4f46e5;
+  color: #4f46e5;
+}
+
+.timeBtn.selected {
+  background: #4f46e5;
+  color: white;
+  border-color: #4f46e5;
+}
+
+/* Energy Card */
+.energyTime {
+  font-size: 10px;
+  color: #9ca3af;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 2px;
+}
+
+/* Delete Button */
+.deleteBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  opacity: 0.4;
+  transition: 0.15s;
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+
+.deleteBtn:hover {
+  opacity: 1;
+}

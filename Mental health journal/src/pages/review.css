@@ -1,0 +1,276 @@
+.reviewsPage {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px 20px 60px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.reviewsHeader {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.reviewsHeader h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+.reviewsHeader p {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.reviewTabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  justify-content: center;
+}
+
+.reviewTab {
+  padding: 10px 24px;
+  border-radius: 12px;
+  border: 1.5px solid #e5e7eb;
+  background: white;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: 0.15s;
+}
+
+.reviewTab:hover {
+  border-color: #4f46e5;
+  color: #4f46e5;
+}
+
+.reviewTab.active {
+  background: #4f46e5;
+  color: white;
+  border-color: #4f46e5;
+}
+
+.reviewForm {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border: 1.5px solid #e0e7ff;
+  margin-bottom: 24px;
+}
+
+.reviewForm h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 20px;
+}
+
+.ratingSection {
+  margin-bottom: 20px;
+}
+
+.ratingSection label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.ratingSlider {
+  width: 100%;
+  height: 6px;
+  border-radius: 99px;
+  outline: none;
+  cursor: pointer;
+  background: linear-gradient(to right, #ef4444, #f59e0b, #22c55e);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.ratingSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #4f46e5;
+  cursor: pointer;
+  border: 3px solid white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.formGroup label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.formGroup textarea {
+  padding: 10px 14px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  outline: none;
+  resize: vertical;
+  line-height: 1.6;
+  transition: 0.15s;
+}
+
+.formGroup textarea:focus {
+  border-color: #4f46e5;
+}
+
+.saveBtn {
+  background: #4f46e5;
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: 0.15s;
+  width: 100%;
+}
+
+.saveBtn:hover { background: #4338ca; }
+
+.errorText { color: #ef4444; font-size: 13px; margin-bottom: 8px; }
+.successText { color: #22c55e; font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+
+.reviewsHistory {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border: 1.5px solid #e0e7ff;
+}
+
+.reviewsHistory h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 20px;
+}
+
+.reviewCard {
+  background: #f9fafb;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 14px;
+  border: 1px solid #f3f4f6;
+}
+
+.reviewCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.reviewCardMeta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.reviewType {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 99px;
+}
+
+.reviewType.weekly {
+  background: #eef2ff;
+  color: #4f46e5;
+}
+
+.reviewType.monthly {
+  background: #fef9c3;
+  color: #ca8a04;
+}
+
+.reviewRating {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.reviewDate {
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.deleteBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  opacity: 0.4;
+  transition: 0.15s;
+}
+
+.deleteBtn:hover { opacity: 1; }
+
+.reviewCardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.reviewField {
+  background: white;
+  border-radius: 8px;
+  padding: 10px 12px;
+  border: 1px solid #f3f4f6;
+}
+
+.reviewFieldLabel {
+  font-size: 11px;
+  font-weight: 700;
+  color: #6b7280;
+  margin-bottom: 4px;
+}
+
+.reviewFieldText {
+  font-size: 13px;
+  color: #374151;
+  line-height: 1.5;
+}
+
+.emptyText {
+  text-align: center;
+  color: #6b7280;
+  font-size: 14px;
+  padding: 20px 0;
+}
+
+.navButtons { margin-top: 30px; text-align: center; }
+
+.backBtn {
+  background: transparent;
+  border: 1.5px solid #e5e7eb;
+  color: #374151;
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: 0.15s;
+}
+
+.backBtn:hover { border-color: #4f46e5; color: #4f46e5; }

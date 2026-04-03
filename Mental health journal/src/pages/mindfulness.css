@@ -1,0 +1,487 @@
+.mindfulPage {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 30px 20px 60px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.mindfulHeader {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.mindfulHeader h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+.mindfulHeader p {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* Tabs */
+.mindfulTabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 28px;
+  background: #f8f7ff;
+  padding: 6px;
+  border-radius: 14px;
+  border: 1.5px solid #e0e7ff;
+}
+
+.mindfulTab {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: 0.15s;
+}
+
+.mindfulTab:hover { color: #4f46e5; }
+.mindfulTab.active {
+  background: white;
+  color: #4f46e5;
+  box-shadow: 0 2px 8px rgba(79,70,229,0.12);
+}
+
+/* ── BREATHING ── */
+.breathSelector {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.breathOption {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 2px solid #e5e7eb;
+  background: white;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: 0.15s;
+  text-align: left;
+}
+
+.breathOption:hover { transform: translateY(-1px); }
+
+.breathOptName {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.breathOptDesc {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+/* Breathing Circle */
+.breathCircleArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.breathCircleOuter {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  border: 3px solid #e0e7ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s ease;
+}
+
+.breathCircleInner {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s ease;
+}
+
+.breath-inhale {
+  animation: expandCircle 4s ease-in-out forwards;
+}
+
+.breath-hold {
+  animation: holdCircle 0.3s ease forwards;
+}
+
+.breath-exhale {
+  animation: shrinkCircle 8s ease-in-out forwards;
+}
+
+@keyframes expandCircle {
+  from { transform: scale(0.85); opacity: 0.7; }
+  to   { transform: scale(1.15); opacity: 1; }
+}
+
+@keyframes holdCircle {
+  from { transform: scale(1.15); }
+  to   { transform: scale(1.15); }
+}
+
+@keyframes shrinkCircle {
+  from { transform: scale(1.15); opacity: 1; }
+  to   { transform: scale(0.85); opacity: 0.7; }
+}
+
+.breathPhaseText {
+  font-size: 18px;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 4px;
+}
+
+.breathPhaseTimer {
+  font-size: 28px;
+  font-weight: 900;
+  color: white;
+}
+
+.breathReadyText {
+  font-size: 16px;
+  font-weight: 700;
+  color: #4f46e5;
+}
+
+.breathCycleCount {
+  font-size: 14px;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.breathBtns {
+  display: flex;
+  gap: 12px;
+}
+
+.startBreathBtn {
+  padding: 12px 32px;
+  border-radius: 99px;
+  border: none;
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: 0.15s;
+}
+
+.startBreathBtn:hover { opacity: 0.85; transform: scale(1.02); }
+
+.stopBreathBtn {
+  padding: 12px 32px;
+  border-radius: 99px;
+  border: 2px solid #e5e7eb;
+  background: white;
+  color: #374151;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: 0.15s;
+}
+
+.stopBreathBtn:hover { border-color: #ef4444; color: #ef4444; }
+
+.phaseGuide {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.phaseGuideItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #9ca3af;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.phaseGuideItem.active {
+  color: #111827;
+  transform: scale(1.05);
+}
+
+.phaseGuideDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+/* ── MEDITATION ── */
+.timerCard {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border: 1.5px solid #e0e7ff;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.timerCard h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 16px;
+}
+
+.timerDisplay { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.timerCount { font-size: 56px; font-weight: 900; color: #4f46e5; line-height: 1; }
+.timerMsg { font-size: 14px; color: #6b7280; }
+
+.timerDone { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.timerDone p { font-size: 16px; font-weight: 700; color: #22c55e; }
+
+.timerLabel { font-size: 13px; color: #6b7280; margin-bottom: 10px; }
+.timerOptions { display: flex; gap: 8px; justify-content: center; margin-bottom: 16px; flex-wrap: wrap; }
+
+.timerOption {
+  padding: 8px 18px;
+  border-radius: 99px;
+  border: 1.5px solid #e5e7eb;
+  background: white;
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: 0.15s;
+}
+
+.timerOption:hover { border-color: #4f46e5; color: #4f46e5; }
+.timerOption.active { background: #4f46e5; color: white; border-color: #4f46e5; }
+
+.startTimerBtn, .stopTimerBtn {
+  background: #4f46e5;
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: 0.15s;
+}
+
+.stopTimerBtn { background: #fef2f2; color: #dc2626; border: 1.5px solid #fecaca; }
+
+.medSectionTitle { font-size: 18px; font-weight: 700; color: #111827; margin-bottom: 16px; }
+
+.medsGrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+
+.medCard {
+  background: white;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  border: 1px solid #f3f4f6;
+  transition: 0.2s;
+}
+
+.medCard:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+
+.medTop { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 8px; }
+.medEmoji { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.medTitle { font-size: 15px; font-weight: 700; color: #111827; margin-bottom: 2px; }
+.medDuration { font-size: 11px; color: #9ca3af; }
+.medDesc { font-size: 12px; color: #6b7280; margin-bottom: 10px; line-height: 1.5; }
+.medToggle { background: transparent; border: none; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Poppins', sans-serif; padding: 0; }
+
+.medSteps {
+  margin-top: 10px;
+  border: 1.5px solid;
+  border-radius: 10px;
+  padding: 12px 14px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.medSteps li { font-size: 12px; color: #374151; line-height: 1.5; padding: 4px 0; border-bottom: 1px solid rgba(0,0,0,0.04); }
+.medSteps li:last-child { border-bottom: none; }
+.stepNum { font-weight: 700; margin-right: 6px; }
+
+/* ── GROUNDING ── */
+.groundingIntro {
+  background: #f0fdf4;
+  border: 1.5px solid #bbf7d0;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+}
+
+.groundingIntro p { font-size: 13px; color: #374151; line-height: 1.6; }
+
+.groundCard { background: white; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #f3f4f6; margin-bottom: 14px; }
+
+.groundHeader { display: flex; align-items: center; gap: 12px; padding: 16px 20px; }
+.groundEmoji { font-size: 24px; }
+.groundTitle { font-size: 16px; font-weight: 700; flex: 1; }
+.groundToggle { padding: 7px 18px; border-radius: 8px; border: none; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Poppins', sans-serif; }
+
+.groundSteps { padding: 16px 20px; display: flex; flex-direction: column; gap: 12px; }
+
+.groundStep { display: flex; gap: 14px; align-items: flex-start; }
+.groundStepIcon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.groundStepBody { flex: 1; }
+.groundStepNum { font-size: 11px; font-weight: 700; margin-bottom: 3px; }
+.groundStepText { font-size: 13px; color: #374151; line-height: 1.5; }
+
+/* ── AFFIRMATIONS ── */
+.affCats { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+
+.affCatBtn {
+  padding: 7px 16px;
+  border-radius: 99px;
+  border: 2px solid #e5e7eb;
+  background: white;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: 0.15s;
+}
+
+.affCard {
+  background: white;
+  border-radius: 20px;
+  padding: 40px 32px;
+  text-align: center;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  border: 2px solid;
+  margin-bottom: 24px;
+}
+
+.affCategory { font-size: 13px; font-weight: 700; margin-bottom: 20px; }
+
+.affText {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.5;
+  margin-bottom: 16px;
+  font-style: italic;
+}
+
+.affProgress { font-size: 12px; color: #9ca3af; margin-bottom: 20px; }
+
+.affNextBtn {
+  padding: 12px 28px;
+  border-radius: 10px;
+  border: none;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: 0.15s;
+}
+
+.affNextBtn:hover { opacity: 0.85; }
+
+.affAllTitle { font-size: 15px; font-weight: 700; color: #374151; margin-bottom: 12px; }
+
+.affList { display: flex; flex-direction: column; gap: 8px; }
+
+.affItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: white;
+  border-radius: 10px;
+  border: 1.5px solid #f3f4f6;
+  cursor: pointer;
+  transition: 0.15s;
+}
+
+.affItem:hover { background: #f8f7ff; }
+.affItem.active { background: #f8f7ff; }
+.affItem p { font-size: 13px; color: #374151; }
+.affItemNum { font-size: 14px; font-weight: 800; flex-shrink: 0; }
+
+/* Nav */
+.navButtons { margin-top: 30px; text-align: center; }
+
+.backBtn {
+  background: transparent;
+  border: 1.5px solid #e5e7eb;
+  color: #374151;
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: 0.15s;
+}
+
+.backBtn:hover { border-color: #4f46e5; color: #4f46e5; }
+
+@media (max-width: 768px) {
+  .breathSelector { grid-template-columns: 1fr; }
+  .medsGrid { grid-template-columns: 1fr; }
+  .mindfulTabs { gap: 4px; }
+  .mindfulTab { font-size: 11px; padding: 8px 6px; }
+  .affText { font-size: 18px; }
+  .affCard { padding: 28px 20px; }
+}
+.affCats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.affCatBtn {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 2px solid #e5e7eb;
+  background: white;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.affCatBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.affCatBtn.active {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
