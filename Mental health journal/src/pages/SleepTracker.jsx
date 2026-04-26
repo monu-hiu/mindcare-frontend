@@ -1,292 +1,13 @@
-// import { useState, useEffect } from "react";
-// import { Link } from "react-router-dom";
-// import { useAuth } from "../context/AuthContext";
-// import "./sleep.css";
-
-// function SleepTracker() {
-//   const { token } = useAuth();
-
-//   const [hours, setHours] = useState("");
-//   const [quality, setQuality] = useState("");
-//   const [bedTime, setBedTime] = useState("");
-//   const [wakeTime, setWakeTime] = useState("");
-//   const [notes, setNotes] = useState("");
-//   const [saving, setSaving] = useState(false);
-//   const [saved, setSaved] = useState(false);
-//   const [error, setError] = useState("");
-//   const [history, setHistory] = useState([]);
-//   const [stats, setStats] = useState(null);
-//   const [loadingHistory, setLoadingHistory] = useState(true);
-
-//   const qualityOptions = [
-//     { label: "Excellent", emoji: "😴", color: "#22c55e" },
-//     { label: "Good", emoji: "🙂", color: "#4ade80" },
-//     { label: "Fair", emoji: "😐", color: "#eab308" },
-//     { label: "Poor", emoji: "😫", color: "#ef4444" },
-//   ];
-
-//   useEffect(() => {
-//     fetchHistory();
-//     fetchStats();
-//   }, []);
-
-//   const fetchHistory = async () => {
-//     try {
-//       const res = await fetch("https://mindcare-backend-v56a.onrender.com/api/sleep/history", {
-//         headers: { Authorization: `Bearer ${token}` },
-//       });
-//       const data = await res.json();
-//       if (data.success) setHistory(data.sleepLogs);
-//     } catch (err) {
-//       console.error("History fetch error:", err);
-//     } finally {
-//       setLoadingHistory(false);
-//     }
-//   };
-
-//   const fetchStats = async () => {
-//     try {
-//       const res = await fetch("https://mindcare-backend-v56a.onrender.com/api/sleep/stats", {
-//         headers: { Authorization: `Bearer ${token}` },
-//       });
-//       const data = await res.json();
-//       if (data.success) setStats(data.stats);
-//     } catch (err) {
-//       console.error("Stats fetch error:", err);
-//     }
-//   };
-
-//   const saveSleep = async () => {
-//     if (!hours || !quality) {
-//       setError("Please enter sleep hours and select quality.");
-//       return;
-//     }
-//     if (hours < 0 || hours > 24) {
-//       setError("Please enter valid sleep hours (0-24).");
-//       return;
-//     }
-
-//     setSaving(true);
-//     setError("");
-
-//     try {
-//       const res = await fetch("https://mindcare-backend-v56a.onrender.com/api/sleep/save", {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//           Authorization: `Bearer ${token}`,
-//         },
-//         body: JSON.stringify({
-//           hours: parseFloat(hours),
-//           quality,
-//           bedTime,
-//           wakeTime,
-//           notes,
-//         }),
-//       });
-
-//       const data = await res.json();
-
-//       if (data.success) {
-//         setSaved(true);
-//         setHistory([data.sleepLog, ...history]);
-//         setHours("");
-//         setQuality("");
-//         setBedTime("");
-//         setWakeTime("");
-//         setNotes("");
-//         fetchStats();
-//         setTimeout(() => setSaved(false), 3000);
-//       } else {
-//         setError(data.message);
-//       }
-//     } catch (err) {
-//       setError("Something went wrong. Try again.");
-//     } finally {
-//       setSaving(false);
-//     }
-//   };
-
-//   const getHoursColor = (h) => {
-//     if (h >= 7 && h <= 9) return "#22c55e";
-//     if (h >= 6 && h < 7) return "#eab308";
-//     return "#ef4444";
-//   };
-
-//   return (
-//     <div className="sleepPage">
-//       <div className="sleepHeader">
-//         <h1>🌙 Sleep Tracker</h1>
-//         <p>Track your sleep patterns and improve your rest quality.</p>
-//       </div>
-
-//       {/* Stats Cards */}
-//       {stats && (
-//         <div className="sleepStats">
-//           <div className="statCard">
-//             <p className="statValue">{stats.avgHours}h</p>
-//             <p className="statLabel">Avg Sleep (7 days)</p>
-//           </div>
-//           <div className="statCard">
-//             <p className="statValue">{stats.totalNights}</p>
-//             <p className="statLabel">Nights Tracked</p>
-//           </div>
-//           <div className="statCard">
-//             <p className="statValue">
-//               {Object.entries(stats.qualityCount).sort(
-//                 (a, b) => b[1] - a[1]
-//               )[0]?.[0] || "—"}
-//             </p>
-//             <p className="statLabel">Most Common Quality</p>
-//           </div>
-//         </div>
-//       )}
-
-//       {/* Log Form */}
-//       <div className="sleepForm">
-//         <h2>Log Tonight's Sleep</h2>
-
-//         <div className="formRow">
-//           <div className="formGroup">
-//             <label>Hours Slept</label>
-//             <input
-//               type="number"
-//               placeholder="e.g. 7.5"
-//               value={hours}
-//               min="0"
-//               max="24"
-//               step="0.5"
-//               onChange={(e) => {
-//                 setHours(e.target.value);
-//                 setError("");
-//               }}
-//             />
-//           </div>
-//           <div className="formGroup">
-//             <label>Bed Time</label>
-//             <input
-//               type="time"
-//               value={bedTime}
-//               onChange={(e) => setBedTime(e.target.value)}
-//             />
-//           </div>
-//           <div className="formGroup">
-//             <label>Wake Time</label>
-//             <input
-//               type="time"
-//               value={wakeTime}
-//               onChange={(e) => setWakeTime(e.target.value)}
-//             />
-//           </div>
-//         </div>
-
-//         {/* Quality Selection */}
-//         <div className="qualitySection">
-//           <label>Sleep Quality</label>
-//           <div className="qualityGrid">
-//             {qualityOptions.map((q) => (
-//               <div
-//                 key={q.label}
-//                 className={`qualityCard ${quality === q.label ? "selected" : ""}`}
-//                 onClick={() => setQuality(q.label)}
-//                 style={{
-//                   borderColor: quality === q.label ? q.color : "#e5e7eb",
-//                   background: quality === q.label ? `${q.color}15` : "white",
-//                 }}
-//               >
-//                 <span className="qualityEmoji">{q.emoji}</span>
-//                 <span className="qualityLabel">{q.label}</span>
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-
-//         {/* Notes */}
-//         <div className="formGroup">
-//           <label>Notes (optional)</label>
-//           <textarea
-//             placeholder="Any notes about your sleep..."
-//             value={notes}
-//             onChange={(e) => setNotes(e.target.value)}
-//             maxLength={300}
-//           />
-//         </div>
-
-//         {error && <p className="errorText">{error}</p>}
-//         {saved && <p className="successText">✅ Sleep log saved!</p>}
-
-//         <button
-//           onClick={saveSleep}
-//           disabled={saving}
-//           className="saveBtn"
-//         >
-//           {saving ? "Saving..." : "Save Sleep Log"}
-//         </button>
-//       </div>
-
-//       {/* Sleep History */}
-//       <div className="sleepHistory">
-//         <h2>Sleep History</h2>
-//         {loadingHistory ? (
-//           <p className="loadingText">Loading...</p>
-//         ) : history.length === 0 ? (
-//           <p className="emptyText">No sleep logs yet. Log your first night!</p>
-//         ) : (
-//           <div className="historyList">
-//             {history.map((log, index) => (
-//               <div key={index} className="sleepCard"
-//                 style={{ borderLeft: `4px solid ${getHoursColor(log.hours)}` }}
-//               >
-//                 <div className="sleepCardLeft">
-//                   <p className="sleepHours"
-//                     style={{ color: getHoursColor(log.hours) }}
-//                   >
-//                     {log.hours}h
-//                   </p>
-//                   <p className="sleepQuality">{log.quality}</p>
-//                 </div>
-//                 <div className="sleepCardRight">
-//                   {log.bedTime && (
-//                     <p className="sleepTime">🌙 Bed: {log.bedTime}</p>
-//                   )}
-//                   {log.wakeTime && (
-//                     <p className="sleepTime">☀️ Wake: {log.wakeTime}</p>
-//                   )}
-//                   {log.notes && (
-//                     <p className="sleepNotes">{log.notes}</p>
-//                   )}
-//                   <p className="sleepDate">
-//                     {new Date(log.createdAt).toLocaleDateString("en-IN", {
-//                       day: "numeric",
-//                       month: "short",
-//                       year: "numeric",
-//                     })}
-//                   </p>
-//                 </div>
-//               </div>
-//             ))}
-//           </div>
-//         )}
-//       </div>
-
-//       <div className="navButtons">
-//         <Link to="/dashboard">
-//           <button className="backBtn">← Back to Dashboard</button>
-//         </Link>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default SleepTracker;
-
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useLanguage } from "../context/LanguageContext";
+import translations from "../i18n/translations";
 import "./sleep.css";
 
 function SleepTracker() {
   const { token } = useAuth();
+  const { language, t } = useLanguage();
 
   const [bedTime, setBedTime] = useState("");
   const [wakeTime, setWakeTime] = useState("");
@@ -301,10 +22,10 @@ function SleepTracker() {
   const [loadingHistory, setLoadingHistory] = useState(true);
 
   const qualityOptions = [
-    { label: "Excellent", emoji: "😴", color: "#22c55e" },
-    { label: "Good",      emoji: "🙂", color: "#4ade80" },
-    { label: "Fair",      emoji: "😐", color: "#eab308" },
-    { label: "Poor",      emoji: "😫", color: "#ef4444" },
+    { label: t("sleepTracker.quality.Excellent"), emoji: "😴", color: "#22c55e" },
+    { label: t("sleepTracker.quality.Good"),      emoji: "🙂", color: "#4ade80" },
+    { label: t("sleepTracker.quality.Fair"),      emoji: "😐", color: "#eab308" },
+    { label: t("sleepTracker.quality.Poor"),      emoji: "😫", color: "#ef4444" },
   ];
 
   // Auto calculate sleep hours
@@ -432,8 +153,8 @@ function SleepTracker() {
   return (
     <div className="sleepPage">
       <div className="sleepHeader">
-        <h1>🌙 Sleep Tracker</h1>
-        <p>Track your sleep patterns and improve your rest quality.</p>
+        <h1>{t("sleepTracker.title")}</h1>
+        <p>{t("sleepTracker.subtitle")}</p>
       </div>
 
       {/* Stats */}
@@ -441,30 +162,30 @@ function SleepTracker() {
         <div className="sleepStats">
           <div className="statCard">
             <p className="statValue">{stats.avgHours}h</p>
-            <p className="statLabel">Avg Sleep (7 days)</p>
+            <p className="statLabel">{t("sleepTracker.avgSleep")}</p>
           </div>
           <div className="statCard">
             <p className="statValue">{stats.totalNights}</p>
-            <p className="statLabel">Nights Tracked</p>
+            <p className="statLabel">{t("sleepTracker.nightTracked")}</p>
           </div>
           <div className="statCard">
             <p className="statValue">
               {Object.entries(stats.qualityCount || {})
                 .sort((a, b) => b[1] - a[1])[0]?.[0] || "—"}
             </p>
-            <p className="statLabel">Most Common Quality</p>
+            <p className="statLabel">{t("sleepTracker.mostCommon")}</p>
           </div>
         </div>
       )}
 
       {/* Form */}
       <div className="sleepForm">
-        <h2>Log Tonight's Sleep</h2>
+        <h2>{t("sleepTracker.sleepForm")}</h2>
 
         {/* Bed Time + Wake Time */}
         <div className="sleepTimeRow">
           <div className="timeGroup">
-            <label>🌙 Bed Time</label>
+            <label>{t("sleepTracker.bedTimeLabel")}</label>
             <input
               type="time"
               value={bedTime}
@@ -476,7 +197,7 @@ function SleepTracker() {
           <div className="timeArrow">→</div>
 
           <div className="timeGroup">
-            <label>☀️ Wake Time</label>
+            <label>{t("sleepTracker.wakeTimeLabel")}</label>
             <input
               type="time"
               value={wakeTime}
@@ -487,7 +208,7 @@ function SleepTracker() {
 
           {/* Auto calculated result */}
           <div className="sleepResult">
-            <label>Total Sleep</label>
+            <label>{t("sleepTracker.totalSleep")}</label>
             <p className="sleepResultValue"
               style={{ color: sleepHours !== null
                 ? getHoursColor(sleepHours) : "#9ca3af" }}>
@@ -514,7 +235,7 @@ function SleepTracker() {
 
         {/* Quality */}
         <div className="qualitySection">
-          <label>Sleep Quality</label>
+          <label>{t("sleepTracker.qualityLabel")}</label>
           <div className="qualityGrid">
             {qualityOptions.map((q) => (
               <div
@@ -535,9 +256,9 @@ function SleepTracker() {
 
         {/* Notes */}
         <div className="formGroup">
-          <label>Notes (optional)</label>
+          <label>{t("sleepTracker.notesLabel")}</label>
           <textarea
-            placeholder="Any notes about your sleep..."
+            placeholder={t("sleepTracker.notesPlaceholder")}
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             maxLength={300}
@@ -545,20 +266,20 @@ function SleepTracker() {
         </div>
 
         {error && <p className="errorText">{error}</p>}
-        {saved && <p className="successText">✅ Sleep log saved!</p>}
+        {saved && <p className="successText">✅ {t("sleepTracker.successText")}</p>}
 
         <button onClick={saveSleep} disabled={saving} className="saveBtn">
-          {saving ? "Saving..." : "Save Sleep Log"}
+          {saving ? "Saving..." : t("sleepTracker.saveBtn")}
         </button>
       </div>
 
       {/* History */}
       <div className="sleepHistory">
-        <h2>Sleep History</h2>
+        <h2>{t("sleepTracker.historyTitle")}</h2>
         {loadingHistory ? (
-          <p className="loadingText">Loading...</p>
+          <p className="loadingText">{t("common.loading")}</p>
         ) : history.length === 0 ? (
-          <p className="emptyText">No sleep logs yet. Log your first night!</p>
+          <p className="emptyText">{t("sleepTracker.emptyText")}</p>
         ) : (
           <div className="historyList">
             {history.map((log, i) => (
@@ -595,7 +316,7 @@ function SleepTracker() {
 
       <div className="navButtons">
         <Link to="/dashboard">
-          <button className="backBtn">← Back to Dashboard</button>
+          <button className="backBtn">{t("common.back")}</button>
         </Link>
       </div>
     </div>

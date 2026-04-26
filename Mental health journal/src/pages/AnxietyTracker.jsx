@@ -1,64 +1,31 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useLanguage } from "../context/LanguageContext";
+import translations from "../i18n/translations";
 import "./anxiety.css";
-
-// ── QUIZ QUESTIONS ──────────────────────────────────────
-const QUIZ_QUESTIONS = [
-  {
-    id: 1,
-    question: "How often have you felt nervous, anxious, or on edge today?",
-    options: [
-      { text: "Not at all", score: 0 },
-      { text: "A little bit", score: 2 },
-      { text: "Quite a bit", score: 5 },
-      { text: "Very much", score: 8 },
-    ],
-  },
-  {
-    id: 2,
-    question: "How difficult has it been to control your worrying today?",
-    options: [
-      { text: "Not difficult at all", score: 0 },
-      { text: "Somewhat difficult", score: 2 },
-      { text: "Very difficult", score: 5 },
-      { text: "Extremely difficult", score: 8 },
-    ],
-  },
-  {
-    id: 3,
-    question: "Are you experiencing any physical symptoms right now?",
-    options: [
-      { text: "No physical symptoms", score: 0 },
-      { text: "Slightly tense or restless", score: 2 },
-      { text: "Racing heart or shortness of breath", score: 5 },
-      { text: "Trembling, sweating, or chest tightness", score: 8 },
-    ],
-  },
-  {
-    id: 4,
-    question: "How much is anxiety affecting your ability to function today?",
-    options: [
-      { text: "Not at all — I feel fine", score: 0 },
-      { text: "Mildly — I can still manage", score: 2 },
-      { text: "Moderately — it's affecting my work/study", score: 5 },
-      { text: "Severely — I can barely function", score: 8 },
-    ],
-  },
-  {
-    id: 5,
-    question: "Have you had any intrusive or racing thoughts today?",
-    options: [
-      { text: "No intrusive thoughts", score: 0 },
-      { text: "Occasional worrying thoughts", score: 2 },
-      { text: "Frequent racing thoughts", score: 5 },
-      { text: "Constant overwhelming thoughts", score: 8 },
-    ],
-  },
-];
 
 function AnxietyTracker() {
   const { token } = useAuth();
+  const { language, t } = useLanguage(); // ✅ moved to top, before QUIZ_QUESTIONS
+
+  // ✅ QUIZ_QUESTIONS moved inside component so language is available
+  const SCORE_MAP = [
+    [0, 2, 5, 8],
+    [0, 2, 5, 8],
+    [0, 2, 5, 8],
+    [0, 2, 5, 8],
+    [0, 2, 5, 8],
+  ];
+
+  const QUIZ_QUESTIONS = translations.anxietyQuiz[language].questions.map((q, i) => ({
+    id: i + 1,
+    question: q.question,
+    options: q.options.map((opt, j) => ({
+      text: opt,
+      score: SCORE_MAP[i][j],
+    })),
+  }));
 
   // Quiz state
   const [quizMode, setQuizMode] = useState(true);
@@ -92,12 +59,11 @@ function AnxietyTracker() {
 
   const fetchHistory = async () => {
     try {
-      const res = await fetch("https://mindcare-backend-v56a.onrender.com/api/anxiety/history", {
+      const res = await fetch("http://localhost:5000/api/anxiety/history", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
       if (data.success) {
-        // Show only last 7 days in UI
         const sevenDaysAgo = new Date();
         sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
         setLogs(data.logs.filter(l => new Date(l.createdAt) >= sevenDaysAgo));
@@ -111,7 +77,7 @@ function AnxietyTracker() {
 
   const fetchStats = async () => {
     try {
-      const res = await fetch("https://mindcare-backend-v56a.onrender.com/api/anxiety/stats", {
+      const res = await fetch("http://localhost:5000/api/anxiety/stats", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -121,7 +87,6 @@ function AnxietyTracker() {
     }
   };
 
-  // ── QUIZ LOGIC ──────────────────────────────────────────
   const handleAnswer = (questionId, score) => {
     setAnswers((prev) => ({ ...prev, [questionId]: score }));
   };
@@ -130,9 +95,7 @@ function AnxietyTracker() {
     if (currentQuestion < QUIZ_QUESTIONS.length - 1) {
       setCurrentQuestion((prev) => prev + 1);
     } else {
-      // Calculate final score
       const totalScore = Object.values(answers).reduce((a, b) => a + b, 0);
-      // Max possible = 5 * 8 = 40, normalize to 1-10
       const normalized = Math.max(1, Math.min(10, Math.round((totalScore / 40) * 10)));
       setCalculatedLevel(normalized);
       setQuizComplete(true);
@@ -152,22 +115,19 @@ function AnxietyTracker() {
     setCalculatedLevel(0);
   };
 
-  // ── SMART NOTIFICATION ─────────────────────────────────
   const sendSmartNotification = async (level) => {
     if (notifSentRef.current) return;
     if (!("Notification" in window)) return;
-
-    // Only send for moderate+ anxiety
     if (level < 4) return;
 
     const sendNotif = (title, body) => {
       if (Notification.permission === "granted") {
-        new Notification(title, { body, icon: "/Logo_mindcare.jpg" });
+        new Notification(title, { body, icon: "/Logo_mindcare.png" });
         notifSentRef.current = true;
       } else if (Notification.permission !== "denied") {
         Notification.requestPermission().then((p) => {
           if (p === "granted") {
-            new Notification(title, { body, icon: "/Logo_mindcare.jpg" });
+            new Notification(title, { body, icon: "/Logo_mindcare.png" });
             notifSentRef.current = true;
           }
         });
@@ -186,26 +146,20 @@ function AnxietyTracker() {
       );
     }
 
-    // Check for 3+ consecutive high anxiety days
     checkConsecutiveHighAnxiety(level);
   };
 
   const checkConsecutiveHighAnxiety = async (todayLevel) => {
     if (todayLevel < 7) return;
     try {
-      const res = await fetch("https://mindcare-backend-v56a.onrender.com/api/anxiety/history", {
+      const res = await fetch("http://localhost:5000/api/anxiety/history", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
       if (!data.success) return;
-
       const recentLogs = data.logs.slice(0, 3);
       const allHigh = recentLogs.length >= 2 && recentLogs.every(l => l.level >= 7);
-
-      if (allHigh) {
-        // Trigger auto-call notification
-        sendAutoCallNotification();
-      }
+      if (allHigh) sendAutoCallNotification();
     } catch (err) {
       console.error(err);
     }
@@ -215,19 +169,15 @@ function AnxietyTracker() {
     if (!("Notification" in window)) return;
     const title = "🆘 MindCare Support Call";
     const body = "You've been experiencing high anxiety for multiple days. Our support team will reach out to you soon. You are not alone. 💙";
-
     if (Notification.permission === "granted") {
       new Notification(title, { body, icon: "/Logo_mindcare.png" });
     }
-
-    // In production: trigger backend to call user
-    // POST /api/support/trigger-call { userId }
     triggerSupportCall();
   };
 
   const triggerSupportCall = async () => {
     try {
-      await fetch("https://mindcare-backend-v56a.onrender.com/api/support/trigger-call", {
+      await fetch("http://localhost:5000/api/support/trigger-call", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -239,12 +189,11 @@ function AnxietyTracker() {
     }
   };
 
-  // ── SAVE LOG ────────────────────────────────────────────
   const saveLog = async () => {
     setSaving(true);
     setError("");
     try {
-      const res = await fetch("https://mindcare-backend-v56a.onrender.com/api/anxiety/save", {
+      const res = await fetch("http://localhost:5000/api/anxiety/save", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -264,23 +213,20 @@ function AnxietyTracker() {
         setCopingStrategy("");
         setNotes("");
         fetchStats();
-
-        // Send smart notification ONLY on save
         await sendSmartNotification(calculatedLevel);
-
         setTimeout(() => setSaved(false), 3000);
       } else {
         setError(data.message);
       }
     } catch (err) {
-      setError("Something went wrong.");
+      setError(t("common.error"));
     } finally {
       setSaving(false);
     }
   };
 
   const getLevelColor = (l) => l <= 3 ? "#22c55e" : l <= 6 ? "#f59e0b" : "#ef4444";
-  const getLevelLabel = (l) => l <= 3 ? "Low Anxiety" : l <= 6 ? "Moderate" : "High Anxiety";
+  const getLevelLabel = (l) => l <= 3 ? t("anxietyQuiz.lowLabel") : l <= 6 ? t("anxietyQuiz.moderateLabel") : t("anxietyQuiz.highLabel");
   const getLevelEmoji = (l) => l <= 3 ? "😌" : l <= 6 ? "😐" : "😰";
 
   const getTips = (l) => {
@@ -299,7 +245,6 @@ function AnxietyTracker() {
       "🆘 Your anxiety is high — please be gentle with yourself.",
       "💨 Try 4-7-8 breathing: Inhale 4s → Hold 7s → Exhale 8s",
       "📱 Consider calling iCall: 9152987821 for free support.",
-      "🧊 Hold ice cubes — the sensation grounds you instantly.",
       "💙 You are not alone. This feeling will pass.",
     ];
   };
@@ -310,35 +255,36 @@ function AnxietyTracker() {
 
   return (
     <div className="anxietyPage">
+
+      {/* ── Header ── */}
       <div className="anxietyHeader">
-        <h1>💭 Anxiety Tracker</h1>
-        <p>Answer a few questions to understand your anxiety level today.</p>
+        <h1>{t("anxietyQuiz.title")}</h1>
+        <p>{t("anxietyQuiz.subtitle")}</p>
       </div>
 
-      {/* Stats */}
+      {/* ── Stats ── */}
       {stats && (
         <div className="anxietyStats">
           <div className="anxietyStatCard">
             <p className="anxietyStatValue" style={{ color: getLevelColor(parseFloat(stats.avgLevel)) }}>
               {stats.avgLevel}/10
             </p>
-            <p className="anxietyStatLabel">Avg Anxiety (7 days)</p>
+            <p className="anxietyStatLabel">{t("anxietyQuiz.historyTitle")}</p>
           </div>
           <div className="anxietyStatCard">
             <p className="anxietyStatValue">{stats.totalLogs}</p>
-            <p className="anxietyStatLabel">Logs This Week</p>
+            <p className="anxietyStatLabel">{t("common.week")}</p>
           </div>
           <div className="anxietyStatCard">
             <p className="anxietyStatValue" style={{ fontSize: "13px" }}>{stats.topTrigger || "—"}</p>
-            <p className="anxietyStatLabel">Top Trigger</p>
+            <p className="anxietyStatLabel">{t("common.stats")}</p>
           </div>
         </div>
       )}
 
-      {/* ── QUIZ MODE ── */}
+      {/* ── Quiz Mode ── */}
       {quizMode && (
         <div className="quizCard">
-          {/* Progress bar */}
           <div className="quizProgress">
             <div className="quizProgressBar">
               <div className="quizProgressFill" style={{ width: `${progress}%` }} />
@@ -348,10 +294,8 @@ function AnxietyTracker() {
             </p>
           </div>
 
-          {/* Question */}
           <p className="quizQuestion">{q.question}</p>
 
-          {/* Options */}
           <div className="quizOptions">
             {q.options.map((opt, i) => (
               <button
@@ -365,26 +309,24 @@ function AnxietyTracker() {
             ))}
           </div>
 
-          {/* Navigation */}
           <div className="quizNav">
             {currentQuestion > 0 && (
-              <button className="quizPrevBtn" onClick={goPrev}>← Back</button>
+              <button className="quizPrevBtn" onClick={goPrev}>{t("common.prev")}</button>
             )}
             <button
               className="quizNextBtn"
               onClick={goNext}
               disabled={currentAnswer === undefined}
             >
-              {currentQuestion === QUIZ_QUESTIONS.length - 1 ? "See My Score →" : "Next →"}
+              {currentQuestion === QUIZ_QUESTIONS.length - 1 ? t("anxietyQuiz.seeScore") : t("common.next")}
             </button>
           </div>
         </div>
       )}
 
-      {/* ── RESULT MODE ── */}
+      {/* ── Result Mode ── */}
       {quizComplete && (
-        <div className="quizResultCard"
-          style={{ borderColor: getLevelColor(calculatedLevel) }}>
+        <div className="quizResultCard" style={{ borderColor: getLevelColor(calculatedLevel) }}>
           <div className="quizResultTop">
             <div className="quizResultCircle"
               style={{ background: `${getLevelColor(calculatedLevel)}15`,
@@ -398,11 +340,9 @@ function AnxietyTracker() {
               <p className="quizResultLabel" style={{ color: getLevelColor(calculatedLevel) }}>
                 {getLevelLabel(calculatedLevel)}
               </p>
-              <p className="quizResultDesc">
-                Based on your answers today
-              </p>
+              <p className="quizResultDesc">{t("common.quizResultsDesc")}</p>
               <button className="retakeBtn" onClick={retakeQuiz}>
-                🔄 Retake Quiz
+                {t("anxietyQuiz.retake")}
               </button>
             </div>
           </div>
@@ -412,7 +352,7 @@ function AnxietyTracker() {
             style={{ background: `${getLevelColor(calculatedLevel)}08`,
                      borderColor: `${getLevelColor(calculatedLevel)}30` }}>
             <p className="tipsTitle" style={{ color: getLevelColor(calculatedLevel) }}>
-              💡 Personalized Tips for You
+              {t("anxietyQuiz.tipsTitle")}
             </p>
             <ul className="tipsList">
               {getTips(calculatedLevel).map((tip, i) => (
@@ -426,7 +366,7 @@ function AnxietyTracker() {
             )}
           </div>
 
-          {/* Crisis alert */}
+          {/* Crisis Alert */}
           {calculatedLevel >= 8 && (
             <div className="crisisAlert">
               <p className="crisisTitle">🆘 You are not alone — Help is available</p>
@@ -439,65 +379,69 @@ function AnxietyTracker() {
                   <p className="crisisOrg">Vandrevala</p>
                   <p className="crisisPhone">1860-2662-345</p>
                 </a>
-                <a href="tel:8766344351" className="crisisNumber">
-                  <p className="crisisOrg">Madhusudhan</p>
-                  <p className="crisisPhone">8766344351</p>
+                <a href="tel:9820466627" className="crisisNumber">
+                  <p className="crisisOrg">AASRA</p>
+                  <p className="crisisPhone">9820466627</p>
                 </a>
               </div>
             </div>
           )}
 
-          {/* Additional inputs */}
+          {/* Additional Inputs */}
           <div className="additionalSection">
-            <h3>Tell us more (optional)</h3>
+            <h3>{t("common.notes")} {t("common.optional")}</h3>
 
+            {/* Triggers */}
             <div className="tagSection">
-              <label>What triggered your anxiety?</label>
+              <label>{t("anxietyQuiz.triggers")}</label>
               <div className="tagGrid">
-                {triggerOptions.map((t) => (
-                  <button key={t}
-                    className={`tagBtn ${triggers.includes(t) ? "selected" : ""}`}
+                {/* ✅ renamed (t) to (item) to avoid shadowing the t() function */}
+                {triggerOptions.map((item) => (
+                  <button key={item}
+                    className={`tagBtn ${triggers.includes(item) ? "selected" : ""}`}
                     onClick={() => setTriggers(prev =>
-                      prev.includes(t) ? prev.filter(x => x !== t) : [...prev, t]
+                      prev.includes(item) ? prev.filter(x => x !== item) : [...prev, item]
                     )}>
-                    {t}
+                    {item}
                   </button>
                 ))}
               </div>
             </div>
 
+            {/* Symptoms */}
             <div className="tagSection">
-              <label>What symptoms are you experiencing?</label>
+              <label>{t("anxietyQuiz.symptoms")}</label>
               <div className="tagGrid">
-                {symptomOptions.map((s) => (
-                  <button key={s}
-                    className={`tagBtn symptomBtn ${symptoms.includes(s) ? "selected" : ""}`}
+                {symptomOptions.map((item) => (
+                  <button key={item}
+                    className={`tagBtn symptomBtn ${symptoms.includes(item) ? "selected" : ""}`}
                     onClick={() => setSymptoms(prev =>
-                      prev.includes(s) ? prev.filter(x => x !== s) : [...prev, s]
+                      prev.includes(item) ? prev.filter(x => x !== item) : [...prev, item]
                     )}>
-                    {s}
+                    {item}
                   </button>
                 ))}
               </div>
             </div>
 
+            {/* Coping */}
             <div className="tagSection">
-              <label>What helped you cope?</label>
+              <label>{t("anxietyQuiz.coping")}</label>
               <div className="tagGrid">
-                {copingOptions.map((c) => (
-                  <button key={c}
-                    className={`tagBtn copingBtn ${copingStrategy === c ? "selected" : ""}`}
-                    onClick={() => setCopingStrategy(copingStrategy === c ? "" : c)}>
-                    {c}
+                {copingOptions.map((item) => (
+                  <button key={item}
+                    className={`tagBtn copingBtn ${copingStrategy === item ? "selected" : ""}`}
+                    onClick={() => setCopingStrategy(copingStrategy === item ? "" : item)}>
+                    {item}
                   </button>
                 ))}
               </div>
             </div>
 
             <div className="formGroup">
-              <label>Additional notes (optional)</label>
+              <label>{t("common.notes")} {t("common.optional")}</label>
               <textarea
-                placeholder="How are you feeling? What's on your mind?"
+                placeholder={t("moodTracker.notePlaceholder")}
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 maxLength={300}
@@ -505,22 +449,22 @@ function AnxietyTracker() {
             </div>
 
             {error && <p className="errorText">{error}</p>}
-            {saved && <p className="successText">✅ Anxiety log saved!</p>}
+            {saved && <p className="successText">{t("common.saved")}</p>}
 
             <button onClick={saveLog} disabled={saving} className="saveBtn">
-              {saving ? "Saving..." : "Save Anxiety Log"}
+              {saving ? t("common.saving") : t("anxietyQuiz.saveBtn")}
             </button>
           </div>
         </div>
       )}
 
-      {/* History */}
+      {/* ── History ── */}
       <div className="anxietyHistory">
-        <h2>Anxiety History (Last 7 Days)</h2>
+        <h2>{t("anxietyQuiz.historyTitle")}</h2>
         {loadingLogs ? (
-          <p className="loadingText">Loading...</p>
+          <p className="loadingText">{t("common.loading")}</p>
         ) : logs.length === 0 ? (
-          <p className="emptyText">No logs in the last 7 days.</p>
+          <p className="emptyText">{t("common.noData")}</p>
         ) : (
           <div className="anxietyList">
             {logs.map((log) => (
@@ -532,20 +476,23 @@ function AnxietyTracker() {
                     {log.level}/10
                   </p>
                   <p className="anxietyLevelLabel" style={{ color: getLevelColor(log.level) }}>
-                    {log.level <= 3 ? "Low" : log.level <= 6 ? "Moderate" : "High"}
+                    {getLevelLabel(log.level)}
                   </p>
                 </div>
                 <div className="anxietyCardRight">
                   {log.triggers?.length > 0 && (
                     <div className="tagRow">
-                      <span className="tagRowLabel">Triggers: </span>
-                      {log.triggers.map((t, i) => (
-                        <span key={i} className="triggerTag">{t}</span>
+                      <span className="tagRowLabel">{t("anxietyQuiz.triggers")}: </span>
+                      {/* ✅ renamed (t, i) to (item, i) to avoid shadowing */}
+                      {log.triggers.map((item, i) => (
+                        <span key={i} className="triggerTag">{item}</span>
                       ))}
                     </div>
                   )}
                   {log.copingStrategy && (
-                    <p className="copingText">Coped with: <strong>{log.copingStrategy}</strong></p>
+                    <p className="copingText">
+                      {t("anxietyQuiz.coping")}: <strong>{log.copingStrategy}</strong>
+                    </p>
                   )}
                   <p className="anxietyDate">
                     {new Date(log.createdAt).toLocaleDateString("en-IN", {
@@ -559,9 +506,13 @@ function AnxietyTracker() {
         )}
       </div>
 
+      {/* ── Back Button ── */}
       <div className="navButtons">
-        <Link to="/dashboard"><button className="backBtn">← Back to Dashboard</button></Link>
+        <Link to="/dashboard">
+          <button className="backBtn">{t("common.back")}</button>
+        </Link>
       </div>
+
     </div>
   );
 }

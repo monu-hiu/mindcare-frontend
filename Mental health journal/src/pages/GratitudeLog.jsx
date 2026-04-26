@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useLanguage } from "../context/LanguageContext";
+import translations from "../i18n/translations";
 import "./gratitude.css";
 
 function GratitudeLog() {
   const { token } = useAuth();
+const {language, t} = useLanguage();
 
   const [items, setItems] = useState(["", "", ""]);
   const [mood, setMood] = useState("");
@@ -109,13 +112,13 @@ function GratitudeLog() {
   return (
     <div className="gratitudePage">
       <div className="gratitudeHeader">
-        <h1>🙏 Gratitude Log</h1>
-        <p>Take a moment to appreciate the good things in your life.</p>
+        <h1>{t("gratitude.title")}</h1>
+        <p>{t("gratitude.subtitle")}</p>
       </div>
 
       {/* Form */}
       <div className="gratitudeForm">
-        <h2>What are you grateful for today?</h2>
+        <h2>{t("gratitude.question")}</h2>
 
         <div className="itemsList">
           {items.map((item, index) => (
@@ -123,7 +126,7 @@ function GratitudeLog() {
               <span className="itemNumber">{index + 1}</span>
               <input
                 type="text"
-                placeholder={`I am grateful for...`}
+                placeholder={t("gratitude.placeholder")}
                 value={item}
                 onChange={(e) => handleItemChange(index, e.target.value)}
                 maxLength={100}
@@ -142,15 +145,15 @@ function GratitudeLog() {
 
         {items.length < 5 && (
           <button className="addItemBtn" onClick={addItem}>
-            + Add Another
+            {t("gratitude.addAnother")}
           </button>
         )}
 
         <div className="formGroup">
-          <label>How does this make you feel? (optional)</label>
+          <label>{t("gratitude.moodLabel")}</label>
           <input
             type="text"
-            placeholder="e.g. Peaceful, Happy, Blessed..."
+            placeholder={t("gratitude.moodPlaceholder")}
             value={mood}
             onChange={(e) => setMood(e.target.value)}
             maxLength={50}
@@ -158,9 +161,9 @@ function GratitudeLog() {
         </div>
 
         <div className="formGroup">
-          <label>Additional note (optional)</label>
+          <label>{t("common.additionalNote")} {t("common.optional")}</label>
           <textarea
-            placeholder="Any additional thoughts..."
+            placeholder={t("gratitude.addtionalThought")}
             value={note}
             onChange={(e) => setNote(e.target.value)}
             maxLength={300}
@@ -169,7 +172,7 @@ function GratitudeLog() {
 
         {error && <p className="errorText">{error}</p>}
         {saved && (
-          <p className="successText">✅ Gratitude log saved!</p>
+          <p className="successText">✅ {t("gratitude.successText")}</p>
         )}
 
         <button
@@ -177,18 +180,18 @@ function GratitudeLog() {
           disabled={saving}
           className="saveBtn"
         >
-          {saving ? "Saving..." : "Save Gratitude Log"}
+          {saving ? "Saving..." : t("gratitude.saveBtn")}
         </button>
       </div>
 
       {/* Logs History */}
       <div className="gratitudeHistory">
-        <h2>Past Gratitude Logs</h2>
+        <h2>{t("gratitude.historyTitle")}</h2>
         {loadingLogs ? (
           <p className="loadingText">Loading...</p>
         ) : logs.length === 0 ? (
           <p className="emptyText">
-            No gratitude logs yet. Start your gratitude journey today!
+            {t("gratitude.emptyText")}
           </p>
         ) : (
           logs.map((log) => (
@@ -231,7 +234,7 @@ function GratitudeLog() {
 
       <div className="navButtons">
         <Link to="/dashboard">
-          <button className="backBtn">← Back to Dashboard</button>
+          <button className="backBtn">← {t("common.back")}</button>
         </Link>
       </div>
     </div>

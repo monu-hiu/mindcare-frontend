@@ -1,123 +1,147 @@
+// src/pages/auth/Login.jsx
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { useLanguage } from "../../context/LanguageContext";
+import LanguageSelector from "../../components/LanguageSelector";
 import "./login.css";
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [serverError, setServerError] = useState("");
-
   const { login } = useAuth();
+  const { checkShowSelector } = useLanguage();
   const navigate = useNavigate();
 
-  const validate = () => {
-    const errs = {};
-    if (!email.trim()) errs.email = "Email is required";
-    else if (!/\S+@\S+\.\S+/.test(email)) errs.email = "Valid email required";
-    if (!password) errs.password = "Password is required";
-    return errs;
-  };
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [showLangSelector, setShowLangSelector] = useState(false);
 
-  const handleLogin = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setServerError("");
-    const errs = validate();
-    if (Object.keys(errs).length > 0) { setErrors(errs); return; }
+    setError("");
+
+    if (!email.trim() || !password.trim()) {
+      setError("Please enter your email and password.");
+      return;
+    }
 
     setLoading(true);
     try {
-      await login(email, password);
-      navigate("/dashboard");
+      const result = await login(email.trim().toLowerCase(), password);
+
+      if (result.success) {
+        // Check if user has selected a language before
+        const savedLang = localStorage.getItem("mc_language");
+        if (!savedLang) {
+          // First time — show language selector
+          setShowLangSelector(true);
+        } else {
+          navigate("/dashboard");
+        }
+      } else {
+        setError(result.message || "Invalid email or password.");
+      }
     } catch (err) {
-      setServerError(err.message || "Login failed. Try again.");
+      setError("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
+  const handleLangSelected = () => {
+    setShowLangSelector(false);
+    navigate("/dashboard");
+  };
+
   return (
-    <div className="authPage">
-      <div className="authLeft">
-        <Link to="/" className="authLogo">🧠 MindCare</Link>
-        <p className="authQuoteText">
-          "Your mental health is a priority."
-        </p>
-        <div className="authFeatures">
-          {["Private & secure", "Mood tracking", "AI Chatbot", "24 tools"].map((f, i) => (
-            <div key={i} className="authFeatureItem">
-              <span className="authCheck">✓</span>
-              <span>{f}</span>
+    <>
+      <div className="authPage">
+        {/* Left Panel */}
+        <div className="authLeft">
+          <div className="authLeftContent">
+            <div className="authLeftLogo">🧠</div>
+            <h1>Welcome Back</h1>
+            <p>Your mental wellness journey continues here.</p>
+            <div className="authLeftFeatures">
+              <div className="authFeature">✅ Track your mood and energy daily</div>
+              <div className="authFeature">✅ AI-powered wellness companion</div>
+              <div className="authFeature">✅ Available in English, Hindi & Hinglish</div>
+              <div className="authFeature">✅ Private and 100% secure</div>
             </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="authRight">
-        <div className="authCard">
-          <div className="authCardHeader">
-            <h1>Welcome back</h1>
-            <p>Sign in to continue your wellness journey</p>
           </div>
+        </div>
 
-          {serverError && (
-            <div className="serverError">
-              ⚠️ {serverError}
-            </div>
-          )}
-
-          <form onSubmit={handleLogin} className="authForm" noValidate>
-            <div className="fieldGroup">
-              <label htmlFor="email">Email address</label>
-              <input
-                id="email"
-                type="email"
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  setErrors(p => ({...p, email: ""}));
-                  setServerError("");
-                }}
-                className={errors.email ? "inputError" : ""}
-              />
-              {errors.email && <span className="fieldError">{errors.email}</span>}
+        {/* Right Panel */}
+        <div className="authRight">
+          <div className="authCard">
+            <div className="authCardHeader">
+              <h2>Login to MindCare</h2>
+              <p>Welcome back! Please enter your details.</p>
             </div>
 
-            <div className="fieldGroup">
-              <div className="fieldLabelRow">
-                <label htmlFor="password">Password</label>
-               <Link to="/forgot-password" className="forgotLink">
-  Forgot password?
-</Link>
+            <form onSubmit={handleSubmit} className="authForm" noValidate>
+              {/* Email */}
+              <div className="authField">
+                <label>Email Address</label>
+                <div className={`authInputWrap ${error ? "hasError" : ""}`}>
+                  <span className="authInputIcon">📧</span>
+                  <input
+                    type="email"
+                    placeholder="your@email.com"
+                    value={email}
+                    onChange={(e) => { setEmail(e.target.value); setError(""); }}
+                    autoComplete="email"
+                  />
+                </div>
               </div>
-              <input
-                id="password"
-                type="password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  setErrors(p => ({...p, password: ""}));
-                }}
-                className={errors.password ? "inputError" : ""}
-              />
-              {errors.password && <span className="fieldError">{errors.password}</span>}
-            </div>
 
-            <button type="submit" className="authSubmitBtn" disabled={loading}>
-              {loading ? "Signing in..." : "Sign In →"}
-            </button>
-          </form>
+              {/* Password */}
+              <div className="authField">
+                <label>Password</label>
+                <div className={`authInputWrap ${error ? "hasError" : ""}`}>
+                  <span className="authInputIcon">🔒</span>
+                  <input
+                    type="password"
+                    placeholder="Your password"
+                    value={password}
+                    onChange={(e) => { setPassword(e.target.value); setError(""); }}
+                    autoComplete="current-password"
+                  />
+                </div>
+              </div>
 
-          <div className="authAlt">
-            <p>Don't have an account? <Link to="/signup">Create an account</Link></p>
+              {/* Error */}
+              {error && (
+                <div className="authServerError">⚠️ {error}</div>
+              )}
+
+              {/* Submit */}
+              <button
+                type="submit"
+                className="authSubmitBtn"
+                disabled={loading}
+              >
+                {loading ? "Logging in..." : "Login →"}
+              </button>
+            </form>
+
+            <p className="authSwitch">
+              Don't have an account?{" "}
+              <Link to="/signup" className="authSwitchLink">Sign up free</Link>
+            </p>
           </div>
         </div>
       </div>
-    </div>
+
+      {/* Language Selector — shows after first login */}
+      {showLangSelector && (
+        <LanguageSelector
+          onClose={handleLangSelected}
+          isChange={false}
+        />
+      )}
+    </>
   );
 }
 

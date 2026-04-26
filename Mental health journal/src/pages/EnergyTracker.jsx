@@ -1,63 +1,41 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useLanguage } from "../context/LanguageContext";
+import translations from "../i18n/translations";
 import "./energy.css";
-
-const QUIZ_QUESTIONS = [
-  {
-    id: 1,
-    question: "How would you describe your physical energy level right now?",
-    options: [
-      { text: "Completely drained — can barely move", score: 1 },
-      { text: "Low — feeling tired and sluggish", score: 3 },
-      { text: "Moderate — getting by okay", score: 6 },
-      { text: "High — feeling energetic and active", score: 9 },
-    ],
-  },
-  {
-    id: 2,
-    question: "How well did you sleep last night?",
-    options: [
-      { text: "Very poorly — less than 4 hours", score: 1 },
-      { text: "Not great — 4-6 hours", score: 4 },
-      { text: "Okay — 6-7 hours", score: 7 },
-      { text: "Well — 7-9 hours of quality sleep", score: 10 },
-    ],
-  },
-  {
-    id: 3,
-    question: "How is your mental focus and motivation today?",
-    options: [
-      { text: "Cannot focus at all — totally unmotivated", score: 1 },
-      { text: "Struggling to concentrate", score: 3 },
-      { text: "Somewhat focused — could be better", score: 6 },
-      { text: "Sharp and motivated — ready to go!", score: 9 },
-    ],
-  },
-  {
-    id: 4,
-    question: "Have you eaten and hydrated well today?",
-    options: [
-      { text: "Skipped meals and barely drank water", score: 1 },
-      { text: "Ate a little but not enough", score: 4 },
-      { text: "Had decent meals and some water", score: 7 },
-      { text: "Eaten well and stayed well hydrated", score: 10 },
-    ],
-  },
-  {
-    id: 5,
-    question: "How do you feel about tackling your tasks today?",
-    options: [
-      { text: "Overwhelmed — cannot start anything", score: 1 },
-      { text: "Reluctant — need a big push", score: 3 },
-      { text: "Willing — can do what's needed", score: 6 },
-      { text: "Eager — let's get things done!", score: 9 },
-    ],
-  },
-];
 
 function EnergyTracker() {
   const { token } = useAuth();
+  const { t, language } = useLanguage();
+
+  // ✅ Get questions array from translations based on current language
+  const QUIZ_QUESTIONS = translations.energyQuiz[language].questions.map((q, i) => ({
+    id: i + 1,
+    question: q.question,
+    options: q.options.map((opt, j) => ({
+      text: opt,
+      score: [1, 3, 6, 9, 10][j] ?? (j + 1) * 2,
+    })),
+  }));
+
+  // Fix scores per question to match originals
+  const SCORE_MAP = [
+    [1, 3, 6, 9],
+    [1, 4, 7, 10],
+    [1, 3, 6, 9],
+    [1, 4, 7, 10],
+    [1, 3, 6, 9],
+  ];
+
+  const questions = translations.energyQuiz[language].questions.map((q, i) => ({
+    id: i + 1,
+    question: q.question,
+    options: q.options.map((opt, j) => ({
+      text: opt,
+      score: SCORE_MAP[i][j],
+    })),
+  }));
 
   const [quizMode, setQuizMode] = useState(true);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -160,11 +138,11 @@ function EnergyTracker() {
   };
 
   const goNext = () => {
-    if (currentQuestion < QUIZ_QUESTIONS.length - 1) {
+    if (currentQuestion < questions.length - 1) {
       setCurrentQuestion((prev) => prev + 1);
     } else {
       const totalScore = Object.values(answers).reduce((a, b) => a + b, 0);
-      const maxScore = QUIZ_QUESTIONS.length * 10;
+      const maxScore = questions.length * 10;
       const normalized = Math.max(1, Math.min(10, Math.round((totalScore / maxScore) * 10)));
       setCalculatedLevel(normalized);
       setQuizComplete(true);
@@ -184,7 +162,6 @@ function EnergyTracker() {
     setCalculatedLevel(0);
   };
 
-  // Smart notification — only on SAVE, based on time of day
   const sendSmartNotification = (level) => {
     if (notifSentRef.current) return;
     if (!("Notification" in window)) return;
@@ -259,58 +236,56 @@ function EnergyTracker() {
         setActivities([]);
         setNotes("");
         fetchStats();
-
-        // Send smart notification ONLY on save
         sendSmartNotification(calculatedLevel);
-
         setTimeout(() => setSaved(false), 3000);
       } else {
         setError(data.message);
       }
     } catch (err) {
-      setError("Something went wrong.");
+      setError(t("common.error"));
     } finally {
       setSaving(false);
     }
   };
 
   const getLevelColor = (l) => l >= 7 ? "#22c55e" : l >= 4 ? "#f59e0b" : "#ef4444";
-  const getLevelLabel = (l) => l >= 7 ? "High Energy 🔥" : l >= 4 ? "Moderate ⚡" : "Low Energy 😴";
+  const getLevelLabel = (l) => l >= 7 ? t("energyQuiz.highLabel") : l >= 4 ? t("energyQuiz.moderateLabel") : t("energyQuiz.lowLabel");
   const getLevelEmoji = (l) => l >= 7 ? "⚡" : l >= 4 ? "😐" : "😴";
-
   const getFoodTips = (l) => l >= 7 ? foodTips.high : l >= 4 ? foodTips.moderate : foodTips.low;
   const getExerciseTips = (l) => l >= 7 ? exerciseTips.high : l >= 4 ? exerciseTips.moderate : exerciseTips.low;
 
-  const q = QUIZ_QUESTIONS[currentQuestion];
-  const progress = ((currentQuestion + 1) / QUIZ_QUESTIONS.length) * 100;
+  const q = questions[currentQuestion];
+  const progress = ((currentQuestion + 1) / questions.length) * 100;
   const currentAnswer = answers[q?.id];
 
   return (
     <div className="energyPage">
+
+      {/* ── Header ── */}
       <div className="energyHeader">
-        <h1>⚡ Energy Tracker</h1>
-        <p>Answer a few questions to understand your energy level today.</p>
+        <h1>{t("energyQuiz.title")}</h1>
+        <p>{t("energyQuiz.subtitle")}</p>
       </div>
 
-      {/* Stats */}
+      {/* ── Stats ── */}
       {stats && (
         <div className="energyStats">
           <div className="energyStatCard">
             <p className="energyStatValue">{stats.avgLevel}/10</p>
-            <p className="energyStatLabel">Avg Energy (7 days)</p>
+            <p className="energyStatLabel">{t("energyQuiz.historyTitle")}</p>
           </div>
           <div className="energyStatCard">
             <p className="energyStatValue">{stats.totalLogs}</p>
-            <p className="energyStatLabel">Logs This Week</p>
+            <p className="energyStatLabel">{t("common.week")}</p>
           </div>
           <div className="energyStatCard">
             <p className="energyStatValue">{stats.topMood || "—"}</p>
-            <p className="energyStatLabel">Most Common Mood</p>
+            <p className="energyStatLabel">{t("common.stats")}</p>
           </div>
         </div>
       )}
 
-      {/* ── QUIZ ── */}
+      {/* ── Quiz ── */}
       {quizMode && (
         <div className="quizCard">
           <div className="quizProgress">
@@ -318,7 +293,7 @@ function EnergyTracker() {
               <div className="quizProgressFill" style={{ width: `${progress}%` }} />
             </div>
             <p className="quizProgressText">
-              Question {currentQuestion + 1} of {QUIZ_QUESTIONS.length}
+              Question {currentQuestion + 1} of {questions.length}
             </p>
           </div>
 
@@ -339,26 +314,34 @@ function EnergyTracker() {
 
           <div className="quizNav">
             {currentQuestion > 0 && (
-              <button className="quizPrevBtn" onClick={goPrev}>← Back</button>
+              <button className="quizPrevBtn" onClick={goPrev}>
+                {t("common.prev")}
+              </button>
             )}
             <button
               className="quizNextBtn"
               onClick={goNext}
               disabled={currentAnswer === undefined}
             >
-              {currentQuestion === QUIZ_QUESTIONS.length - 1 ? "See My Score →" : "Next →"}
+              {currentQuestion === questions.length - 1
+                ? t("energyQuiz.seeScore")
+                : t("common.next")}
             </button>
           </div>
         </div>
       )}
 
-      {/* ── RESULT ── */}
+      {/* ── Result ── */}
       {quizComplete && (
         <div className="quizResultCard" style={{ borderColor: getLevelColor(calculatedLevel) }}>
           <div className="quizResultTop">
-            <div className="quizResultCircle"
-              style={{ background: `${getLevelColor(calculatedLevel)}15`,
-                       border: `3px solid ${getLevelColor(calculatedLevel)}` }}>
+            <div
+              className="quizResultCircle"
+              style={{
+                background: `${getLevelColor(calculatedLevel)}15`,
+                border: `3px solid ${getLevelColor(calculatedLevel)}`,
+              }}
+            >
               <p className="quizResultEmoji">{getLevelEmoji(calculatedLevel)}</p>
               <p className="quizResultScore" style={{ color: getLevelColor(calculatedLevel) }}>
                 {calculatedLevel}/10
@@ -368,17 +351,23 @@ function EnergyTracker() {
               <p className="quizResultLabel" style={{ color: getLevelColor(calculatedLevel) }}>
                 {getLevelLabel(calculatedLevel)}
               </p>
-              <p className="quizResultDesc">Your energy score for today</p>
-              <button className="retakeBtn" onClick={retakeQuiz}>🔄 Retake Quiz</button>
+              <p className="quizResultDesc">{t("common.quizResultsDesc")}</p>
+              <button className="retakeBtn" onClick={retakeQuiz}>
+                {t("energyQuiz.retake")}
+              </button>
             </div>
           </div>
 
           {/* Exercise Tips */}
-          <div className="energyTipsSection"
-            style={{ background: `${getLevelColor(calculatedLevel)}08`,
-                     borderColor: `${getLevelColor(calculatedLevel)}30` }}>
+          <div
+            className="energyTipsSection"
+            style={{
+              background: `${getLevelColor(calculatedLevel)}08`,
+              borderColor: `${getLevelColor(calculatedLevel)}30`,
+            }}
+          >
             <p className="tipsTitle" style={{ color: getLevelColor(calculatedLevel) }}>
-              🏃 Recommended Exercises
+              {t("energyQuiz.exerciseTipsTitle")}
             </p>
             <ul className="tipsList">
               {getExerciseTips(calculatedLevel).map((tip, i) => (
@@ -390,7 +379,7 @@ function EnergyTracker() {
           {/* Food Tips */}
           <div className="energyTipsSection" style={{ background: "#f0fdf4", borderColor: "#bbf7d0" }}>
             <p className="tipsTitle" style={{ color: "#16a34a" }}>
-              🥗 Eat This for Better Energy
+              {t("energyQuiz.foodTipsTitle")}
             </p>
             <ul className="tipsList">
               {getFoodTips(calculatedLevel).map((tip, i) => (
@@ -401,24 +390,27 @@ function EnergyTracker() {
 
           {/* Activities */}
           <div className="additionalSection">
-            <h3>What have you been doing today? (optional)</h3>
+            <h3>{t("energyQuiz.activitiesLabel")}</h3>
             <div className="activitiesGrid">
               {activityOptions.map((act) => (
                 <button
                   key={act}
                   className={`activityBtn ${activities.includes(act) ? "selected" : ""}`}
-                  onClick={() => setActivities(prev =>
-                    prev.includes(act) ? prev.filter(a => a !== act) : [...prev, act]
-                  )}>
+                  onClick={() =>
+                    setActivities(prev =>
+                      prev.includes(act) ? prev.filter(a => a !== act) : [...prev, act]
+                    )
+                  }
+                >
                   {act}
                 </button>
               ))}
             </div>
 
             <div className="formGroup" style={{ marginTop: "16px" }}>
-              <label>Notes (optional)</label>
+              <label>{t("common.notes")} {t("common.optional")}</label>
               <textarea
-                placeholder="Any notes about your energy today..."
+                placeholder={t("sleepTracker.notesLabel")}
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 maxLength={300}
@@ -426,28 +418,33 @@ function EnergyTracker() {
             </div>
 
             {error && <p className="errorText">{error}</p>}
-            {saved && <p className="successText">✅ Energy log saved!</p>}
+            {saved && <p className="successText">{t("common.saved")}</p>}
 
             <button onClick={saveLog} disabled={saving} className="saveBtn">
-              {saving ? "Saving..." : "Save Energy Log"}
+              {saving ? t("common.saving") : t("energyQuiz.saveBtn")}
             </button>
           </div>
         </div>
       )}
 
-      {/* History */}
+      {/* ── History ── */}
       <div className="energyHistory">
-        <h2>Energy History (Last 7 Days)</h2>
+        <h2>{t("energyQuiz.historyTitle")}</h2>
         {loadingLogs ? (
-          <p className="loadingText">Loading...</p>
+          <p className="loadingText">{t("common.loading")}</p>
         ) : logs.length === 0 ? (
-          <p className="emptyText">No energy logs in the last 7 days.</p>
+          <p className="emptyText">{t("common.noData")}</p>
         ) : (
           <div className="energyList">
             {logs.map((log) => (
-              <div key={log._id} className="energyCard"
-                style={{ borderLeft: `4px solid ${getLevelColor(log.level)}`,
-                         background: `${getLevelColor(log.level)}08` }}>
+              <div
+                key={log._id}
+                className="energyCard"
+                style={{
+                  borderLeft: `4px solid ${getLevelColor(log.level)}`,
+                  background: `${getLevelColor(log.level)}08`,
+                }}
+              >
                 <div className="energyCardLeft">
                   <p className="energyLevel" style={{ color: getLevelColor(log.level) }}>
                     {log.level}/10
@@ -476,9 +473,13 @@ function EnergyTracker() {
         )}
       </div>
 
+      {/* ── Back Button ── */}
       <div className="navButtons">
-        <Link to="/dashboard"><button className="backBtn">← Back to Dashboard</button></Link>
+        <Link to="/dashboard">
+          <button className="backBtn">{t("common.back")}</button>
+        </Link>
       </div>
+
     </div>
   );
 }

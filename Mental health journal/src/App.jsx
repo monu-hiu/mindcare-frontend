@@ -1,6 +1,7 @@
+// src/App.jsx
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
-import PrivateRoute from "./components/PrivateRoute";
+import { LanguageProvider } from "./context/LanguageContext";
 
 import Home from "./pages/Home";
 import Login from "./pages/auth/Login";
@@ -26,69 +27,50 @@ import TherapyNotes from "./pages/TherapyNotes";
 import ReviewsReflection from "./pages/ReviewsReflection";
 import SupportPage from "./pages/SupportPage";
 import SelfHarmSupport from "./pages/SelfHarmSupport";
+import FeedbackViewer from "./pages/FeedbackViewer";
 import Chatbot from "./pages/Chatbot";
-import NotFound from "./pages/NotFound";
 import Header from "./components/Header_final";
 import Footer from "./components/Footer";
-import ForgotPassword from "./pages/auth/ForgotPassword";
-import VerifyOTP from "./pages/auth/VerifyOtp";
-import PrivacyPolicy from "./pages/auth/PrivacyPolicy";
-import FAQ from "./components/FAQ";
-import FeedbackViewer from "./pages/FeedbackViewer";
+
 function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <Header />
-        <Routes>
-
-          {/* Public Routes */}
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/support" element={<SupportPage />} />
-          <Route path="/self-harm-support" element={<SelfHarmSupport />} />
-
-          {/* Protected Routes */}
-          <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-          <Route path="/mindfulness" element={<PrivateRoute><Mindfulness /></PrivateRoute>} />
-          <Route path="/suggestions" element={<PrivateRoute><Suggestions /></PrivateRoute>} />
-          <Route path="/goal" element={<PrivateRoute><Goal /></PrivateRoute>} />
-          <Route path="/challenges" element={<PrivateRoute><Challenges /></PrivateRoute>} />
-          <Route path="/selfcare" element={<PrivateRoute><SelfCare /></PrivateRoute>} />
-          <Route path="/reflection" element={<PrivateRoute><Reflection /></PrivateRoute>} />
-          <Route path="/cognitive-distortions" element={<PrivateRoute><CognitiveDistortions /></PrivateRoute>} />
-          <Route path="/combo" element={<PrivateRoute><ComboTracker /></PrivateRoute>} />
-          <Route path="/anxiety-tracker" element={<PrivateRoute><AnxietyTracker /></PrivateRoute>} />
-          <Route path="/mood-tracker" element={<PrivateRoute><MoodTracker /></PrivateRoute>} />
-          <Route path="/gratitude-log" element={<PrivateRoute><GratitudeLog /></PrivateRoute>} />
-          <Route path="/self-congrats" element={<PrivateRoute><SelfCongrats /></PrivateRoute>} />
-          <Route path="/sleep-tracker" element={<PrivateRoute><SleepTracker /></PrivateRoute>} />
-          <Route path="/improvement-tracker" element={<PrivateRoute><ImprovementTracker /></PrivateRoute>} />
-          <Route path="/energy-tracker" element={<PrivateRoute><EnergyTracker /></PrivateRoute>} />
-          <Route path="/rage" element={<PrivateRoute><RagePage /></PrivateRoute>} />
-          <Route path="/therapy-notes" element={<PrivateRoute><TherapyNotes /></PrivateRoute>} />
-          <Route path="/reviews-reflection" element={<PrivateRoute><ReviewsReflection /></PrivateRoute>} />
-          <Route path="/chatbot" element={<PrivateRoute><Chatbot /></PrivateRoute>} />
-
-          {/* 404 */}
-          <Route path="*" element={<NotFound />} />
-          {/* Password Reset */}
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/verify-otp" element={<VerifyOTP />} />
-          {/* Privacy Policy */}
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          {/* FAQ */}
-          <Route path="/faq" element={<FAQ />} />
-          {/* Feedback Viewer */}
-         <Route path="/feedback-admin" element={<FeedbackViewer />} />
-         
-
-
-        </Routes>
-        <Footer />
-      </Router>
-    </AuthProvider>
+    // LanguageProvider wraps everything so all pages can access language
+    <LanguageProvider>
+      <AuthProvider>
+        <Router>
+          <Header />
+          <Routes>
+            <Route path="/"                    element={<Home />} />
+            <Route path="/login"               element={<Login />} />
+            <Route path="/signup"              element={<Signup />} />
+            <Route path="/dashboard"           element={<Dashboard />} />
+            <Route path="/mindfulness"         element={<Mindfulness />} />
+            <Route path="/suggestions"         element={<Suggestions />} />
+            <Route path="/goal"                element={<Goal />} />
+            <Route path="/challenges"          element={<Challenges />} />
+            <Route path="/selfcare"            element={<SelfCare />} />
+            <Route path="/reflection"          element={<Reflection />} />
+            <Route path="/cognitive-distortions" element={<CognitiveDistortions />} />
+            <Route path="/combo"               element={<ComboTracker />} />
+            <Route path="/anxiety-tracker"     element={<AnxietyTracker />} />
+            <Route path="/mood-tracker"        element={<MoodTracker />} />
+            <Route path="/gratitude-log"       element={<GratitudeLog />} />
+            <Route path="/self-congrats"       element={<SelfCongrats />} />
+            <Route path="/sleep-tracker"       element={<SleepTracker />} />
+            <Route path="/improvement-tracker" element={<ImprovementTracker />} />
+            <Route path="/energy-tracker"      element={<EnergyTracker />} />
+            <Route path="/rage"                element={<RagePage />} />
+            <Route path="/therapy-notes"       element={<TherapyNotes />} />
+            <Route path="/reviews-reflection"  element={<ReviewsReflection />} />
+            <Route path="/support"             element={<SupportPage />} />
+            <Route path="/self-harm-support"   element={<SelfHarmSupport />} />
+            <Route path="/chatbot"             element={<Chatbot />} />
+            <Route path="/feedback-admin"      element={<FeedbackViewer />} />
+          </Routes>
+          <Footer />
+        </Router>
+      </AuthProvider>
+    </LanguageProvider>
   );
 }
 

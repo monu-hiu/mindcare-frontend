@@ -1,18 +1,23 @@
+
+
 import "./mood.css";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useLanguage } from "../context/LanguageContext";
 
 function MoodTracker() {
   const { token } = useAuth();
+  const { language, t } = useLanguage();
 
+  // ✅ key = always English (sent to backend), label = translated (shown in UI)
   const moods = [
-    { emoji: "😄", label: "Happy", color: "#22c55e" },
-    { emoji: "🙂", label: "Good", color: "#4ade80" },
-    { emoji: "😐", label: "Neutral", color: "#eab308" },
-    { emoji: "😔", label: "Sad", color: "#f97316" },
-    { emoji: "😡", label: "Angry", color: "#ef4444" },
-    { emoji: "😰", label: "Anxious", color: "#8b5cf6" },
+    { emoji: "😄", key: "Happy",   label: t("moodTracker.moods.Happy"),   color: "#22c55e" },
+    { emoji: "🙂", key: "Good",    label: t("moodTracker.moods.Good"),    color: "#4ade80" },
+    { emoji: "😐", key: "Neutral", label: t("moodTracker.moods.Neutral"), color: "#eab308" },
+    { emoji: "😔", key: "Sad",     label: t("moodTracker.moods.Sad"),     color: "#f97316" },
+    { emoji: "😡", key: "Angry",   label: t("moodTracker.moods.Angry"),   color: "#ef4444" },
+    { emoji: "😰", key: "Anxious", label: t("moodTracker.moods.Anxious"), color: "#8b5cf6" },
   ];
 
   const [selectedMood, setSelectedMood] = useState(null);
@@ -23,7 +28,6 @@ function MoodTracker() {
   const [loadingHistory, setLoadingHistory] = useState(true);
   const [error, setError] = useState("");
 
-  // Mood history fetch karo
   useEffect(() => {
     fetchHistory();
   }, []);
@@ -31,14 +35,10 @@ function MoodTracker() {
   const fetchHistory = async () => {
     try {
       const res = await fetch("https://mindcare-backend-v56a.onrender.com/api/mood/history", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
-      if (data.success) {
-        setHistory(data.moods);
-      }
+      if (data.success) setHistory(data.moods);
     } catch (err) {
       console.error("History fetch error:", err);
     } finally {
@@ -59,7 +59,7 @@ function MoodTracker() {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          mood: selectedMood.label,
+          mood: selectedMood.key,   // ✅ always "Happy", "Sad" etc — never Hindi/Hinglish
           emoji: selectedMood.emoji,
           note: note,
           color: selectedMood.color,
@@ -67,20 +67,19 @@ function MoodTracker() {
       });
 
       const data = await res.json();
-
-if (data.success) {
-  setSavedMood(selectedMood);
-  setHistory([data.moodLog, ...history]);
-  setNote("");
-  setSelectedMood(null);
-  if (data.streakCount) {
-    console.log("Streak updated:", data.streakCount);
-  }
-} else {
+      if (data.success) {
+        setSavedMood(selectedMood);
+        setHistory([data.moodLog, ...history]);
+        setNote("");
+        setSelectedMood(null);
+        if (data.streakCount) {
+          console.log("Streak updated:", data.streakCount);
+        }
+      } else {
         setError(data.message);
       }
     } catch (err) {
-      setError("Something went wrong. Try again.");
+      setError(t("common.error")); // ✅ translated
     } finally {
       setSaving(false);
     }
@@ -88,19 +87,18 @@ if (data.success) {
 
   return (
     <div className="moodPage">
-      <h1>Mood Tracker</h1>
-      <p className="subtitle">How are you feeling right now?</p>
+      <h1>{t("moodTracker.title")}</h1>
+      <p className="subtitle">{t("moodTracker.subtitle")}</p>
 
       {/* Mood Selection */}
       <div className="moodGrid">
         {moods.map((mood, index) => (
           <div
             key={index}
-            className={`moodCard ${selectedMood?.label === mood.label ? "active" : ""}`}
+            className={`moodCard ${selectedMood?.key === mood.key ? "active" : ""}`}
             onClick={() => setSelectedMood(mood)}
             style={{
-              borderColor: selectedMood?.label === mood.label
-                ? mood.color : "#eee"
+              borderColor: selectedMood?.key === mood.key ? mood.color : "#eee",
             }}
           >
             <div className="emoji">{mood.emoji}</div>
@@ -113,7 +111,7 @@ if (data.success) {
       {selectedMood && (
         <div className="noteSection">
           <textarea
-          placeholder="Add a note... (optional)"
+            placeholder={t("moodTracker.notePlaceholder")} // ✅ fixed
             value={note}
             onChange={(e) => setNote(e.target.value)}
             maxLength={500}
@@ -134,12 +132,8 @@ if (data.success) {
           <p>
             Selected: <strong>{selectedMood.emoji} {selectedMood.label}</strong>
           </p>
-          <button
-            onClick={saveMood}
-            className="saveBtn"
-            disabled={saving}
-          >
-            {saving ? "Saving..." : "Save Mood"}
+          <button onClick={saveMood} className="saveBtn" disabled={saving}>
+            {saving ? t("common.saving") : t("moodTracker.saveBtn")}
           </button>
         </div>
       )}
@@ -147,21 +141,23 @@ if (data.success) {
       {/* Success Message */}
       {savedMood && (
         <div className="result">
-          <p> Mood saved: <strong>{savedMood.emoji} {savedMood.label}</strong></p>
+          <p>{t("common.saved")}: <strong>{savedMood.emoji} {savedMood.label}</strong></p>
         </div>
       )}
 
       {/* Mood History */}
       <div className="historySection">
-        <h2>Your Recent Moods</h2>
+        <h2>{t("moodTracker.historyTitle")}</h2>
         {loadingHistory ? (
-          <p>Loading...</p>
+          <p>{t("common.loading")}</p> // ✅ fixed
         ) : history.length === 0 ? (
-          <p className="subtitle">No moods logged yet. Log your first mood!</p>
+          <p className="subtitle">{t("moodTracker.historySubtitle")}</p>
         ) : (
           <div className="historyList">
             {history.map((log, index) => (
-              <div key={index} className="historyItem"
+              <div
+                key={index}
+                className="historyItem"
                 style={{ borderLeft: `4px solid ${log.color || "#6366f1"}` }}
               >
                 <span className="historyEmoji">{log.emoji}</span>
@@ -186,7 +182,7 @@ if (data.success) {
 
       <div className="nav">
         <Link to="/dashboard">
-          <button className="backBtn">← Back to Dashboard</button>
+          <button className="backBtn">{t("common.back")}</button>
         </Link>
       </div>
     </div>

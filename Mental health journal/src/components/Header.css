@@ -364,3 +364,48 @@
   .mcDesktopAuth { display: none !important; }
   .mcHamburger { display: flex !important; }
 }
+/* Add these styles to your existing Header.css */
+
+/* Language Toggle Button */
+.mcLangBtn {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.9);
+  border: 1.5px solid rgba(255,255,255,0.2);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: all 0.15s ease;
+  min-height: unset;
+  letter-spacing: 0.3px;
+}
+
+.mcLangBtn:hover {
+  background: rgba(167,139,250,0.25);
+  border-color: rgba(167,139,250,0.5);
+  color: white;
+}
+
+/* Drawer Language Button */
+.mcDrawerLangBtn {
+  width: 100%;
+  background: #f0f4ff;
+  color: #4f46e5;
+  border: 1.5px solid #e0e7ff;
+  padding: 13px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  text-align: left;
+  transition: 0.15s;
+  margin-top: 8px;
+  min-height: unset;
+}
+
+.mcDrawerLangBtn:hover {
+  background: #e0e7ff;
+}

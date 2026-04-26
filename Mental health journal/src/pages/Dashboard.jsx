@@ -3,10 +3,13 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "./dashboard.css";
 import { checkDailyReminder, requestNotificationPermission } from "../utils/notifications";
+import { useLanguage } from "../context/LanguageContext";
+import translations from "../i18n/translations";
 function Dashboard() {
   const { user, token } = useAuth();
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
+  const {language,t}=useLanguage();
 
   useEffect(() => {
     // Request notification permission on dashboard load
@@ -40,64 +43,64 @@ function Dashboard() {
 
   const categories = [
     {
-      title: "Daily Trackers",
-      subtitle: "Track your daily health metrics",
+      title: t("dashboard.categories.trackers"),
+      subtitle: t("dashboard.categories.trackersDesc"),
       color: "#4f46e5",
       icon: "📊",
       links: [
-        { to: "/mood-tracker", emoji: "😊", label: "Mood Tracker" },
-        { to: "/sleep-tracker", emoji: "🌙", label: "Sleep Tracker" },
-        { to: "/anxiety-tracker", emoji: "💭", label: "Anxiety Tracker" },
-        { to: "/energy-tracker", emoji: "⚡", label: "Energy Tracker" },
-        { to: "/combo", emoji: "🔄", label: "Combo Tracker" },
-        { to: "/improvement-tracker", emoji: "📈", label: "Improvement" },
+        { to: "/mood-tracker", emoji: "😊", label: t("dashboard.categories.moodLabel") },
+        { to: "/sleep-tracker", emoji: "🌙", label: t("dashboard.categories.sleepLabel") },
+        { to: "/anxiety-tracker", emoji: "💭", label: t("dashboard.categories.anxietyLabel") },
+        { to: "/energy-tracker", emoji: "⚡", label: t("dashboard.categories.energyLabel") },
+        { to: "/combo", emoji: "🔄", label: t("dashboard.categories.comboLabel") },
+        { to: "/improvement-tracker", emoji: "📈", label: t("dashboard.categories.improvementLabel") },
       ],
     },
     {
-      title: "Mindfulness & Wellness",
-      subtitle: "Calm your mind and body",
+      title: t("dashboard.categories.mindfulness"),
+      subtitle: t("dashboard.categories.mindfulnessDesc"),
       color: "#10b981",
       icon: "🧘",
       links: [
-        { to: "/mindfulness", emoji: "🧘", label: "Mindfulness" },
-        { to: "/selfcare", emoji: "💆", label: "Self Care" },
-        { to: "/challenges", emoji: "🏆", label: "Challenges" },
-        { to: "/rage", emoji: "😤", label: "Rage Release" },
-        { to: "/suggestions", emoji: "💡", label: "Suggestions" },
+        { to: "/mindfulness", emoji: "🧘", label: t("dashboard.categories.mindfulness") },
+        { to: "/selfcare", emoji: "💆", label: t("dashboard.categories.selfcareLabel") },
+        { to: "/challenges", emoji: "🏆", label: t("dashboard.categories.challengesLabel") },
+        { to: "/rage", emoji: "😤", label: t("dashboard.categories.rageLabel") },
+        { to: "/suggestions", emoji: "💡", label: t("dashboard.categories.suggestionsLabel") },
       ],
     },
     {
-      title: "Journaling & Reflection",
-      subtitle: "Express and understand yourself",
+      title: t("dashboard.categories.journaling"),
+      subtitle: t("dashboard.categories.journalingDesc"),
       color: "#ec4899",
       icon: "📓",
       links: [
-        { to: "/reflection", emoji: "📓", label: "Journal" },
-        { to: "/gratitude-log", emoji: "🙏", label: "Gratitude" },
-        { to: "/self-congrats", emoji: "🌟", label: "Self Congrats" },
-        { to: "/reviews-reflection", emoji: "🔍", label: "Reviews" },
-        { to: "/therapy-notes", emoji: "🗒️", label: "Therapy Notes" },
-        { to: "/cognitive-distortions", emoji: "🧩", label: "Cognitive" },
+        { to: "/reflection", emoji: "📓", label: t("dashboard.categories.journalLabel") },
+        { to: "/gratitude-log", emoji: "🙏", label: t("dashboard.categories.gratitudeLabel") },
+        { to: "/self-congrats", emoji: "🌟", label: t("dashboard.categories.selfCongratsLabel") },
+        { to: "/reviews-reflection", emoji: "🔍", label: t("dashboard.categories.reviewsLabel") },
+        { to: "/therapy-notes", emoji: "🗒️", label:t("dashboard.categories.therapyNotesLabel") },
+        { to: "/cognitive-distortions", emoji: "🧩", label: t("dashboard.categories.cognitiveDistortionsLabel") },
       ],
     },
     {
-      title: "Growth & Goals",
-      subtitle: "Build habits and achieve goals",
+      title: t("dashboard.categories.growth"),
+      subtitle: t("dashboard.categories.growthDesc"),
       color: "#f59e0b",
       icon: "🎯",
       links: [
-        { to: "/goal", emoji: "🎯", label: "Goal Planner" },
+        { to: "/goal", emoji: "🎯", label: t("dashboard.categories.goalLabel") },
       ],
     },
     {
-      title: "Support & Help",
-      subtitle: "You are never alone",
+      title: t("dashboard.categories.support"),
+      subtitle: t("dashboard.categories.supportDesc"),
       color: "#ef4444",
       icon: "💙",
       links: [
-        { to: "/chatbot", emoji: "🤖", label: "AI Chatbot" },
-        { to: "/support", emoji: "🆘", label: "Support Center" },
-        { to: "/self-harm-support", emoji: "💙", label: "Crisis Support" },
+        { to: "/chatbot", emoji: "🤖", label: t("dashboard.categories.aiLabel")},
+        { to: "/support", emoji: "🆘", label: t("dashboard.categories.supportCenterLabel") },
+        { to: "/self-harm-support", emoji: "💙", label:t("dashboard.categories.crisisLabel") },
       ],
     },
   ];
@@ -108,15 +111,15 @@ function Dashboard() {
       {/* Welcome Header */}
       <div className="dashboardHeader">
         <div>
-          <h1>Welcome back, {user?.name?.split(" ")[0]}! 👋</h1>
-          <p>How are you feeling today? Track your mental wellness journey.</p>
+          <h1>{t("dashboard.welcome")}, {user?.name?.split(" ")[0]}! 👋</h1>
+          <p>{t("dashboard.subtitle")}</p>
         </div>
         {stats && (
           <div className="streakCard">
             <span className="streakFire">🔥</span>
             <div>
               <p className="streakCount">{stats.streakCount}</p>
-              <p className="streakLabel">Day Streak</p>
+              <p className="streakLabel">{t("dashboard.dayStreak")}</p>
             </div>
           </div>
         )}
@@ -135,7 +138,7 @@ function Dashboard() {
                   {getMoodEmoji(stats.todayMood.mood)}
                 </span>
                 <div>
-                  <p className="todayMoodTitle">Today's Mood</p>
+                  <p className="todayMoodTitle">{t("dashboard.todayMood")}</p>
                   <p className="todayMoodValue">{stats.todayMood.mood}</p>
                   {stats.todayMood.note && (
                     <p className="todayMoodNote">"{stats.todayMood.note}"</p>
@@ -146,10 +149,10 @@ function Dashboard() {
               <div className="todayMoodContent">
                 <span className="todayMoodEmoji">🌤️</span>
                 <div>
-                  <p className="todayMoodTitle">Today's Mood</p>
-                  <p className="todayMoodValue">Not logged yet</p>
+                  <p className="todayMoodTitle">{t("dashboard.todayMood")}</p>
+                  <p className="todayMoodValue">{t("dashboard.notLoggedYet")}</p>
                   <Link to="/mood-tracker" className="logMoodLink">
-                    Log your mood →
+                    {t("dashboard.logMood")}
                   </Link>
                 </div>
               </div>
@@ -161,32 +164,32 @@ function Dashboard() {
             <div className="statCard">
               <p className="statEmoji">📅</p>
               <p className="statValue">{stats.weekMoodsCount}</p>
-              <p className="statLabel">Moods This Week</p>
+              <p className="statLabel">{t("dashboard.moodsThisWeek")}</p>
             </div>
             <div className="statCard">
               <p className="statEmoji">📓</p>
               <p className="statValue">{stats.totalJournals}</p>
-              <p className="statLabel">Journal Entries</p>
+              <p className="statLabel">{t("dashboard.journalEntries")}</p>
             </div>
             <div className="statCard">
               <p className="statEmoji">🌙</p>
               <p className="statValue">{stats.avgSleepHours}h</p>
-              <p className="statLabel">Avg Sleep</p>
+              <p className="statLabel">{t("dashboard.avgSleep")}</p>
             </div>
             <div className="statCard">
               <p className="statEmoji">🙏</p>
               <p className="statValue">{stats.totalGratitude}</p>
-              <p className="statLabel">Gratitude Logs</p>
+              <p className="statLabel">{t("dashboard.gratitudeLogs")}</p>
             </div>
             <div className="statCard">
               <p className="statEmoji">🎯</p>
               <p className="statValue">{stats.completedGoals}/{stats.totalGoals}</p>
-              <p className="statLabel">Goals Completed</p>
+              <p className="statLabel">{t("dashboard.goalsCompleted")}</p>
             </div>
             <div className="statCard">
               <p className="statEmoji">📊</p>
               <p className="statValue">{stats.goalCompletionRate}%</p>
-              <p className="statLabel">Goal Success Rate</p>
+              <p className="statLabel">{t("dashboard.goalSuccessRate")}</p>
             </div>
           </div>
         </>
@@ -194,9 +197,9 @@ function Dashboard() {
 
       {/* Categorized Quick Access */}
       <div className="allFeatures">
-        <h2>All Features</h2>
+        <h2>{t("dashboard.allFeatures")}</h2>
         <p className="allFeaturesSubtitle">
-          Everything you need for your mental wellness journey
+          {t("dashboard.allFeaturesSubtitle")}
         </p>
 
         {categories.map((cat) => (
@@ -234,13 +237,13 @@ function Dashboard() {
       {/* Support Banner */}
       <div className="supportBanner">
         <div className="supportBannerLeft">
-          <p className="supportBannerTitle">Need Immediate Support?</p>
+          <p className="supportBannerTitle">{t("dashboard.needSupport")}</p>
           <p className="supportBannerText">
-            You are not alone. Talk to someone or explore our crisis resources.
+            {t("dashboard.supportText")}
           </p>
         </div>
         <Link to="/support">
-          <button className="supportBannerBtn">Get Help →</button>
+          <button className="supportBannerBtn">{t("dashboard.getHelp")}</button>
         </Link>
       </div>
 

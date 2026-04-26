@@ -2,10 +2,13 @@ import { useState, useEffect, useCallback } from "react";
 import { sendComboNotification } from "../utils/notifications";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import {useLanguage} from "../context/LanguageContext";
+import translations from "../i18n/translations";
 import "./comboTracker.css";
 
 function ComboTracker() {
   const { token } = useAuth();
+  const { language, t } = useLanguage();
 
   const [todayData, setTodayData] = useState({
     mood: null,
@@ -121,9 +124,9 @@ function ComboTracker() {
   // Score display logic
   const getScoreInfo = (s) => {
     if (s === null) return null;
-    if (s < 7)  return { label: "Tough Day",    emoji: "💙", color: "#ef4444", bg: "#fef2f2", msg: "Today seems tough. Be kind to yourself." };
-    if (s < 14) return { label: "Moderate Day", emoji: "😐", color: "#f59e0b", bg: "#fffbeb", msg: "You are doing okay. Keep using your coping strategies." };
-    return            { label: "Good Day",      emoji: "🌟", color: "#22c55e", bg: "#f0fdf4", msg: "Amazing! You are thriving today." };
+    if (s < 7)  return { label: t("comboTracker.scoreInfo.Tough"),    emoji: "💙", color: "#ef4444", bg: "#fef2f2", msg: t("comboTracker.messageInfo.Toughmsg") };
+    if (s < 14) return { label: t("comboTracker.scoreInfo.Moderate"), emoji: "😐", color: "#f59e0b", bg: "#fffbeb", msg: t("comboTracker.messageInfo.Moderatemsg") };
+    return            { label: t("comboTracker.scoreInfo.Good"),      emoji: "🌟", color: "#22c55e", bg: "#f0fdf4", msg: t("comboTracker.messageInfo.Goodmsg") };
   };
 
   const scoreInfo = getScoreInfo(score);
@@ -134,15 +137,15 @@ function ComboTracker() {
   return (
     <div className="comboPage">
       <div className="comboHeader">
-        <h1>🔄 Combo Tracker</h1>
-        <p>Your daily wellness score — auto-updated from all your trackers.</p>
+        <h1>{t("comboTracker.title")}</h1>
+        <p>{t("comboTracker.subtitle")}</p>
         <button className="refreshBtn" onClick={fetchTodayData}>
-          🔄 Refresh Now
+          🔄 {t("comboTracker.refreshbtn")}
         </button>
       </div>
 
       {loading ? (
-        <div className="comboLoading">Loading your today's data...</div>
+        <div className="comboLoading">{t("comboTracker.comboLoading")}</div>
       ) : (
         <>
           {/* Score Card */}
@@ -176,25 +179,25 @@ function ComboTracker() {
               </>
             ) : (
               <div className="noScoreMsg">
-                <p>📊 No data logged today yet.</p>
-                <p>Log your mood, sleep, energy, and anxiety to see your score!</p>
+                <p>{t("comboTracker.noScoremsg")}</p>
+                <p>{t("comboTracker.noScoremsgSubtitle")}</p>
               </div>
             )}
           </div>
 
           {/* Today's Tracker Summary */}
           <div className="trackerSummary">
-            <h2>Today's Summary</h2>
+            <h2>{t("comboTracker.trackerSummary")}</h2>
             <div className="summaryGrid">
 
               {/* Mood */}
               <div className={`summaryCard ${todayData.mood ? "logged" : "empty"}`}>
                 <div className="summaryCardHeader">
                   <span className="summaryIcon">😊</span>
-                  <span className="summaryTitle">Mood</span>
+                  <span className="summaryTitle">{t("comboTracker.summaryMood")}</span>
                   {todayData.mood
-                    ? <span className="loggedBadge">✅ Logged</span>
-                    : <span className="notLoggedBadge">Not logged</span>}
+                    ? <span className="loggedBadge">{t("comboTracker.loggedBadge")}</span>
+                    : <span className="notLoggedBadge">{t("comboTracker.notLoggedBadge")}</span>}
                 </div>
                 {todayData.mood ? (
                   <div className="summaryData">
@@ -207,7 +210,7 @@ function ComboTracker() {
                   </div>
                 ) : (
                   <Link to="/mood-tracker" className="logNowLink">
-                    Log Mood →
+                    {t("comboTracker.LogMoodLink")} 
                   </Link>
                 )}
               </div>
@@ -216,10 +219,10 @@ function ComboTracker() {
               <div className={`summaryCard ${todayData.sleep ? "logged" : "empty"}`}>
                 <div className="summaryCardHeader">
                   <span className="summaryIcon">🌙</span>
-                  <span className="summaryTitle">Sleep</span>
+                  <span className="summaryTitle">{t("comboTracker.summarySleep")}</span>
                   {todayData.sleep
-                    ? <span className="loggedBadge">✅ Logged</span>
-                    : <span className="notLoggedBadge">Not logged</span>}
+                    ? <span className="loggedBadge"> {t("comboTracker.loggedBadge")}</span>
+                    : <span className="notLoggedBadge">{t("comboTracker.notLoggedBadge")}</span>}
                 </div>
                 {todayData.sleep ? (
                   <div className="summaryData">
@@ -235,7 +238,7 @@ function ComboTracker() {
                   </div>
                 ) : (
                   <Link to="/sleep-tracker" className="logNowLink">
-                    Log Sleep →
+                    {t("comboTracker.LogSleepLink")}
                   </Link>
                 )}
               </div>
@@ -244,10 +247,10 @@ function ComboTracker() {
               <div className={`summaryCard ${todayData.energy ? "logged" : "empty"}`}>
                 <div className="summaryCardHeader">
                   <span className="summaryIcon">⚡</span>
-                  <span className="summaryTitle">Energy</span>
+                  <span className="summaryTitle">{t("comboTracker.summaryEnergy")}</span>
                   {todayData.energy
-                    ? <span className="loggedBadge">✅ Logged</span>
-                    : <span className="notLoggedBadge">Not logged</span>}
+                    ? <span className="loggedBadge">{t("comboTracker.loggedBadge")}</span>
+                    : <span className="notLoggedBadge">{t("comboTracker.notLoggedBadge")}</span>}
                 </div>
                 {todayData.energy ? (
                   <div className="summaryData">
@@ -259,7 +262,7 @@ function ComboTracker() {
                   </div>
                 ) : (
                   <Link to="/energy-tracker" className="logNowLink">
-                    Log Energy →
+                    {t("comboTracker.LogEnergyLink")}
                   </Link>
                 )}
               </div>
@@ -268,10 +271,10 @@ function ComboTracker() {
               <div className={`summaryCard ${todayData.anxiety ? "logged" : "empty"}`}>
                 <div className="summaryCardHeader">
                   <span className="summaryIcon">💭</span>
-                  <span className="summaryTitle">Anxiety</span>
+                  <span className="summaryTitle">{t("comboTracker.summaryAnxiety")}</span>
                   {todayData.anxiety
-                    ? <span className="loggedBadge">✅ Logged</span>
-                    : <span className="notLoggedBadge">Not logged</span>}
+                    ? <span className="loggedBadge"> {t("comboTracker.loggedBadge")}</span>
+                    : <span className="notLoggedBadge">{t("comboTracker.notLoggedBadge")}</span>}
                 </div>
                 {todayData.anxiety ? (
                   <div className="summaryData">
@@ -291,7 +294,7 @@ function ComboTracker() {
                   </div>
                 ) : (
                   <Link to="/anxiety-tracker" className="logNowLink">
-                    Log Anxiety →
+                    {t("comboTracker.LogAnxietyLink")}
                   </Link>
                 )}
               </div>
@@ -301,7 +304,7 @@ function ComboTracker() {
           {/* Progress toward complete log */}
           <div className="completionCard">
             <div className="completionHeader">
-              <p className="completionTitle">Daily Log Completion</p>
+              <p className="completionTitle">{t("comboTracker.completionTitle")}</p>
               <p className="completionCount">
                 {[todayData.mood, todayData.sleep,
                   todayData.energy, todayData.anxiety].filter(Boolean).length}/4
@@ -317,8 +320,8 @@ function ComboTracker() {
             <p className="completionMsg">
               {[todayData.mood, todayData.sleep,
                 todayData.energy, todayData.anxiety].filter(Boolean).length === 4
-                ? "🎉 All 4 trackers logged today! Your score is complete."
-                : "Log all 4 trackers for a complete wellness score."}
+                ? t("comboTracker.completionMsg")
+                : t("comboTracker.completionMsgPartial")}
             </p>
           </div>
         </>
@@ -326,7 +329,7 @@ function ComboTracker() {
 
       <div className="navButtons">
         <Link to="/dashboard">
-          <button className="backBtn">← Back to Dashboard</button>
+          <button className="backBtn"> {t("common.back")}</button>
         </Link>
       </div>
     </div>
