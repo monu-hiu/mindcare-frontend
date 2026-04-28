@@ -1,7 +1,7 @@
 // src/i18n/translations.js
 // Complete translations for English, Hindi, Hinglish
 
-import { title } from "framer-motion/client";
+
 
 
 export const translations = {
