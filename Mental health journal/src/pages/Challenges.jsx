@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import {useLanguage} from "../context/LanguageContext";
+import translations from "../i18n/translations";
 import "./challenges.css";
 
 function Challenges() {
@@ -12,28 +14,29 @@ function Challenges() {
   const [bestDay, setBestDay] = useState(null);
   const [saving, setSaving] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
+    const { language , t} = useLanguage();
 
-  const categories = ["All", "Mindfulness", "Social", "Physical", "Creative", "Growth"];
+  const categories = [t("challenges.categories.all"), t("challenges.categories.Mindfulness"), t("challenges.categories.Social"), t("challenges.categories.Physical"), t("challenges.categories.Creative"), t("challenges.categories.Growth")];
 
   const challenges = [
-    { id: 1,  title: "5-Minute Meditation",      desc: "Sit quietly and focus on your breath for 5 minutes.", category: "Mindfulness", points: 10, emoji: "🧘" },
-    { id: 2,  title: "Gratitude List",            desc: "Write down 5 things you are grateful for today.",     category: "Mindfulness", points: 10, emoji: "🙏" },
-    { id: 3,  title: "Digital Detox",             desc: "Stay off social media for 2 hours.",                  category: "Mindfulness", points: 20, emoji: "📵" },
-    { id: 4,  title: "Mindful Eating",            desc: "Eat one meal today without any screens.",             category: "Mindfulness", points: 15, emoji: "🍽️" },
-    { id: 5,  title: "Reach Out",                 desc: "Call or message someone you haven't talked to.",      category: "Social",      points: 15, emoji: "📞" },
-    { id: 6,  title: "Random Act of Kindness",    desc: "Do something kind for someone without expecting.",    category: "Social",      points: 20, emoji: "💝" },
-    { id: 7,  title: "Compliment Someone",        desc: "Give a genuine compliment to 3 different people.",   category: "Social",      points: 10, emoji: "😊" },
-    { id: 8,  title: "Morning Walk",              desc: "Take a 15-minute walk in the morning fresh air.",     category: "Physical",    points: 15, emoji: "🚶" },
-    { id: 9,  title: "Stretch Break",             desc: "Do 10 minutes of full body stretching.",              category: "Physical",    points: 10, emoji: "🤸" },
-    { id: 10, title: "Hydration Challenge",       desc: "Drink 8 glasses of water today.",                     category: "Physical",    points: 10, emoji: "💧" },
-    { id: 11, title: "No Junk Food",              desc: "Go the entire day without junk food.",                category: "Physical",    points: 25, emoji: "🥗" },
-    { id: 12, title: "Creative Writing",          desc: "Write a short poem, story, or journal entry.",        category: "Creative",    points: 15, emoji: "✍️" },
-    { id: 13, title: "Draw Something",            desc: "Draw or doodle anything for 10 minutes.",            category: "Creative",    points: 10, emoji: "🎨" },
-    { id: 14, title: "Cook Something New",        desc: "Try cooking a recipe you have never made before.",   category: "Creative",    points: 20, emoji: "👨‍🍳" },
-    { id: 15, title: "Learn Something New",       desc: "Spend 20 minutes learning a new skill or topic.",    category: "Growth",      points: 20, emoji: "📚" },
-    { id: 16, title: "Face a Small Fear",         desc: "Do one small thing that makes you uncomfortable.",   category: "Growth",      points: 25, emoji: "💪" },
-    { id: 17, title: "Early Rise",                desc: "Wake up 30 minutes earlier than usual.",              category: "Growth",      points: 20, emoji: "🌅" },
-    { id: 18, title: "No Complaints",             desc: "Go the entire day without complaining.",              category: "Growth",      points: 30, emoji: "🌟" },
+    { id: 1,  title: t("challenges.title1"),      desc: t("challenges.desc1"), category: t("challenges.categories.Mindfulness"), points: 10, emoji: "🧘" },
+    { id: 2,  title: t("challenges.title2"),            desc: t("challenges.desc2"),     category: t("challenges.categories.Mindfulness"), points: 10, emoji: "🙏" },
+    { id: 3,  title: t("challenges.title3"),             desc: t("challenges.desc3"),                  category: t("challenges.categories.Mindfulness"), points: 20, emoji: "📵" },
+    { id: 4,  title: t("challenges.title4"),            desc: t("challenges.desc4"),             category: t("challenges.categories.Mindfulness"), points: 15, emoji: "🍽️" },
+    { id: 5,  title: t("challenges.title5"),                 desc: t("challenges.desc5"),      category: t("challenges.categories.Social"),      points: 15, emoji: "📞" },
+    { id: 6,  title: t("challenges.title6"),    desc: t("challenges.desc6"),    category: t("challenges.categories.Social"),      points: 20, emoji: "💝" },
+    { id: 7,  title: t("challenges.title7"),        desc: t("challenges.desc7"),   category: t("challenges.categories.Social"),      points: 10, emoji: "😊" },
+    { id: 8,  title: t("challenges.title8"),              desc: t("challenges.desc8"),     category: t("challenges.categories.Physical"),    points: 15, emoji: "🚶" },
+    { id: 9,  title: t("challenges.title9"),             desc: t("challenges.desc9"),              category: t("challenges.categories.Physical"),    points: 10, emoji: "🤸" },
+    { id: 10, title: t("challenges.title10"),       desc: t("challenges.desc10"),                     category: t("challenges.categories.Physical"),    points: 10, emoji: "💧" },
+    { id: 11, title: t("challenges.title11"),              desc:t("challenges.desc11"),                category: t("challenges.categories.Physical"),    points: 25, emoji: "🥗" },
+    { id: 12, title: t("challenges.title12"),          desc: t("challenges.desc12"),        category: t("challenges.categories.Creative"),    points: 15, emoji: "✍️" },
+    { id: 13, title: t("challenges.title13"),            desc: t("challenges.desc13"),            category: t("challenges.categories.Creative"),    points: 10, emoji: "🎨" },
+    { id: 14, title: t("challenges.title14"),        desc: t("challenges.desc14"),   category: t("challenges.categories.Creative"),    points: 20, emoji: "👨‍🍳" },
+    { id: 15, title: t("challenges.title15"),       desc: t("challenges.desc15"),    category: t("challenges.categories.Growth"),      points: 20, emoji: "📚" },
+    { id: 16, title: t("challenges.title16"),         desc: t("challenges.desc16"),   category: t("challenges.categories.Growth"),      points: 25, emoji: "💪" },
+    { id: 17, title: t("challenges.title17"),                desc: t("challenges.desc17"),              category: t("challenges.categories.Growth"),      points: 20, emoji: "🌅" },
+    { id: 18, title: t("challenges.title18"),             desc: t("challenges.desc18"),              category: t("challenges.categories.Growth"),      points: 30, emoji: "🌟" },
   ];
 
   const totalPoints = completedChallenges.reduce((sum, id) => {
@@ -146,8 +149,8 @@ function Challenges() {
     <div className="challengesPage">
       {/* Header */}
       <div className="challengesHeader">
-        <h1>🏆 Daily Challenges</h1>
-        <p>Complete challenges to boost your mental wellness.</p>
+        <h1>{t("challenges.title")}</h1>
+        <p>{t("challenges.subtitle")}</p>
 
         {/* Stats Row */}
         <div className="challengeStatsRow">
@@ -155,30 +158,30 @@ function Challenges() {
             <p className="challengeStatValue" style={{ color: "#f59e0b" }}>
               ⭐ {totalPoints}
             </p>
-            <p className="challengeStatLabel">Today's Points</p>
+            <p className="challengeStatLabel">{t("challenges.points")}</p>
           </div>
           <div className="challengeStat">
             <p className="challengeStatValue" style={{ color: badge.color }}>
               {badge.label}
             </p>
-            <p className="challengeStatLabel">Your Level</p>
+            <p className="challengeStatLabel">{t("challenges.level")}</p>
           </div>
           <div className="challengeStat">
             <p className="challengeStatValue" style={{ color: "#4f46e5" }}>
               {allTimePoints}
             </p>
-            <p className="challengeStatLabel">All Time Points</p>
+            <p className="challengeStatLabel">{t("challenges.alltime")}</p>
           </div>
           <div className="challengeStat">
             <p className="challengeStatValue" style={{ color: "#22c55e" }}>
               {completedChallenges.length}/{challenges.length}
             </p>
-            <p className="challengeStatLabel">Completed Today</p>
+            <p className="challengeStatLabel">{t("challenges.completed")}</p>
           </div>
         </div>
 
         {saving && (
-          <p className="challengeSaving">💾 Saving progress...</p>
+          <p className="challengeSaving">💾 {t("common.save")}</p>
         )}
       </div>
 
@@ -217,7 +220,7 @@ function Challenges() {
             <div className="challengeFooter">
               <span className="challengeCategory">{challenge.category}</span>
               {completedChallenges.includes(challenge.id) && (
-                <span className="challengeDone">✅ Done</span>
+                <span className="challengeDone"> {t("challenges.Done")}</span>
               )}
             </div>
           </div>
@@ -227,12 +230,12 @@ function Challenges() {
       {/* 7-Day History */}
       <div className="challengeHistorySection">
         <div className="challengeHistoryHeader">
-          <h2>📊 Last 7 Days History</h2>
+          <h2> {t("challenges.historTitle")}</h2>
           <button
             className="historyToggleBtn"
             onClick={() => setShowHistory(!showHistory)}
           >
-            {showHistory ? "Hide ▲" : "Show ▼"}
+            {showHistory ? t("challenges.hideToggle") : t("challenges.showToggle")}
           </button>
         </div>
 
@@ -240,7 +243,7 @@ function Challenges() {
           <>
             {bestDay && (
               <div className="bestDayCard">
-                <p className="bestDayTitle">🏆 Best Day</p>
+                <p className="bestDayTitle"> {t("challenges.best")}</p>
                 <p className="bestDayDate">{bestDay.date}</p>
                 <p className="bestDayPoints">⭐ {bestDay.totalPoints} points</p>
               </div>
@@ -248,7 +251,7 @@ function Challenges() {
 
             {history.length === 0 ? (
               <p className="historyEmpty">
-                No history in the last 7 days. Complete challenges to build your streak!
+                {t("challenges.historyEmpty")}
               </p>
             ) : (
               <div className="historyList">
@@ -279,7 +282,7 @@ function Challenges() {
 
       <div className="navButtons">
         <Link to="/dashboard">
-          <button className="backBtn">← Back to Dashboard</button>
+          <button className="backBtn">{t("common.back")}</button>
         </Link>
       </div>
     </div>

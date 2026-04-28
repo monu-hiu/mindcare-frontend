@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import {useLanguage} from "../context/LanguageContext";
+import translations from "../i18n/translations";
 import "./rage.css";
 
 const QUIZ_QUESTIONS = [
@@ -42,6 +44,7 @@ function RagePage() {
   const [quizComplete, setQuizComplete] = useState(false);
   const [intensity, setIntensity] = useState(0);
   const [text, setText] = useState("");
+  const {language,t} = useLanguage();
   const [released, setReleased] = useState(false);
 
   const handleAnswer = (questionId, score) => {
@@ -110,14 +113,14 @@ function RagePage() {
   };
 
   const rageTips = [
-    "🥊 Do 20 jumping jacks right now",
-    "📄 Tear a piece of paper into tiny pieces",
-    "🎵 Listen to loud music for 3 minutes",
-    "🚶 Walk briskly for 5 minutes",
-    "💨 10 deep breaths — exhale forcefully",
-    "✍️ Write everything — then delete or burn it",
-    "🗣️ Scream into a pillow",
-    "🧊 Hold ice cubes for 30 seconds",
+    t("ragePage.rageTips.tips1"),
+    t("ragePage.rageTips.tips2"),
+     t("ragePage.rageTips.tips3"),
+   t("ragePage.rageTips.tips4"),
+     t("ragePage.rageTips.tips5"),
+     t("ragePage.rageTips.tips6"),
+   t("ragePage.rageTips.tips7"),
+    t("ragePage.rageTips.tips8"),
   ];
 
   const q = QUIZ_QUESTIONS[currentQuestion];
@@ -127,8 +130,8 @@ function RagePage() {
   return (
     <div className="ragePage">
       <div className="rageHeader">
-        <h1>😤 Rage Release</h1>
-        <p>A safe space to understand and release your anger.</p>
+        <h1>{t("ragePage.title")}</h1>
+        <p>{t("ragePage.subtitle")}</p>
       </div>
 
       {/* ── QUIZ ── */}
@@ -140,7 +143,7 @@ function RagePage() {
                 style={{ width: `${progress}%` }} />
             </div>
             <p className="quizProgressText">
-              Question {currentQuestion + 1} of {QUIZ_QUESTIONS.length}
+              {t("ragePage.q")} {currentQuestion + 1} {t("ragePage.of")} {QUIZ_QUESTIONS.length}
             </p>
           </div>
 
@@ -161,14 +164,14 @@ function RagePage() {
 
           <div className="quizNav">
             {currentQuestion > 0 && (
-              <button className="quizPrevBtn" onClick={goPrev}>← Back</button>
+              <button className="quizPrevBtn" onClick={goPrev}>{t("common.prev")}</button>
             )}
             <button
               className="quizNextBtn rageNextBtn"
               onClick={goNext}
               disabled={currentAnswer === undefined}
             >
-              {currentQuestion === QUIZ_QUESTIONS.length - 1 ? "See My Score →" : "Next →"}
+              {currentQuestion === QUIZ_QUESTIONS.length - 1 ? t("ragePage.myScore") : t("ragePage.nextBtn")}
             </button>
           </div>
         </div>
@@ -191,8 +194,8 @@ function RagePage() {
                 <p className="quizResultLabel" style={{ color: getColor(intensity) }}>
                   {getLabel(intensity)}
                 </p>
-                <p className="quizResultDesc">Your anger intensity level</p>
-                <button className="retakeBtn" onClick={retakeQuiz}>🔄 Retake Quiz</button>
+                <p className="quizResultDesc">{t("ragePage.intensity")}</p>
+                <button className="retakeBtn" onClick={retakeQuiz}>{t("ragePage.retake")}</button>
               </div>
             </div>
 
@@ -200,7 +203,7 @@ function RagePage() {
               style={{ background: `${getColor(intensity)}08`,
                        borderColor: `${getColor(intensity)}30` }}>
               <p className="tipsTitle" style={{ color: getColor(intensity) }}>
-                💡 What to do right now
+                {t("ragePage.what")}
               </p>
               <ul className="tipsList">
                 {getTips(intensity).map((tip, i) => (
@@ -212,16 +215,16 @@ function RagePage() {
 
           {/* Write and Release */}
           <div className="rageForm">
-            <h2>Write it all out — let it go 🔥</h2>
+            <h2>{t("ragePage.rageform")}</h2>
             <textarea
-              placeholder="Write everything you are angry about. No judgment here. This will be cleared after you release it..."
+              placeholder={t("ragePage.placeholder")}
               value={text}
               onChange={(e) => setText(e.target.value)}
               className="rageTextarea"
             />
             {released ? (
               <div className="releasedMsg">
-                ✅ Released! Your anger has been let go. Take a deep breath. 🌬️
+                {t("ragePage.releasedMsg")}
               </div>
             ) : (
               <button
@@ -229,14 +232,14 @@ function RagePage() {
                 disabled={!text.trim()}
                 className="releaseBtn"
               >
-                🔥 Release & Clear
+                {t("ragePage.clearmsg")}
               </button>
             )}
           </div>
 
           {/* Physical Tips */}
           <div className="rageTips">
-            <h2>Physical Release Tips</h2>
+            <h2>{t("ragePage.rageTip")}</h2>
             <div className="rageTipsGrid">
               {rageTips.map((tip, i) => (
                 <div key={i} className="rageTipCard">{tip}</div>
@@ -247,7 +250,7 @@ function RagePage() {
       )}
 
       <div className="navButtons">
-        <Link to="/dashboard"><button className="backBtn">← Back to Dashboard</button></Link>
+        <Link to="/dashboard"><button className="backBtn">{t("common.back")}</button></Link>
       </div>
     </div>
   );

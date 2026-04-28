@@ -2,91 +2,69 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./mindfulness.css";
 import DropdownSelect from "../components/DropdownSelect";
+import { useLanguage } from "../context/LanguageContext";
+import translations from "../i18n/translations";
+
 
 function Mindfulness() {
   const [activeTab, setActiveTab] = useState("breathing");
-  const [breathPhase, setBreathPhase] = useState("ready");
-  const [breathCount, setBreathCount] = useState(0);
   const [isBreathing, setIsBreathing] = useState(false);
   const [selectedTimer, setSelectedTimer] = useState(5);
   const [timerLeft, setTimerLeft] = useState(null);
   const [timerRunning, setTimerRunning] = useState(false);
-  const [completedExercises, setCompletedExercises] = useState([]);
   const timerRef = useRef(null);
-  const breathRef = useRef(null);
+  const { language, t } = useLanguage();
+  const data = translations.mindfulness[language] || translations.mindfulness.en;
+
+  // ── Pull everything from translations ──────────────────────
+  const breathingExercises = data.breathingExercises.map((ex, i) => {
+    const colors = ["#4f46e5", "#10b981", "#06b6d4", "#f59e0b"];
+    return { ...ex, color: colors[i] };
+  });
+
+  const meditations = data.meditations.map((med, i) => {
+    const emojis = ["🧘", "💝", "💨", "🌅", "🚶", "🎵"];
+    const colors = ["#8b5cf6", "#ec4899", "#4f46e5", "#f59e0b", "#10b981", "#06b6d4"];
+    return { ...med, emoji: emojis[i], color: colors[i] };
+  });
+
+  const groundingTechniques = data.groundingTechniques.map((tech, i) => {
+    const emojis = ["🖐️", "💧", "🏡"];
+    const colors = ["#4f46e5", "#06b6d4", "#10b981"];
+    return { ...tech, emoji: emojis[i], color: colors[i] };
+  });
+
+  const affirmations = data.affirmations.map((cat, i) => {
+    const colors = ["#4f46e5", "#ef4444", "#10b981", "#f59e0b", "#ec4899"];
+    return { ...cat, color: colors[i] };
+  });
 
   const tabs = [
-    { key: "breathing",  label: "Breathing",   emoji: "💨" },
-    { key: "meditation", label: "Meditation",  emoji: "🧘" },
-    { key: "grounding",  label: "Grounding",   emoji: "🌿" },
-    { key: "affirmations", label: "Affirmations", emoji: "💫" },
-  ];
-
-  const breathingExercises = [
-    { id: "478",   name: "4-7-8 Breathing",   desc: "For anxiety and sleep", color: "#4f46e5", phases: [{label:"Inhale",  seconds:4}, {label:"Hold", seconds:7}, {label:"Exhale", seconds:8}] },
-    { id: "box",   name: "Box Breathing",      desc: "For stress and focus", color: "#10b981", phases: [{label:"Inhale",  seconds:4}, {label:"Hold", seconds:4}, {label:"Exhale", seconds:4}, {label:"Hold", seconds:4}] },
-    { id: "calm",  name: "Calm Breathing",     desc: "For relaxation",       color: "#06b6d4", phases: [{label:"Inhale",  seconds:5}, {label:"Exhale",seconds:5}] },
-    { id: "power", name: "Energizing Breath",  desc: "For energy and focus", color: "#f59e0b", phases: [{label:"Inhale",  seconds:4}, {label:"Exhale",seconds:2}] },
-  ];
-
-  const [selectedBreath, setSelectedBreath] = useState(breathingExercises[0]);
-  const [phaseIndex, setPhaseIndex] = useState(0);
-  const [phaseTimer, setPhaseTimer] = useState(0);
-
-  const meditations = [
-    { id: 1, title: "Body Scan",          duration: "10 min", desc: "Release tension from head to toe.", emoji: "🧘", color: "#8b5cf6",
-      steps: ["Find a comfortable position lying down", "Close your eyes and take 3 deep breaths", "Focus on your feet — notice any sensations", "Slowly move attention up through each body part", "Release any tension you notice with each exhale", "Finish by taking 3 deep breaths and slowly open eyes"] },
-    { id: 2, title: "Loving Kindness",    duration: "8 min",  desc: "Cultivate compassion for yourself and others.", emoji: "💝", color: "#ec4899",
-      steps: ["Sit comfortably with eyes closed", "Think of someone you love — feel that warmth", "Silently repeat: May you be happy, may you be well", "Extend this to yourself: May I be happy, may I be well", "Extend to neutral people, then difficult people", "Finally extend to all living beings"] },
-    { id: 3, title: "Breath Awareness",   duration: "5 min",  desc: "Anchor yourself to the present moment.", emoji: "💨", color: "#4f46e5",
-      steps: ["Sit with your back straight", "Close eyes and breathe naturally", "Notice each breath — inhale and exhale", "When mind wanders, gently return to breath", "No judgment — just observe", "Slowly open eyes when ready"] },
-    { id: 4, title: "Visualization",      duration: "12 min", desc: "Visit your calm and peaceful inner space.", emoji: "🌅", color: "#f59e0b",
-      steps: ["Close eyes and breathe deeply", "Imagine a peaceful place — beach, forest, mountains", "Notice the colors, sounds, smells around you", "Feel the temperature and air on your skin", "Stay here as long as you like", "When ready, gently return and open eyes"] },
-    { id: 5, title: "Walking Meditation", duration: "15 min", desc: "Bring mindfulness to every step.", emoji: "🚶", color: "#10b981",
-      steps: ["Find a quiet path or space", "Walk slowly — more slowly than normal", "Feel each foot lift, move, and place down", "Notice the ground beneath your feet", "When mind wanders, return to the sensation of walking", "End with standing still and 3 deep breaths"] },
-    { id: 6, title: "Sound Meditation",   duration: "7 min",  desc: "Use sound as your anchor to the present.", emoji: "🎵", color: "#06b6d4",
-      steps: ["Sit comfortably and close eyes", "Listen to all sounds around you", "Near sounds, far sounds — just notice", "Do not label or judge — just hear", "If mind wanders, return to listening", "Notice how sounds arise and fade"] },
-  ];
-
-  const groundingTechniques = [
-    { id: 1, title: "5-4-3-2-1 Technique", emoji: "🖐️", color: "#4f46e5",
-      steps: [
-        { number: 5, sense: "See",   instruction: "Name 5 things you can SEE right now", icon: "👁️" },
-        { number: 4, sense: "Touch", instruction: "Name 4 things you can TOUCH or feel",  icon: "✋" },
-        { number: 3, sense: "Hear",  instruction: "Name 3 things you can HEAR right now", icon: "👂" },
-        { number: 2, sense: "Smell", instruction: "Name 2 things you can SMELL",          icon: "👃" },
-        { number: 1, sense: "Taste", instruction: "Name 1 thing you can TASTE",            icon: "👅" },
-      ]
-    },
-    { id: 2, title: "Cold Water Technique", emoji: "💧", color: "#06b6d4",
-      steps: [
-        { number: 1, sense: "Step 1", instruction: "Go to the sink and turn on cold water", icon: "🚿" },
-        { number: 2, sense: "Step 2", instruction: "Place hands under cold water for 30 seconds", icon: "🖐️" },
-        { number: 3, sense: "Step 3", instruction: "Focus entirely on the cold sensation", icon: "🧊" },
-        { number: 4, sense: "Step 4", instruction: "Take 5 deep breaths while feeling the water", icon: "💨" },
-        { number: 5, sense: "Step 5", instruction: "Notice how your mind has shifted to the present", icon: "🧠" },
-      ]
-    },
-    { id: 3, title: "Safe Space Visualization", emoji: "🏡", color: "#10b981",
-      steps: [
-        { number: 1, sense: "Close eyes", instruction: "Find a comfortable position and close your eyes", icon: "😌" },
-        { number: 2, sense: "Imagine",    instruction: "Picture a place where you feel completely safe", icon: "🌅" },
-        { number: 3, sense: "Explore",    instruction: "Notice the colors, sounds, and smells there", icon: "👀" },
-        { number: 4, sense: "Feel",       instruction: "Feel the safety and warmth of this place", icon: "💛" },
-        { number: 5, sense: "Return",     instruction: "When ready, slowly return and open your eyes", icon: "🌟" },
-      ]
-    },
-  ];
-
-  const affirmations = [
-    { category: "Self-Worth",    color: "#4f46e5", emoji: "💜", list: ["I am enough exactly as I am", "I deserve love and kindness", "I am worthy of good things", "My feelings are valid", "I matter"] },
-    { category: "Strength",      color: "#ef4444", emoji: "❤️", list: ["I have survived every difficult day so far", "I am stronger than I know", "I can handle what comes my way", "Every challenge helps me grow", "I trust my resilience"] },
-    { category: "Peace",         color: "#10b981", emoji: "💚", list: ["I choose peace over worry", "I release what I cannot control", "I am safe in this moment", "My breath calms me", "I embrace the present"] },
-    { category: "Growth",        color: "#f59e0b", emoji: "💛", list: ["I am constantly growing and evolving", "Mistakes are how I learn", "I am proud of how far I have come", "Every step forward counts", "I trust my journey"] },
-    { category: "Relationships", color: "#ec4899", emoji: "🩷", list: ["I attract kind and caring people", "I give and receive love freely", "I set healthy boundaries", "I deserve genuine connection", "I am not alone"] },
+    { key: "breathing",    label: t("mindfulness.tabs.breathing") },
+    { key: "meditation",   label: t("mindfulness.tabs.meditation") },
+    { key: "grounding",    label: t("mindfulness.tabs.grounding") },
+    { key: "affirmations", label: t("mindfulness.tabs.affirmations") },
   ];
 
   const timerOptions = [3, 5, 10, 15, 20];
+
+  const [selectedBreath, setSelectedBreath] = useState(breathingExercises[0]);
+  const [phaseIndex, setPhaseIndex]         = useState(0);
+  const [phaseTimer, setPhaseTimer]         = useState(0);
+  const [breathCount, setBreathCount]       = useState(0);
+
+  // Keep selectedBreath in sync when language changes
+  useEffect(() => {
+    const updatedExercises = (translations.mindfulness[language] || translations.mindfulness.en)
+      .breathingExercises.map((ex, i) => {
+        const colors = ["#4f46e5", "#10b981", "#06b6d4", "#f59e0b"];
+        return { ...ex, color: colors[i] };
+      });
+    setSelectedBreath(prev => {
+      const match = updatedExercises.find(e => e.id === prev.id);
+      return match || updatedExercises[0];
+    });
+  }, [language]);
 
   // ── Breathing logic ──────────────────────────────────
   useEffect(() => {
@@ -157,10 +135,10 @@ function Mindfulness() {
     return `${m}:${sec.toString().padStart(2, "0")}`;
   };
 
-  const [expandedMed, setExpandedMed] = useState(null);
+  const [expandedMed,    setExpandedMed]    = useState(null);
   const [expandedGround, setExpandedGround] = useState(null);
-  const [currentAffCat, setCurrentAffCat] = useState(0);
-  const [currentAff, setCurrentAff] = useState(0);
+  const [currentAffCat,  setCurrentAffCat]  = useState(0);
+  const [currentAff,     setCurrentAff]     = useState(0);
 
   const nextAffirmation = () => {
     const cat = affirmations[currentAffCat];
@@ -173,14 +151,17 @@ function Mindfulness() {
   };
 
   const currentPhase = selectedBreath.phases[phaseIndex];
-  const phaseColors = { Inhale: "#4f46e5", Hold: "#f59e0b", Exhale: "#10b981" };
-  const circleColor = phaseColors[currentPhase?.label] || selectedBreath.color;
+  const phaseColors  = { Inhale: "#4f46e5", Hold: "#f59e0b", Exhale: "#10b981" };
+
+  // For translated phase labels, map by index position instead of English label
+  const phaseColorsByIndex = ["#4f46e5", "#f59e0b", "#10b981", "#f59e0b"];
+  const circleColor = phaseColorsByIndex[phaseIndex] || selectedBreath.color;
 
   return (
     <div className="mindfulPage">
       <div className="mindfulHeader">
-        <h1>🧘 Mindfulness</h1>
-        <p>Breathing exercises, guided meditation, grounding techniques, and daily affirmations.</p>
+        <h1>{t("mindfulness.title")}</h1>
+        <p>{t("mindfulness.subtitle")}</p>
       </div>
 
       {/* Tabs */}
@@ -191,7 +172,7 @@ function Mindfulness() {
             className={`mindfulTab ${activeTab === tab.key ? "active" : ""}`}
             onClick={() => setActiveTab(tab.key)}
           >
-            {tab.emoji} {tab.label}
+            {tab.label}
           </button>
         ))}
       </div>
@@ -199,7 +180,6 @@ function Mindfulness() {
       {/* ── BREATHING ── */}
       {activeTab === "breathing" && (
         <div className="breathingSection">
-          {/* Exercise selector */}
           <div className="breathSelector">
             {breathingExercises.map((ex) => (
               <button
@@ -218,14 +198,13 @@ function Mindfulness() {
             ))}
           </div>
 
-          {/* Breathing circle */}
           <div className="breathCircleArea">
             <div
               className={`breathCircleOuter ${isBreathing ? "animating" : ""}`}
               style={{ borderColor: `${circleColor}30` }}
             >
               <div
-                className={`breathCircleInner ${isBreathing ? `breath-${currentPhase?.label?.toLowerCase()}` : ""}`}
+                className={`breathCircleInner ${isBreathing ? `breath-phase-${phaseIndex}` : ""}`}
                 style={{ background: isBreathing ? circleColor : "#e0e7ff" }}
               >
                 {isBreathing ? (
@@ -234,13 +213,15 @@ function Mindfulness() {
                     <p className="breathPhaseTimer">{phaseTimer}s</p>
                   </>
                 ) : (
-                  <p className="breathReadyText">Ready</p>
+                  <p className="breathReadyText">{t("mindfulness.breatheReady")}</p>
                 )}
               </div>
             </div>
 
             {isBreathing && (
-              <p className="breathCycleCount">Cycles: {breathCount}</p>
+              <p className="breathCycleCount">
+                {t("mindfulness.breatheCount")} {breathCount}
+              </p>
             )}
 
             <div className="breathBtns">
@@ -250,24 +231,25 @@ function Mindfulness() {
                   style={{ background: selectedBreath.color }}
                   onClick={startBreathing}
                 >
-                  ▶ Start {selectedBreath.name}
+                  {t("mindfulness.startBtn")}
                 </button>
               ) : (
                 <button className="stopBreathBtn" onClick={stopBreathing}>
-                  ⬛ Stop
+                  {t("mindfulness.stopBtn")}
                 </button>
               )}
             </div>
 
-            {/* Phase guide */}
             <div className="phaseGuide">
               {selectedBreath.phases.map((p, i) => (
                 <div
                   key={i}
                   className={`phaseGuideItem ${isBreathing && phaseIndex === i ? "active" : ""}`}
                 >
-                  <span className="phaseGuideDot"
-                    style={{ background: phaseColors[p.label] || selectedBreath.color }} />
+                  <span
+                    className="phaseGuideDot"
+                    style={{ background: phaseColorsByIndex[i] || selectedBreath.color }}
+                  />
                   <span>{p.label} {p.seconds}s</span>
                 </div>
               ))}
@@ -279,54 +261,60 @@ function Mindfulness() {
       {/* ── MEDITATION ── */}
       {activeTab === "meditation" && (
         <div className="meditationSection">
-          {/* Timer */}
           <div className="timerCard">
-            <h3>🕐 Meditation Timer</h3>
+            <h3>{t("mindfulness.meditationTimerTitle")}</h3>
             {timerRunning && timerLeft !== null ? (
               <div className="timerDisplay">
                 <p className="timerCount">{formatTime(timerLeft)}</p>
-                <p className="timerMsg">Stay present. Breathe. 🧘</p>
-                <button className="stopTimerBtn" onClick={stopTimer}>End Session</button>
+                <p className="timerMsg">{t("mindfulness.timerRunningMsg")}</p>
+                <button className="stopTimerBtn" onClick={stopTimer}>
+                  {t("mindfulness.timerEndBtn")}
+                </button>
               </div>
             ) : timerLeft === 0 ? (
               <div className="timerDone">
-                <p>🎉 Session complete! Well done!</p>
-                <button className="startTimerBtn" onClick={() => setTimerLeft(null)}>New Session</button>
+                <p>{t("mindfulness.timerDoneMsg")}</p>
+                <button className="startTimerBtn" onClick={() => setTimerLeft(null)}>
+                  {t("mindfulness.timerNewSessionBtn")}
+                </button>
               </div>
             ) : (
               <div className="timerSetup">
-                <p className="timerLabel">Select duration:</p>
+                <p className="timerLabel">{t("mindfulness.timerSelectLabel")}</p>
                 <DropdownSelect
-  options={timerOptions.map(t => ({
-    value: t,
-    label: `${t} min`
-  }))}
-  value={selectedTimer}
-  onChange={setSelectedTimer}
-  placeholder="Select duration..."
-  multiple={false}
-/>
+                  options={timerOptions.map((opt) => ({
+                    value: opt,
+                    label: `${opt} ${t("mindfulness.timerMinSuffix")}`,
+                  }))}
+                  value={selectedTimer}
+                  onChange={setSelectedTimer}
+                  placeholder={t("mindfulness.timerPlaceholder")}
+                  multiple={false}
+                />
                 <button className="startTimerBtn" onClick={startTimer}>
-                  ▶ Start {selectedTimer} Min Session
+                  {t("mindfulness.startBtn")}
                 </button>
               </div>
             )}
           </div>
 
-          {/* Guided meditations */}
-          <h3 className="medSectionTitle">Guided Meditation Practices</h3>
+          <h3 className="medSectionTitle">{t("mindfulness.meditationGuidesTitle")}</h3>
           <div className="medsGrid">
             {meditations.map((med) => (
-              <div key={med.id} className="medCard"
-                style={{ borderTop: `4px solid ${med.color}` }}>
+              <div
+                key={med.id}
+                className="medCard"
+                style={{ borderTop: `4px solid ${med.color}` }}
+              >
                 <div className="medTop">
-                  <span className="medEmoji"
-                    style={{ background: `${med.color}15` }}>
+                  <span className="medEmoji" style={{ background: `${med.color}15` }}>
                     {med.emoji}
                   </span>
                   <div>
                     <h3 className="medTitle">{med.title}</h3>
-                    <p className="medDuration">⏱️ {med.duration}</p>
+                    <p className="medDuration">
+                      {t("mindfulness.meditationDurationIcon")} {med.duration}
+                    </p>
                   </div>
                 </div>
                 <p className="medDesc">{med.desc}</p>
@@ -335,11 +323,15 @@ function Mindfulness() {
                   style={{ color: med.color }}
                   onClick={() => setExpandedMed(expandedMed === med.id ? null : med.id)}
                 >
-                  {expandedMed === med.id ? "▲ Hide Steps" : "▼ How to Practice"}
+                  {expandedMed === med.id
+                    ? t("mindfulness.hideStepsBtn")
+                    : t("mindfulness.howToPracticeBtn")}
                 </button>
                 {expandedMed === med.id && (
-                  <ol className="medSteps"
-                    style={{ borderColor: `${med.color}30`, background: `${med.color}06` }}>
+                  <ol
+                    className="medSteps"
+                    style={{ borderColor: `${med.color}30`, background: `${med.color}06` }}
+                  >
                     {med.steps.map((step, i) => (
                       <li key={i}>
                         <span className="stepNum" style={{ color: med.color }}>{i + 1}.</span>
@@ -358,38 +350,44 @@ function Mindfulness() {
       {activeTab === "grounding" && (
         <div className="groundingSection">
           <div className="groundingIntro">
-            <p>
-              Grounding techniques help you return to the present moment when feeling
-              anxious, overwhelmed, or disconnected. Use these when you need to feel
-              centered and safe right now.
-            </p>
+            <p>{t("mindfulness.groundingIntro")}</p>
           </div>
           {groundingTechniques.map((tech) => (
             <div key={tech.id} className="groundCard">
-              <div className="groundHeader"
-                style={{ background: `${tech.color}10`, borderBottom: `2px solid ${tech.color}20` }}>
+              <div
+                className="groundHeader"
+                style={{
+                  background:   `${tech.color}10`,
+                  borderBottom: `2px solid ${tech.color}20`,
+                }}
+              >
                 <span className="groundEmoji">{tech.emoji}</span>
                 <h3 className="groundTitle" style={{ color: tech.color }}>{tech.title}</h3>
                 <button
                   className="groundToggle"
                   style={{ background: tech.color, color: "white" }}
-                  onClick={() => setExpandedGround(expandedGround === tech.id ? null : tech.id)}
+                  onClick={() =>
+                    setExpandedGround(expandedGround === tech.id ? null : tech.id)
+                  }
                 >
-                  {expandedGround === tech.id ? "Hide" : "Start"}
+                  {expandedGround === tech.id
+                    ? t("mindfulness.hideStepsBtn")
+                    : t("mindfulness.howToPracticeBtn")}
                 </button>
               </div>
               {expandedGround === tech.id && (
                 <div className="groundSteps">
                   {tech.steps.map((step, i) => (
                     <div key={i} className="groundStep">
-                      <div className="groundStepIcon"
-                        style={{ background: `${tech.color}15`, color: tech.color }}>
+                      <div
+                        className="groundStepIcon"
+                        style={{ background: `${tech.color}15`, color: tech.color }}
+                      >
                         {step.icon}
                       </div>
                       <div className="groundStepBody">
-                        <p className="groundStepNum"
-                          style={{ color: tech.color }}>
-                          Step {step.number} — {step.sense}
+                        <p className="groundStepNum" style={{ color: tech.color }}>
+                          {t("mindfulness.groundingStepLabel")} {step.number} — {step.sense}
                         </p>
                         <p className="groundStepText">{step.instruction}</p>
                       </div>
@@ -405,7 +403,6 @@ function Mindfulness() {
       {/* ── AFFIRMATIONS ── */}
       {activeTab === "affirmations" && (
         <div className="affirmationsSection">
-          {/* Category selector */}
           <div className="affCats">
             {affirmations.map((cat, i) => (
               <button
@@ -423,11 +420,8 @@ function Mindfulness() {
             ))}
           </div>
 
-          {/* Main affirmation card */}
-          <div className="affCard"
-            style={{ borderColor: affirmations[currentAffCat].color }}>
-            <p className="affCategory"
-              style={{ color: affirmations[currentAffCat].color }}>
+          <div className="affCard" style={{ borderColor: affirmations[currentAffCat].color }}>
+            <p className="affCategory" style={{ color: affirmations[currentAffCat].color }}>
               {affirmations[currentAffCat].emoji} {affirmations[currentAffCat].category}
             </p>
             <p className="affText">
@@ -441,22 +435,28 @@ function Mindfulness() {
               style={{ background: affirmations[currentAffCat].color }}
               onClick={nextAffirmation}
             >
-              Next Affirmation →
+              {t("mindfulness.affirmationNextBtn")}
             </button>
           </div>
 
-          {/* All affirmations list */}
-          <div className="affAllTitle">All {affirmations[currentAffCat].category} Affirmations</div>
+          <div className="affAllTitle">{t("mindfulness.affAllTitle")}</div>
           <div className="affList">
             {affirmations[currentAffCat].list.map((aff, i) => (
               <div
                 key={i}
                 className={`affItem ${i === currentAff ? "active" : ""}`}
-                style={{ borderColor: i === currentAff ? affirmations[currentAffCat].color : "#f3f4f6" }}
+                style={{
+                  borderColor:
+                    i === currentAff
+                      ? affirmations[currentAffCat].color
+                      : "#f3f4f6",
+                }}
                 onClick={() => setCurrentAff(i)}
               >
-                <span className="affItemNum"
-                  style={{ color: affirmations[currentAffCat].color }}>
+                <span
+                  className="affItemNum"
+                  style={{ color: affirmations[currentAffCat].color }}
+                >
                   {i + 1}
                 </span>
                 <p>{aff}</p>
@@ -468,7 +468,7 @@ function Mindfulness() {
 
       <div className="navButtons">
         <Link to="/dashboard">
-          <button className="backBtn">← Back to Dashboard</button>
+          <button className="backBtn">{t("mindfulness.backBtn")}</button>
         </Link>
       </div>
     </div>
@@ -476,3 +476,4 @@ function Mindfulness() {
 }
 
 export default Mindfulness;
+

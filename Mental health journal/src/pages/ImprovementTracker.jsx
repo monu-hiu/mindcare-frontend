@@ -5,10 +5,13 @@ import {
   LineChart, Line, XAxis, YAxis, CartesianGrid,
   Tooltip, Legend, ResponsiveContainer,
 } from "recharts";
+import {useLanguage} from "../context/LanguageContext";
+import translations from "../i18n/translations";
 import "./improvement.css";
 
 function ImprovementTracker() {
   const { token } = useAuth();
+  const {language, t} = useLanguage();
   const [chartData, setChartData] = useState([]);
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -58,8 +61,8 @@ function ImprovementTracker() {
   return (
     <div className="improvementPage">
       <div className="improvementHeader">
-        <h1>📈 Improvement Tracker</h1>
-        <p>Visualize your mental wellness trends over the last 7 days.</p>
+        <h1>{t("improvementTracker.title")}</h1>
+        <p>{t("improvementTracker.subtitle")}</p>
       </div>
 
       {/* Stat Cards */}
@@ -74,7 +77,7 @@ function ImprovementTracker() {
                   : "—"}
               </p>
               <p className="improvementStatLabel">{card.label}</p>
-              <p className="improvementStatSub">7-day average</p>
+              <p className="improvementStatSub">{t("improvementTracker.improvementSub")}</p>
             </div>
           ))}
         </div>
@@ -83,7 +86,7 @@ function ImprovementTracker() {
       {/* Chart */}
       <div className="chartCard">
         <div className="chartHeader">
-          <h2>7-Day Wellness Trends</h2>
+          <h2>{t("improvementTracker.chartHeader")}</h2>
           <div className="chartToggles">
             {lines.map((line) => (
               <button
@@ -103,18 +106,18 @@ function ImprovementTracker() {
         </div>
 
         {loading ? (
-          <div className="chartLoading">Loading your data...</div>
+          <div className="chartLoading">{t("improvementTracker.chartLoading")}</div>
         ) : chartData.every(d =>
             d.mood === null && d.sleep === null &&
             d.anxiety === null && d.energy === null) ? (
           <div className="chartEmpty">
-            <p>📊 No data yet!</p>
-            <p>Start logging your mood, sleep, anxiety, and energy to see trends here.</p>
+            <p>📊 {t("common.noData")}</p>
+            <p>{t("improvementTracker.noDataMsg")}</p>
             <div className="chartEmptyLinks">
-              <Link to="/mood-tracker">Log Mood</Link>
-              <Link to="/sleep-tracker">Log Sleep</Link>
-              <Link to="/anxiety-tracker">Log Anxiety</Link>
-              <Link to="/energy-tracker">Log Energy</Link>
+              <Link to="/mood-tracker">{t("improvementTracker.LogMoodLabel")}</Link>
+              <Link to="/sleep-tracker">{t("improvementTracker.LogSleepLabel")}</Link>
+              <Link to="/anxiety-tracker">{t("improvementTracker.LogAnxietyLabel")}</Link>
+              <Link to="/energy-tracker">{t("improvementTracker.LogEnergyLabel")}</Link>
             </div>
           </div>
         ) : (
@@ -154,51 +157,51 @@ function ImprovementTracker() {
       {/* Insights */}
       {stats && (
         <div className="insightsCard">
-          <h2>Weekly Insights</h2>
+          <h2>{t("improvementTracker.InsightsTitle")}</h2>
           <div className="insightsList">
             {stats.avgMood && parseFloat(stats.avgMood) >= 7 && (
               <div className="insightItem good">
-                🌟 Your mood has been great this week! Keep it up!
+                {t("improvementTracker.mooditemGood")}
               </div>
             )}
             {stats.avgMood && parseFloat(stats.avgMood) < 5 && (
               <div className="insightItem bad">
-                💙 Your mood has been low. Consider trying mindfulness or journaling.
+                {t("improvementTracker.mooditemBad")}
               </div>
             )}
             {stats.avgSleep && parseFloat(stats.avgSleep) >= 7 && (
               <div className="insightItem good">
-                😴 Excellent sleep this week! Sleep is key to mental health.
+                {t("improvementTracker.sleepitemGood")}
               </div>
             )}
             {stats.avgSleep && parseFloat(stats.avgSleep) < 6 && (
               <div className="insightItem bad">
-                🌙 You are not getting enough sleep. Try a consistent bedtime routine.
+                {t("improvementTracker.sleepitemBad")}
               </div>
             )}
             {stats.avgAnxiety && parseFloat(stats.avgAnxiety) >= 7 && (
               <div className="insightItem bad">
-                💭 High anxiety levels detected. Try breathing exercises daily.
+                {t("improvementTracker.anxietyitemBad")}
               </div>
             )}
             {stats.avgAnxiety && parseFloat(stats.avgAnxiety) <= 3 && (
               <div className="insightItem good">
-                ✅ Low anxiety this week — you are managing stress well!
+                {t("improvementTracker.anxietyitemGood")}
               </div>
             )}
             {stats.avgEnergy && parseFloat(stats.avgEnergy) >= 7 && (
               <div className="insightItem good">
-                ⚡ High energy levels — great time to work on your goals!
+                {t("improvementTracker.energyitemGood")}
               </div>
             )}
             {stats.avgEnergy && parseFloat(stats.avgEnergy) < 4 && (
               <div className="insightItem bad">
-                😴 Low energy this week. Check your sleep and nutrition.
+                {t("improvementTracker.energyitemBad")}
               </div>
             )}
             {!stats.avgMood && !stats.avgSleep && !stats.avgAnxiety && !stats.avgEnergy && (
               <div className="insightItem neutral">
-                📊 Start logging daily to get personalized insights here!
+                {t("improvementTracker.startlogging")}
               </div>
             )}
           </div>
@@ -207,7 +210,7 @@ function ImprovementTracker() {
 
       <div className="navButtons">
         <Link to="/dashboard">
-          <button className="backBtn">← Back to Dashboard</button>
+          <button className="backBtn">{t("common.back")}</button>
         </Link>
       </div>
     </div>

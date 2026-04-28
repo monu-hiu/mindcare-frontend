@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import {useLanguage} from "../context/LanguageContext";
+import translations from "../i18n/translations";
 import "./goal.css";
 
 function Goal() {
   const { token } = useAuth();
+  const {language,t}=useLanguage();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -18,8 +21,12 @@ function Goal() {
   const [filter, setFilter] = useState("All");
 
   const categories = [
-    "Mental Health", "Physical", "Social",
-    "Personal", "Work", "Other"
+    t("goals.categories.Mental"),
+    t("goals.categories.Physical"),
+    t("goals.categories.Social"),
+    t("goals.categories.Personal"),
+    t("goals.categories.Work"),
+    t("goals.categories.Other")
   ];
 
   useEffect(() => {
@@ -72,7 +79,7 @@ function Goal() {
         setError(data.message);
       }
     } catch (err) {
-      setError("Something went wrong. Try again.");
+      setError(t("common.error"));
     } finally {
       setSaving(false);
     }
@@ -122,8 +129,8 @@ function Goal() {
   return (
     <div className="goalPage">
       <div className="goalHeader">
-        <h1>🎯 Goal Planner</h1>
-        <p>Set meaningful goals and track your progress.</p>
+        <h1>{t("goals.title")}</h1>
+        <p>{t("goals.subtitle")}</p>
         {totalCount > 0 && (
           <div className="goalProgress">
             <div className="progressBar">
@@ -135,7 +142,7 @@ function Goal() {
               />
             </div>
             <p className="progressText">
-              {completedCount} of {totalCount} goals completed
+              {completedCount} of {totalCount} {t("goals.progress")}
             </p>
           </div>
         )}
@@ -143,13 +150,13 @@ function Goal() {
 
       {/* Create Goal Form */}
       <div className="goalForm">
-        <h2>Create New Goal</h2>
+        <h2>{t("goals.createTitle")}</h2>
 
         <div className="formGroup">
-          <label>Goal Title *</label>
+          <label>{t("goals.titleLabel")}</label>
           <input
             type="text"
-            placeholder="What do you want to achieve?"
+            placeholder={t("goals.titlePlaceholder")}
             value={title}
             onChange={(e) => { setTitle(e.target.value); setError(""); }}
             maxLength={100}
@@ -157,9 +164,9 @@ function Goal() {
         </div>
 
         <div className="formGroup">
-          <label>Description (optional)</label>
+          <label>{t("goals.descLabel")}</label>
           <textarea
-            placeholder="Describe your goal in more detail..."
+            placeholder={t("goals.descPlaceholder")}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             maxLength={500}
@@ -168,7 +175,7 @@ function Goal() {
 
         <div className="formRow">
           <div className="formGroup">
-            <label>Category</label>
+            <label>{t("goals.categoryLabel")}</label>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
@@ -180,7 +187,7 @@ function Goal() {
           </div>
 
           <div className="formGroup">
-            <label>Target Date (optional)</label>
+            <label>{t("goals.dateLabel")}</label>
             <input
               type="date"
               value={targetDate}
@@ -190,23 +197,23 @@ function Goal() {
         </div>
 
         {error && <p className="errorText">{error}</p>}
-        {saved && <p className="successText">✅ Goal created successfully!</p>}
+        {saved && <p className="successText">✅ {t("goals.successText")}</p>}
 
         <button
           onClick={createGoal}
           disabled={saving}
           className="saveBtn"
         >
-          {saving ? "Creating..." : "Create Goal"}
+          {saving ? "Creating..." : t("goals.saveBtn")}
         </button>
       </div>
 
       {/* Goals List */}
       <div className="goalsList">
         <div className="goalsListHeader">
-          <h2>Your Goals</h2>
+          <h2>{t("goals.yourGoals")}</h2>
           <div className="filterBtns">
-            {["All", "Active", "Completed"].map((f) => (
+            {[t("goals.filterAll"), t("goals.filterActive"), t("goals.filterCompleted")].map((f) => (
               <button
                 key={f}
                 className={`filterBtn ${filter === f ? "active" : ""}`}
@@ -219,11 +226,11 @@ function Goal() {
         </div>
 
         {loadingGoals ? (
-          <p className="loadingText">Loading...</p>
+          <p className="loadingText">{t("common.loading")}</p>
         ) : filteredGoals.length === 0 ? (
           <p className="emptyText">
             {filter === "All"
-              ? "No goals yet. Create your first goal!"
+              ? t("goals.noGoals")
               : `No ${filter.toLowerCase()} goals.`}
           </p>
         ) : (
@@ -258,7 +265,7 @@ function Goal() {
                     </span>
                   )}
                   {goal.isCompleted && (
-                    <span className="goalCompleted">✅ Completed</span>
+                    <span className="goalCompleted">{t("goals.completed")}</span>
                   )}
                 </div>
               </div>
@@ -276,7 +283,7 @@ function Goal() {
 
       <div className="navButtons">
         <Link to="/dashboard">
-          <button className="backBtn">← Back to Dashboard</button>
+          <button className="backBtn">{t("common.back")}</button>
         </Link>
       </div>
     </div>
