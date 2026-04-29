@@ -42,8 +42,7 @@
   line-height: 1.7;
 }
 
-/* ── TABS ──────────────────────────────── */
-/* ── DROPDOWN ROW (replaces tabs + category pills) ───── */
+/* ── DROPDOWN ROW ──────────────────────── */
 .sugDropdownRow {
   display: flex;
   gap: 12px;
@@ -153,17 +152,12 @@
 }
 
 @media (max-width: 560px) {
-  .sugDropdownRow {
-    flex-direction: column;
-  }
+  .sugDropdownRow { flex-direction: column; }
   .sugDropdownWrap,
-  .sugSearch {
-    width: 100%;
-    min-width: unset;
-  }
+  .sugSearch { width: 100%; min-width: unset; }
 }
 
-/* Student Banner */
+/* ── STUDENT BANNER ──────────────────── */
 .studentBanner {
   background: linear-gradient(135deg, #4f46e5, #7c3aed);
   border-radius: 14px;
@@ -179,6 +173,7 @@
 .studentBanner h3 { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
 .studentBanner p { font-size: 12px; opacity: 0.85; }
 
+/* ── EMPTY STATE ─────────────────────── */
 .sugEmpty {
   text-align: center;
   padding: 60px 20px;
@@ -199,7 +194,12 @@
   grid-template-columns: repeat(2, 1fr);
 }
 
-/* ── BOOK CARD ──────────────────────────── */
+/* ── BOOKS GRID — 3 columns for photo cards ── */
+.booksGrid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* ── BOOK CARD (photo layout) ──────────── */
 .bookCard {
   display: flex;
   background: white;
@@ -207,7 +207,7 @@
   overflow: hidden;
   box-shadow: 0 2px 12px rgba(0,0,0,0.06);
   border: 1.5px solid #f3f4f6;
-  transition: 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .bookCard:hover {
@@ -215,12 +215,57 @@
   box-shadow: 0 8px 24px rgba(0,0,0,0.1);
 }
 
+/* Photo card: vertical layout with cover on top */
+.bookCardPhoto {
+  flex-direction: column !important;
+  padding: 0 !important;
+}
+
+.bookCoverWrap {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  background: #f3f4f6;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.bookCoverImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: transform 0.3s;
+}
+
+.bookCard:hover .bookCoverImg {
+  transform: scale(1.04);
+}
+
+.bookCoverFallback {
+  display: none;
+  position: absolute;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+}
+
+/* Show fallback when image fails (set via JS onError) */
+.bookCoverImg[style*="display: none"] + .bookCoverFallback {
+  display: flex;
+}
+
 .bookStripe {
   width: 5px;
   flex-shrink: 0;
 }
 
-.bookBody { padding: 16px; flex: 1; }
+.bookBody {
+  padding: 14px 16px 16px;
+  flex: 1;
+}
 
 .bookHeader {
   display: flex;
@@ -240,7 +285,7 @@
 }
 
 .bookTitle {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   color: #111827;
   line-height: 1.4;
@@ -274,7 +319,385 @@
   letter-spacing: 1px;
 }
 
-/* ── PODCAST CARD ──────────────────────── */
+/* ── VIDEO CARD ──────────────────────── */
+.videoCard {
+  background: white;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border: 1.5px solid #f3f4f6;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.videoCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+/* Student video card slight distinction */
+.stuVideoCard {
+  border: 2px solid #e0e7ff;
+}
+
+.videoThumb {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.videoThumbnailImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.videoThumb:hover .videoThumbnailImg {
+  transform: scale(1.05);
+}
+
+.videoPlayOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.videoThumb:hover .videoPlayOverlay {
+  background: rgba(0,0,0,0.45);
+}
+
+.videoPlayBtn {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: white;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  transition: transform 0.2s;
+}
+
+.videoThumb:hover .videoPlayBtn {
+  transform: scale(1.1);
+}
+
+.videoDuration {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(0,0,0,0.75);
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.videoEmbed {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+}
+
+.videoEmbed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.closeVideo {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  background: #fef2f2;
+  color: #dc2626;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: background 0.15s;
+}
+
+.closeVideo:hover { background: #fee2e2; }
+
+.videoInfo { padding: 14px 16px; }
+
+.videoCat {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 99px;
+  display: inline-block;
+  margin-bottom: 6px;
+}
+
+.videoTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.4;
+  margin-bottom: 3px;
+}
+
+.videoHost {
+  font-size: 11px;
+  color: #9ca3af;
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+.watchBtn {
+  display: inline-block;
+  padding: 7px 18px;
+  border-radius: 8px;
+  border: none;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: opacity 0.15s;
+}
+
+.watchBtn:hover { opacity: 0.85; }
+
+/* ── ARTICLE CARD ──────────────────────── */
+.articleCard {
+  display: block;
+  background: white;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border: 1.5px solid #f3f4f6;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.articleCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.articleHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.articleSource {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 99px;
+}
+
+.articleTime {
+  font-size: 11px;
+  color: #9ca3af;
+  font-weight: 600;
+}
+
+.articleCat {
+  font-size: 11px;
+  font-weight: 600;
+  color: #9ca3af;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.articleTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+
+.articleDesc {
+  font-size: 12px;
+  color: #6b7280;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.articleRead {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* ── EXERCISE CARD ──────────────────────── */
+.exCard {
+  background: white;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border: 1.5px solid #f3f4f6;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.exCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.exTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.exEmoji {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.exCat {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 99px;
+}
+
+.exTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 6px;
+}
+
+.exDesc {
+  font-size: 12px;
+  color: #6b7280;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.exToggle {
+  background: transparent;
+  border: 1.5px solid;
+  border-radius: 8px;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: opacity 0.15s;
+}
+
+.exToggle:hover { opacity: 0.75; }
+
+.exTips {
+  margin-top: 10px;
+  border: 1.5px solid;
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  list-style: none;
+}
+
+.exTips li {
+  font-size: 12px;
+  color: #374151;
+  line-height: 1.5;
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+
+.exTips li:last-child { border-bottom: none; }
+
+/* ── STUDENT CARD ──────────────────────── */
+.stuCard {
+  background: white;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border: 1.5px solid #f3f4f6;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.stuCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.stuTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.stuEmoji {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.stuCat {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 99px;
+}
+
+.stuTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 6px;
+}
+
+.stuDesc {
+  font-size: 12px;
+  color: #6b7280;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.stuToggle {
+  background: transparent;
+  border: 1.5px solid;
+  border-radius: 8px;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: opacity 0.15s;
+}
+
+.stuToggle:hover { opacity: 0.75; }
+
+/* ── PODCAST CARD (legacy — kept for safety) ── */
 .podCard {
   display: flex;
   gap: 14px;
@@ -283,7 +706,7 @@
   padding: 18px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.06);
   border: 1.5px solid #f3f4f6;
-  transition: 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .podCard:hover {
@@ -355,382 +778,12 @@
   font-size: 11px;
   font-weight: 700;
   text-decoration: none;
-  transition: 0.15s;
+  transition: opacity 0.15s, transform 0.15s;
 }
 
 .podBtn:hover { opacity: 0.85; transform: scale(1.03); }
 
-/* ── VIDEO CARD ──────────────────────── */
-.videoCard {
-  background: white;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  border: 1.5px solid #f3f4f6;
-  transition: 0.2s;
-}
-
-.videoCard:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-}
-
-.videoThumb {
-  position: relative;
-  width: 100%;
-  height: 180px;
-  cursor: pointer;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.videoThumbnailImg {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: 0.3s;
-}
-
-.videoThumb:hover .videoThumbnailImg {
-  transform: scale(1.05);
-}
-
-.videoPlayOverlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: 0.2s;
-}
-
-.videoThumb:hover .videoPlayOverlay {
-  background: rgba(0,0,0,0.45);
-}
-
-.videoPlayBtn {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  color: white;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-  transition: 0.2s;
-}
-
-.videoThumb:hover .videoPlayBtn {
-  transform: scale(1.1);
-}
-
-.videoDuration {
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
-  background: rgba(0,0,0,0.75);
-  color: white;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 4px;
-}
-
-.videoEmbed {
-  position: relative;
-  width: 100%;
-  padding-top: 56.25%;
-}
-
-.videoEmbed iframe {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-.closeVideo {
-  display: block;
-  width: 100%;
-  padding: 8px;
-  background: #fef2f2;
-  color: #dc2626;
-  border: none;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  font-family: 'Poppins', sans-serif;
-  transition: 0.15s;
-}
-
-.closeVideo:hover { background: #fee2e2; }
-
-.videoInfo { padding: 14px 16px; }
-
-.videoCat {
-  font-size: 10px;
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 99px;
-  display: inline-block;
-  margin-bottom: 6px;
-}
-
-.videoTitle {
-  font-size: 14px;
-  font-weight: 700;
-  color: #111827;
-  line-height: 1.4;
-  margin-bottom: 3px;
-}
-
-.videoHost {
-  font-size: 11px;
-  color: #9ca3af;
-  font-style: italic;
-  margin-bottom: 10px;
-}
-
-.watchBtn {
-  display: inline-block;
-  padding: 7px 18px;
-  border-radius: 8px;
-  border: none;
-  color: white;
-  font-size: 12px;
-  font-weight: 700;
-  cursor: pointer;
-  font-family: 'Poppins', sans-serif;
-  transition: 0.15s;
-}
-
-.watchBtn:hover { opacity: 0.85; }
-
-/* ── ARTICLE CARD ──────────────────────── */
-.articleCard {
-  display: block;
-  background: white;
-  border-radius: 14px;
-  padding: 18px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  border: 1.5px solid #f3f4f6;
-  text-decoration: none;
-  transition: 0.2s;
-}
-
-.articleCard:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-}
-
-.articleHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.articleSource {
-  font-size: 10px;
-  font-weight: 700;
-  padding: 3px 10px;
-  border-radius: 99px;
-}
-
-.articleTime {
-  font-size: 11px;
-  color: #9ca3af;
-  font-weight: 600;
-}
-
-.articleCat {
-  font-size: 11px;
-  font-weight: 600;
-  color: #9ca3af;
-  display: block;
-  margin-bottom: 4px;
-}
-
-.articleTitle {
-  font-size: 15px;
-  font-weight: 700;
-  color: #111827;
-  line-height: 1.4;
-  margin-bottom: 6px;
-}
-
-.articleDesc {
-  font-size: 12px;
-  color: #6b7280;
-  line-height: 1.6;
-  margin-bottom: 10px;
-}
-
-.articleRead {
-  font-size: 12px;
-  font-weight: 700;
-}
-
-/* ── EXERCISE CARD ──────────────────────── */
-.exCard {
-  background: white;
-  border-radius: 14px;
-  padding: 18px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  border: 1.5px solid #f3f4f6;
-  transition: 0.2s;
-}
-
-.exCard:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-}
-
-.exTop {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.exEmoji {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-}
-
-.exCat {
-  font-size: 10px;
-  font-weight: 700;
-  padding: 3px 10px;
-  border-radius: 99px;
-}
-
-.exTitle {
-  font-size: 15px;
-  font-weight: 700;
-  color: #111827;
-  margin-bottom: 6px;
-}
-
-.exDesc {
-  font-size: 12px;
-  color: #6b7280;
-  line-height: 1.6;
-  margin-bottom: 10px;
-}
-
-.exToggle {
-  background: transparent;
-  border: 1.5px solid;
-  border-radius: 8px;
-  padding: 5px 14px;
-  font-size: 12px;
-  font-weight: 700;
-  cursor: pointer;
-  font-family: 'Poppins', sans-serif;
-  transition: 0.15s;
-}
-
-.exTips {
-  margin-top: 10px;
-  border: 1.5px solid;
-  border-radius: 10px;
-  padding: 12px 14px 12px 28px;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  list-style: none;
-  padding-left: 14px;
-}
-
-.exTips li {
-  font-size: 12px;
-  color: #374151;
-  line-height: 1.5;
-  padding: 4px 0;
-  border-bottom: 1px solid rgba(0,0,0,0.04);
-}
-
-.exTips li:last-child { border-bottom: none; }
-
-/* ── STUDENT CARD ──────────────────────── */
-.stuCard {
-  background: white;
-  border-radius: 14px;
-  padding: 18px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  border: 1.5px solid #f3f4f6;
-  transition: 0.2s;
-}
-
-.stuCard:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-}
-
-.stuTop {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.stuEmoji {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-}
-
-.stuCat {
-  font-size: 10px;
-  font-weight: 700;
-  padding: 3px 10px;
-  border-radius: 99px;
-}
-
-.stuTitle {
-  font-size: 15px;
-  font-weight: 700;
-  color: #111827;
-  margin-bottom: 6px;
-}
-
-.stuDesc {
-  font-size: 12px;
-  color: #6b7280;
-  line-height: 1.6;
-  margin-bottom: 10px;
-}
-
-.stuToggle {
-  background: transparent;
-  border: 1.5px solid;
-  border-radius: 8px;
-  padding: 5px 14px;
-  font-size: 12px;
-  font-weight: 700;
-  cursor: pointer;
-  font-family: 'Poppins', sans-serif;
-  transition: 0.15s;
-}
-
-/* ── BACK ──────────────────────────────── */
+/* ── BACK BUTTON ──────────────────────── */
 .sugBack {
   margin-top: 40px;
   text-align: center;
@@ -745,18 +798,30 @@
   font-size: 14px;
   cursor: pointer;
   font-family: 'Poppins', sans-serif;
-  transition: 0.15s;
+  transition: border-color 0.15s, color 0.15s;
 }
 
 .backBtn:hover { border-color: #4f46e5; color: #4f46e5; }
 
 /* ── RESPONSIVE ──────────────────────── */
+@media (max-width: 900px) {
+  .booksGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
-  .sugGrid { grid-template-columns: 1fr; }
-  .videosGrid { grid-template-columns: 1fr; }
-  /* sugTabs replaced by dropdowns */
-  .sugHeroTitle { font-size: 22px; }
-  .podCard { flex-direction: column; }
-  .podIcon { width: 40px; height: 40px; font-size: 18px; }
+  .sugGrid          { grid-template-columns: 1fr; }
+  .videosGrid       { grid-template-columns: 1fr; }
+  .booksGrid        { grid-template-columns: repeat(2, 1fr); }
+  .sugHeroTitle     { font-size: 22px; }
+  .podCard          { flex-direction: column; }
+  .podIcon          { width: 40px; height: 40px; font-size: 18px; }
+  .bookCoverWrap    { height: 140px; }
+}
+
+@media (max-width: 480px) {
+  .booksGrid        { grid-template-columns: 1fr; }
+  .bookCoverWrap    { height: 180px; }
 }
 

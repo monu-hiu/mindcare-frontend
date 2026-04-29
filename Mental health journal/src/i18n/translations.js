@@ -1958,6 +1958,60 @@ selfCare: {
       },
       ],           
   },
+  hin: {
+  title: "💆 Self Care",
+  subtitle: "Apna khayal rakho — tum iske haqdar ho.",
+  completecount: "Complete kiya",
+  of: "mein se",
+  allDonemsg: "Amazing! Tumne aaj sabhi self-care activities complete kar li hain!",
+
+  sections: [
+    {
+      title: "Physical Care",
+      items: [
+        { id: "water", text: "Aaj 8 glass paani piyo" },
+        { id: "walk", text: "Bahar 20 minute walk karo" },
+        { id: "stretch", text: "10 minute stretching karo" },
+        { id: "meal", text: "Ek nutritious meal khao" },
+        { id: "sleep", text: "Aaj raat 7-8 ghante ki neend lo" },
+        { id: "shower", text: "Ek garam aur relaxing shower lo" },
+      ],
+    },
+    {
+      title: "Mental Care",
+      items: [
+        { id: "journal", text: "Apne journal mein 10 minute likho" },
+        { id: "meditation", text: "5 minute meditation practice karo" },
+        { id: "read", text: "Kuch aisa padho jo tumhe pasand ho" },
+        { id: "social_break", text: "Social media se thoda break lo" },
+        { id: "detox", text: "1 ghante ke liye digital detox karo" },
+        { id: "learn", text: "Aaj kuch naya seekho" },
+      ],
+    },
+    {
+      title: "Emotional Care",
+      items: [
+        { id: "friend", text: "Kisi dost ko call ya text karo jise tum miss karte ho" },
+        { id: "gratitude", text: "3 cheezein likho jin ke liye tum grateful ho" },
+        { id: "laugh", text: "Kuch aisa karo jo tumhe hasaaye" },
+        { id: "movie", text: "Apni favourite movie ya show dekho" },
+        { id: "self_kind", text: "Khud se ek achhi baat bolo" },
+        { id: "forgive", text: "Ek galti ke liye khud ko maaf karo" },
+      ],
+    },
+    {
+      title: "Creative Care",
+      items: [
+        { id: "draw", text: "Kuch draw karo, paint karo ya doodle banao" },
+        { id: "music", text: "Uplifting music suno" },
+        { id: "cook", text: "Kuch aisa cook ya bake karo jo tumhe pasand ho" },
+        { id: "organize", text: "Ek chhoti jagah ko organize karo" },
+        { id: "write", text: "Ek chhoti poem ya story likho" },
+        { id: "photo", text: "Khoobsurat cheezon ki photos lo" },
+      ],
+    },
+  ],
+}
 },
 
  // ══════════════════════════════════════════
