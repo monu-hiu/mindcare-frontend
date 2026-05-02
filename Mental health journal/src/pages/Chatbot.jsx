@@ -1,17 +1,18 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useLanguage } from "../context/LanguageContext";
 import "./chatbot.css";
 
 function Chatbot() {
   const { token, user } = useAuth();
+  const { language, t } = useLanguage(); // ✅ fixed Language → language
 
-  const [messages, setMessages]           = useState([]);
-  const [input, setInput]                 = useState("");
-  const [sending, setSending]             = useState(false);
-  const [loading, setLoading]             = useState(true);
-  const [clearing, setClearing]           = useState(false);
+  const [messages, setMessages]                 = useState([]);
+  const [input, setInput]                       = useState("");
+  const [sending, setSending]                   = useState(false);
+  const [loading, setLoading]                   = useState(true);
+  const [clearing, setClearing]                 = useState(false);
   const [showQuickReplies, setShowQuickReplies] = useState(true);
   const [dynamicReplies, setDynamicReplies]     = useState([]);
 
@@ -19,27 +20,27 @@ function Chatbot() {
   const inputRef  = useRef(null);
 
   const quickReplies = [
-    { text: "I feel anxious 😰",       msg: "I am feeling very anxious right now and don't know what to do" },
-    { text: "Can't sleep 🌙",           msg: "I have been struggling to sleep lately" },
-    { text: "I feel sad 😔",            msg: "I have been feeling really sad and low lately" },
-    { text: "Feeling overwhelmed 😤",   msg: "I feel completely overwhelmed and don't know where to start" },
-    { text: "Low energy ⚡",            msg: "I have very low energy and feel exhausted all the time" },
-    { text: "Breathing exercise 💨",    msg: "Can you guide me through a breathing exercise?" },
-    { text: "Motivate me 🔥",           msg: "I need some motivation and encouragement right now" },
-    { text: "I feel lonely 💙",         msg: "I have been feeling very lonely and disconnected" },
-    { text: "Exam stress 📚",           msg: "I am really stressed about my upcoming exams" },
-    { text: "Anger management 😡",      msg: "I have been feeling very angry lately and need help managing it" },
-    { text: "Panic attack help 🆘",     msg: "I think I am having a panic attack, please help" },
-    { text: "Positive affirmation ✨",  msg: "Can you give me some positive affirmations for today?" },
+    { text: "I feel anxious 😰",      msg: "I am feeling very anxious right now and don't know what to do" },
+    { text: "Can't sleep 🌙",          msg: "I have been struggling to sleep lately" },
+    { text: "I feel sad 😔",           msg: "I have been feeling really sad and low lately" },
+    { text: "Feeling overwhelmed 😤",  msg: "I feel completely overwhelmed and don't know where to start" },
+    { text: "Low energy ⚡",           msg: "I have very low energy and feel exhausted all the time" },
+    { text: "Breathing exercise 💨",   msg: "Can you guide me through a breathing exercise?" },
+    { text: "Motivate me 🔥",          msg: "I need some motivation and encouragement right now" },
+    { text: "I feel lonely 💙",        msg: "I have been feeling very lonely and disconnected" },
+    { text: "Exam stress 📚",          msg: "I am really stressed about my upcoming exams" },
+    { text: "Anger management 😡",     msg: "I have been feeling very angry lately and need help managing it" },
+    { text: "Panic attack help 🆘",    msg: "I think I am having a panic attack, please help" },
+    { text: "Positive affirmation ✨", msg: "Can you give me some positive affirmations for today?" },
   ];
 
   const detectMood = (text) => {
-    const t = text.toLowerCase();
-    if (t.includes("anxious") || t.includes("panic") || t.includes("anxiety")) return "anxious";
-    if (t.includes("sad") || t.includes("lonely") || t.includes("depress"))    return "sad";
-    if (t.includes("angry") || t.includes("anger") || t.includes("rage"))      return "angry";
-    if (t.includes("sleep") || t.includes("insomnia"))                          return "sleep";
-    if (t.includes("motivat") || t.includes("energy") || t.includes("tired"))  return "energy";
+    const lower = text.toLowerCase();
+    if (lower.includes("anxious") || lower.includes("panic") || lower.includes("anxiety")) return "anxious";
+    if (lower.includes("sad") || lower.includes("lonely") || lower.includes("depress"))    return "sad";
+    if (lower.includes("angry") || lower.includes("anger") || lower.includes("rage"))      return "angry";
+    if (lower.includes("sleep") || lower.includes("insomnia"))                              return "sleep";
+    if (lower.includes("motivat") || lower.includes("energy") || lower.includes("tired"))  return "energy";
     return "neutral";
   };
 
@@ -47,21 +48,21 @@ function Chatbot() {
     const mood = detectMood(text);
     if (mood === "anxious") return [
       { text: "Breathing exercise 💨", msg: "Can you guide me through a breathing exercise?" },
-      { text: "Calm me down 🧘",       msg: "Help me calm down right now" },
-      { text: "Grounding technique 🌿",msg: "Teach me a grounding technique" },
-      { text: "Why do I panic? 🤔",    msg: "Why do I get panic attacks?" },
+      { text: "Calm me down 🧘",        msg: "Help me calm down right now" },
+      { text: "Grounding technique 🌿", msg: "Teach me a grounding technique" },
+      { text: "Why do I panic? 🤔",     msg: "Why do I get panic attacks?" },
     ];
     if (mood === "sad") return [
-      { text: "Motivate me 🔥",        msg: "I need some motivation and encouragement" },
-      { text: "Affirmation ✨",         msg: "Can you give me some positive affirmations?" },
-      { text: "Talk to me 💙",         msg: "I just need someone to talk to" },
-      { text: "Get better tips 💡",    msg: "What can help me feel better?" },
+      { text: "Motivate me 🔥",      msg: "I need some motivation and encouragement" },
+      { text: "Affirmation ✨",       msg: "Can you give me some positive affirmations?" },
+      { text: "Talk to me 💙",       msg: "I just need someone to talk to" },
+      { text: "Get better tips 💡",  msg: "What can help me feel better?" },
     ];
     if (mood === "sleep") return [
-      { text: "Sleep tips 😴",         msg: "Give me tips to sleep better" },
-      { text: "Bedtime routine 🌙",    msg: "Help me build a bedtime routine" },
-      { text: "Relaxation 🧘",         msg: "Guide me through a relaxation exercise" },
-      { text: "Why can't I sleep? 🤔", msg: "Why do I struggle with sleep?" },
+      { text: "Sleep tips 😴",          msg: "Give me tips to sleep better" },
+      { text: "Bedtime routine 🌙",     msg: "Help me build a bedtime routine" },
+      { text: "Relaxation 🧘",          msg: "Guide me through a relaxation exercise" },
+      { text: "Why can't I sleep? 🤔",  msg: "Why do I struggle with sleep?" },
     ];
     return quickReplies.slice(0, 4);
   };
@@ -185,8 +186,8 @@ function Chatbot() {
       hour: "2-digit", minute: "2-digit",
     });
 
-  const firstName = user?.name?.split(" ")[0] || "there";
-  const userInitial = user?.name?.charAt(0).toUpperCase() || "U";
+  const firstName    = user?.name?.split(" ")[0] || "there";
+  const userInitial  = user?.name?.charAt(0).toUpperCase() || "U";
 
   return (
     <div className="cbPage">
@@ -196,10 +197,10 @@ function Chatbot() {
         <div className="cbHeaderLeft">
           <div className="cbAiAvatar">🤖</div>
           <div>
-            <p className="cbAiName">MindCare AI</p>
+            <p className="cbAiName">{t("chatbot.title")}</p>
             <p className="cbAiStatus">
               <span className="cbOnlineDot" />
-              Always here for you
+              {t("chatbot.status")}
             </p>
           </div>
         </div>
@@ -208,7 +209,7 @@ function Chatbot() {
             className="cbClearBtn"
             onClick={clearHistory}
             disabled={clearing || messages.length === 0}
-            title="Clear chat"
+            title={t("chatbot.clearHistory")}
           >
             🗑️
           </button>
@@ -223,15 +224,18 @@ function Chatbot() {
             <div className="cbLoadingDots">
               <span /><span /><span />
             </div>
-            <p>Loading your conversation...</p>
+            <p>{t("common.loading")}</p>
           </div>
         ) : messages.length === 0 ? (
           <div className="cbWelcome">
             <div className="cbWelcomeAvatar">🤖</div>
-            <h2>Hi {firstName}! 👋</h2>
-            <p>I'm MindCare AI — your personal mental wellness companion. I'm here to listen, support, and help you feel better.</p>
-            <p className="cbWelcomeHint">💙 Everything you share stays private</p>
-            <p className="cbWelcomeDisclaimer">⚠️ I'm an AI, not a therapist. For serious concerns, please reach out to a mental health professional.</p>
+            {/* ✅ welcomeTitle with dynamic name */}
+            <h2>{t("chatbot.welcomeTitle").replace("{name}", firstName)}</h2>
+            <p>{t("chatbot.welcomeText")}</p>
+            {/* ✅ welcomeHint and everything are now separate lines */}
+            <p className="cbWelcomeHint">💙 {t("chatbot.welcomeHint")} {t("chatbot.everything")}</p>
+            {/* ✅ fixed typo: "chatbot. disclimar" → "chatbot.disclimar" */}
+            <p className="cbWelcomeDisclaimer">{t("chatbot.disclimar")}</p>
           </div>
         ) : (
           messages.map((msg) => (
@@ -269,7 +273,8 @@ function Chatbot() {
       {/* ── QUICK REPLIES — welcome grid ── */}
       {showQuickReplies && messages.length === 0 && !loading && (
         <div className="cbQuickSection">
-          <p className="cbQuickTitle">How can I help you today?</p>
+          {/* ✅ translated */}
+          <p className="cbQuickTitle">{t("chatbot.welcomeHint")}</p>
           <div className="cbQuickGrid">
             {quickReplies.map((q, i) => (
               <button
@@ -306,7 +311,7 @@ function Chatbot() {
         <textarea
           ref={inputRef}
           className="cbInput"
-          placeholder="Type your message... (Enter to send)"
+          placeholder={t("chatbot.inputPlaceholder")} // ✅ translated
           value={input}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
@@ -318,11 +323,7 @@ function Chatbot() {
           onClick={() => sendMessage()}
           disabled={sending || !input.trim()}
         >
-          {sending ? (
-            <span className="cbSendLoader" />
-          ) : (
-            <span>➤</span>
-          )}
+          {sending ? <span className="cbSendLoader" /> : <span>➤</span>}
         </button>
       </div>
 

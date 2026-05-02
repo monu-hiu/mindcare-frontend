@@ -59,7 +59,7 @@ function AnxietyTracker() {
 
   const fetchHistory = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/anxiety/history", {
+      const res = await fetch("https://mindcare-backend-v56a.onrender.com/api/anxiety/history", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -77,7 +77,7 @@ function AnxietyTracker() {
 
   const fetchStats = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/anxiety/stats", {
+      const res = await fetch("https://mindcare-backend-v56a.onrender.com/api/anxiety/stats", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -122,12 +122,12 @@ function AnxietyTracker() {
 
     const sendNotif = (title, body) => {
       if (Notification.permission === "granted") {
-        new Notification(title, { body, icon: "/Logo_mindcare.png" });
+        new Notification(title, { body, icon: "/Logo_mindcare.jpg" });
         notifSentRef.current = true;
       } else if (Notification.permission !== "denied") {
         Notification.requestPermission().then((p) => {
           if (p === "granted") {
-            new Notification(title, { body, icon: "/Logo_mindcare.png" });
+            new Notification(title, { body, icon: "/Logo_mindcare.jpg" });
             notifSentRef.current = true;
           }
         });
@@ -149,10 +149,10 @@ function AnxietyTracker() {
     checkConsecutiveHighAnxiety(level);
   };
 
-  const checkConsecutiveHighAnxiety = async (todayLevel) => {
+ const checkConsecutiveHighAnxiety = async (todayLevel) => {
     if (todayLevel < 7) return;
     try {
-      const res = await fetch("http://localhost:5000/api/anxiety/history", {
+      const res = await fetch("https://mindcare-backend-v56a.onrender.com/api/anixety/history", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -175,9 +175,9 @@ function AnxietyTracker() {
     triggerSupportCall();
   };
 
-  const triggerSupportCall = async () => {
+ const triggerSupportCall = async () => {
     try {
-      await fetch("http://localhost:5000/api/support/trigger-call", {
+      await fetch("https://mindcare-backend-v56a.onrender.com/api/support/trigger-call", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -193,7 +193,7 @@ function AnxietyTracker() {
     setSaving(true);
     setError("");
     try {
-      const res = await fetch("http://localhost:5000/api/anxiety/save", {
+      const res = await fetch("https://mindcare-backend-v56a.onrender.com/api/anxiety/save", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

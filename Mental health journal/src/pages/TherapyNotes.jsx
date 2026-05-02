@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import {useLanguage} from "../context/LanguageContext";
+import translations from "../i18n/translations";
 import "./therapy.css";
 
 function TherapyNotes() {
@@ -14,6 +16,7 @@ function TherapyNotes() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [expandedNote, setExpandedNote] = useState(null);
+  const {language,t} = useLanguage();
 
   const categories = [
     "Session Notes", "Homework", "Insights",
@@ -73,22 +76,22 @@ function TherapyNotes() {
   return (
     <div className="therapyPage">
       <div className="therapyHeader">
-        <h1>🗒️ Therapy Notes</h1>
-        <p>Keep track of your therapy sessions, insights, and homework.</p>
+        <h1>{t("notes.title")}</h1>
+        <p>{t("notes.subtitle")}</p>
         <div className="therapyPrivacyBadge">
-          🔒 Stored privately on your device
+          {t("notes.security")}
         </div>
       </div>
 
       {/* Add Note Form */}
       <div className="therapyForm">
-        <h2>Add New Note</h2>
+        <h2>{t("notes.add")}</h2>
 
         <div className="formGroup">
-          <label>Title</label>
+          <label>{t("notes.note")}</label>
           <input
             type="text"
-            placeholder="e.g. Session with Dr. Sharma — 20 March"
+            placeholder={t("notes.nplaceholder")}
             value={title}
             onChange={(e) => { setTitle(e.target.value); setError(""); }}
             maxLength={100}
@@ -96,7 +99,7 @@ function TherapyNotes() {
         </div>
 
         <div className="formGroup">
-          <label>Category</label>
+          <label>{t("notes.category")}</label>
           <select
             className="categoryDropdown"
             value={category}
@@ -109,9 +112,9 @@ function TherapyNotes() {
         </div>
 
         <div className="formGroup">
-          <label>Notes</label>
+          <label>{t("notes.cnotes")}</label>
           <textarea
-            placeholder="Write your therapy notes here..."
+            placeholder={t("notes.placeholder")}
             value={content}
             onChange={(e) => { setContent(e.target.value); setError(""); }}
             rows={6}
@@ -119,14 +122,14 @@ function TherapyNotes() {
         </div>
 
         {error && <p className="errorText">{error}</p>}
-        {saved && <p className="successText">✅ Note saved!</p>}
+        {saved && <p className="successText">{t("notes.saved")}</p>}
 
         <button
           onClick={saveNote}
           disabled={saving}
           className="saveBtn"
         >
-          {saving ? "Saving..." : "Save Note"}
+          {saving ? t("common.saving") : t("notes.saveBtn")}
         </button>
       </div>
 
@@ -134,9 +137,9 @@ function TherapyNotes() {
       <div className="therapyNotesList">
         <h2>Your Notes ({notes.length})</h2>
         {loading ? (
-          <p className="loadingText">Loading...</p>
+          <p className="loadingText">{t("common.loading")}</p>
         ) : notes.length === 0 ? (
-          <p className="emptyText">No therapy notes yet. Add your first note!</p>
+          <p className="emptyText">{t("notes.emptyText")}</p>
         ) : (
           notes.map((note) => (
             <div key={note.id} className="therapyNoteCard">
@@ -189,7 +192,7 @@ function TherapyNotes() {
 
       <div className="navButtons">
         <Link to="/dashboard">
-          <button className="backBtn">← Back to Dashboard</button>
+          <button className="backBtn">{t("common.back")}</button>
         </Link>
       </div>
     </div>

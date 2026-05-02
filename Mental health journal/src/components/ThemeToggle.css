@@ -1,0 +1,79 @@
+/* ThemeToggle.css */
+
+.themeToggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 99px;
+  transition: 0.15s;
+  min-height: unset;
+  flex-shrink: 0;
+}
+
+.themeToggle:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.themeIcon {
+  font-size: 15px;
+  line-height: 1;
+}
+
+/* Toggle Track */
+.themeTrack {
+  width: 36px;
+  height: 20px;
+  border-radius: 99px;
+  background: rgba(255,255,255,0.25);
+  position: relative;
+  transition: background 0.3s ease;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  flex-shrink: 0;
+}
+
+.themeTrack.dark {
+  background: #4f46e5;
+  border-color: #4f46e5;
+}
+
+/* Toggle Thumb */
+.themeThumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: white;
+  transition: transform 0.3s ease, background 0.3s ease;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+.themeTrack.dark .themeThumb {
+  transform: translateX(16px);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .themeIcon {
+    font-size: 16px;
+  }
+  
+  .themeTrack {
+    width: 32px;
+    height: 18px;
+  }
+  
+  .themeThumb {
+    width: 12px;
+    height: 12px;
+  }
+  
+  .themeTrack.dark .themeThumb {
+    transform: translateX(14px);
+  }
+}

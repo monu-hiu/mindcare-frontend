@@ -2,9 +2,12 @@ import "./reflection.css";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
+import {useLanguage} from "../context/LanguageContext";
+import translations from "../i18n/translations";
 
 function Reflection() {
   const { token } = useAuth();
+  const {language,t} = useLanguage();
 
   const [happy, setHappy] = useState("");
   const [sad, setSad] = useState("");
@@ -95,26 +98,25 @@ function Reflection() {
   return (
     <div className="reflection">
       <div className="overlay">
-        <h1>Before & After Reflection</h1>
+        <h1>{t("journal.title")}</h1>
         <p className="subtitle">
-          Reflect on moments that shaped your emotions today.
-          This space is for awareness, not judgment.
+          {t("journal.subtitle")}
         </p>
 
         <div className="panels">
           <div className="panel happy">
-            <h2>🌞 Happiest I felt when…</h2>
+            <h2>{t("journal.happypannel")}</h2>
             <textarea
-              placeholder="Describe a moment that made you feel happy..."
+              placeholder={t("journal.happyPlaceholder")}
               value={happy}
               onChange={(e) => setHappy(e.target.value)}
             />
           </div>
 
           <div className="panel sad">
-            <h2>🌧️ Unhappiest I felt when…</h2>
+            <h2>{t("journal.unhappyPannel")}</h2>
             <textarea
-              placeholder="Describe a moment that made you feel low..."
+              placeholder={t("journal.unhappyPlaceholder")}
               value={sad}
               onChange={(e) => setSad(e.target.value)}
             />
@@ -122,9 +124,9 @@ function Reflection() {
         </div>
 
         <div className="coping">
-          <h2>💡 What helped you cope?</h2>
+          <h2>{t("journal.coping")}</h2>
           <textarea
-            placeholder="What helped you handle the situation?"
+            placeholder={t("journal.copingPlaceholder")}
             value={cope}
             onChange={(e) => setCope(e.target.value)}
           />
@@ -136,7 +138,7 @@ function Reflection() {
 
         {saved && (
           <p style={{ color: "#22c55e", marginBottom: "10px" }}>
-            ✅ Journal saved successfully!
+            {t("journal.saveSuccess")}
           </p>
         )}
 
@@ -156,16 +158,16 @@ function Reflection() {
             marginBottom: "40px",
           }}
         >
-          {saving ? "Saving..." : "Save Journal Entry"}
+          {saving ? t("common.save") : t("journal.saveEntry")}
         </button>
 
         {/* Journal History */}
         <div className="journalHistory">
-          <h2>📓 Past Reflections</h2>
+          <h2>{t("journal.pastTitle")}</h2>
           {loadingHistory ? (
-            <p>Loading...</p>
+            <p>{t("common.loading")}</p>
           ) : history.length === 0 ? (
-            <p className="subtitle">No entries yet. Write your first reflection!</p>
+            <p className="subtitle">{t("journal.pastSubtitle")}</p>
           ) : (
             history.map((entry) => (
               <div key={entry._id} className="journalEntry">
@@ -181,17 +183,17 @@ function Reflection() {
                     onClick={() => deleteJournal(entry._id)}
                     className="deleteBtn"
                   >
-                    🗑️ Delete
+                    🗑️ {t("common.delete")}
                   </button>
                 </div>
                 {entry.happy && (
-                  <p><strong>🌞 Happy:</strong> {entry.happy}</p>
+                  <p><strong>{t("journal.happy")}</strong> {entry.happy}</p>
                 )}
                 {entry.sad && (
-                  <p><strong>🌧️ Low:</strong> {entry.sad}</p>
+                  <p><strong>{t("journal.Low")}</strong> {entry.sad}</p>
                 )}
                 {entry.cope && (
-                  <p><strong>💡 Coped by:</strong> {entry.cope}</p>
+                  <p><strong>{t("journal.coped")}</strong> {entry.cope}</p>
                 )}
               </div>
             ))
@@ -200,7 +202,7 @@ function Reflection() {
 
         <div className="navButtons">
           <Link to="/dashboard">
-            <button className="navBtn">Back to Dashboard</button>
+            <button className="navBtn">{t("common.back")}</button>
           </Link>
         </div>
 

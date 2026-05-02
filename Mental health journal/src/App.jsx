@@ -31,10 +31,12 @@ import FeedbackViewer from "./pages/FeedbackViewer";
 import Chatbot from "./pages/Chatbot";
 import Header from "./components/Header_final";
 import Footer from "./components/Footer";
+import { ThemeProvider } from "./context/ThemeContext";
 
 function App() {
   return (
     // LanguageProvider wraps everything so all pages can access language
+    <ThemeProvider> 
     <LanguageProvider>
       <AuthProvider>
         <Router>
@@ -71,6 +73,7 @@ function App() {
         </Router>
       </AuthProvider>
     </LanguageProvider>
+     </ThemeProvider>
   );
 }
 

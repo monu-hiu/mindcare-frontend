@@ -596,7 +596,9 @@ export const translations = {
       status: "Always here for you",
       welcomeTitle: "Hi {name}! 👋",
       welcomeText: "I'm MindCare AI — your mental wellness companion.",
-      welcomeHint: "I'm here to listen, support, and help you feel better. Everything you share stays private.",
+      welcomeHint: "I'm here to listen, support, and help you feel better.",
+      everything:" Everything you share stays private.",
+      disclimar:"⚠️ I'm an AI, not a therapist. For serious concerns, please reach out to a mental health professional.",
       inputPlaceholder: "Type your message... (Enter to send)",
       clearHistory: "Clear History",
       quickReplies: [
@@ -613,7 +615,9 @@ export const translations = {
       status: "हमेशा आपके लिए यहाँ",
       welcomeTitle: "नमस्ते {name}! 👋",
       welcomeText: "मैं MindCare AI हूं — आपका मानसिक स्वास्थ्य साथी।",
-      welcomeHint: "मैं सुनने, सहारा देने और आपको बेहतर महसूस कराने के लिए यहाँ हूं। आप जो भी साझा करेंगे वो निजी रहेगा।",
+      welcomeHint: "मैं सुनने, सहारा देने और आपको बेहतर महसूस कराने के लिए यहाँ हूं।",
+      everything:"आप जो भी साझा करेंगे वो निजी रहेगा।",
+       disclimar:"⚠️ मैं एक AI हूँ, कोई थेरेपिस्ट नहीं। गंभीर समस्याओं के लिए कृपया किसी मानसिक स्वास्थ्य विशेषज्ञ से संपर्क करें।",
       inputPlaceholder: "अपना संदेश लिखें... (भेजने के लिए Enter दबाएं)",
       clearHistory: "इतिहास साफ़ करें",
       quickReplies: [
@@ -630,7 +634,9 @@ export const translations = {
       status: "Hamesha aapke liye yahan",
       welcomeTitle: "Hi {name}! 👋",
       welcomeText: "Main MindCare AI hoon — aapka mental wellness companion.",
-      welcomeHint: "Main sunne, support dene aur better feel karane ke liye yahan hoon. Jo bhi share karoge woh private rahega.",
+      welcomeHint: "Main sunne, support dene aur better feel karane ke liye yahan hoon. ",
+      everything:"Jo bhi share karoge woh private rahega.",
+       disclimar:"⚠️ Main ek AI hoon, koi therapist nahi. Serious concerns ke liye please kisi mental health professional se contact karein.",
       inputPlaceholder: "Apna message type karo... (bhejne ke liye Enter dabao)",
       clearHistory: "History Clear Karo",
       quickReplies: [
@@ -2344,7 +2350,305 @@ hin: {
 },
   
 },
+// ══════════════════════════════════════════
+  // Journal
+  //══════════════════════════════════════════
 
+journal:{
+  en:{
+    title:"Before & After Reflection",
+    subtitle: "  Reflect on moments that shaped your emotions today. This space is for awareness, not judgment.", 
+    happypannel:"🌞 Happiest I felt when…",
+    happyPlaceholder:"Describe a moment that made you feel happy...",
+    unhappyPannel:"🌧️ Unhappiest I felt when…",
+    unhappyPlaceholder:"Describe a moment that made you feel low...",
+    coping:"💡 What helped you cope?",
+    copingPlaceholder:"What helped you handle the situation?",
+    saveSuccess:" ✅ Journal saved successfully!",
+    saveEntry:"Save Journal Entry",
+    pastTitle:"📓 Past Reflections",
+    pastSubtitle:"No entries yet. Write your first reflection!",
+    happy:"🌞 Happy:",
+    Low:"🌧️ Low:",
+    coped:"💡 Coped by:"
+
+
+  },
+   hi: {
+    title: "पहले और बाद की सोच",
+    subtitle: "आज के उन पलों पर विचार करें जिन्होंने आपकी भावनाओं को प्रभावित किया। यह स्थान जागरूकता के लिए है, निर्णय के लिए नहीं।",
+    happypannel: "🌞 मैं सबसे खुश तब था/थी जब…",
+    happyPlaceholder: "उस पल का वर्णन करें जिसने आपको खुश किया...",
+    unhappyPannel: "🌧️ मैं सबसे उदास तब था/थी जब…",
+    unhappyPlaceholder: "उस पल का वर्णन करें जिसने आपको उदास किया...",
+    coping: "💡 आपने कैसे संभाला?",
+    copingPlaceholder: "उस स्थिति को संभालने में क्या मदद मिली?",
+    saveSuccess: "✅ जर्नल सफलतापूर्वक सेव हो गया!",
+    saveEntry: "जर्नल एंट्री सेव करें",
+    pastTitle: "📓 पिछली प्रविष्टियाँ",
+    pastSubtitle: "अभी कोई प्रविष्टि नहीं है। अपनी पहली सोच लिखें!",
+    happy: "🌞 खुशी:",
+    Low: "🌧️ उदासी:",
+    coped: "💡 संभाला इस तरह:"
+  },
+   hin: {
+    title: "Before & After Reflection",
+    subtitle: "Aaj ke un moments par reflect karein jinhone aapki emotions ko affect kiya. Yeh space awareness ke liye hai, judgment ke liye nahi.",
+    happypannel: "🌞 Main sabse zyada khush tab tha/thi jab…",
+    happyPlaceholder: "Woh moment describe karein jisne aapko khush kiya...",
+    unhappyPannel: "🌧️ Main sabse zyada udaas tab tha/thi jab…",
+    unhappyPlaceholder: "Woh moment describe karein jisne aapko low feel karaya...",
+    coping: "💡 Aapne kaise handle kiya?",
+    copingPlaceholder: "Situation ko handle karne mein kya help mila?",
+    saveSuccess: "✅ Journal successfully save ho gaya!",
+    saveEntry: "Journal Entry Save karein",
+    pastTitle: "📓 Past Reflections",
+    pastSubtitle: "Abhi tak koi entry nahi hai. Apni pehli reflection likhein!",
+    happy: "🌞 Khushi:",
+    Low: "🌧️ Udaasi:",
+    coped: "💡 Aise handle kiya:"
+  }
+},
+
+// ══════════════════════════════════════════
+  //Self-Congrats
+  // ══════════════════════════════════════════
+congrats:{
+  en:{
+    title:"🌟 Self Congratulations",
+    subtitle:"Celebrate your wins — big and small. You deserve recognition!",
+    promptsTitle: "Need inspiration? Click a prompt:",
+    selfCongrats:"What are you celebrating today?",
+    placeholder: "Select category...",
+    textPlaceholder:"Write what you are proud of...",
+successText:"🎉 Celebrated! Keep going!",
+celebBtn:" 🎉 Celebrate This!",
+history:"Your Celebrations",
+emptyText:" No celebrations yet. You have more wins than you realize!",
+label1:"Achievement",
+label2:"Courage",
+label3:"Growth",
+label4:"Kindness",
+label5:"Resilience",
+label6:"Small Win",
+prompts:{
+  p1: "Today I am proud of myself for...",
+  p2: "I showed courage when I...",
+  p3: "I grew as a person by...",
+  p4: "I was kind to myself when...",
+  p5: "Despite challenges, I managed to...",
+  p6: "One small win I had today...",
+
+},
+
+  },
+  hi: {
+  title: "🌟 स्वयं को बधाई",
+  subtitle: "अपनी छोटी-बड़ी सफलताओं का जश्न मनाएं। आप सराहना के हकदार हैं!",
+  promptsTitle: "प्रेरणा चाहिए? किसी प्रॉम्प्ट पर क्लिक करें:",
+  selfCongrats: "आज आप किस बात का जश्न मना रहे हैं?",
+  placeholder: "श्रेणी चुनें...",
+  textPlaceholder: "जिस बात पर आपको गर्व है, उसे लिखें...",
+  successText: "🎉 जश्न मनाया! ऐसे ही आगे बढ़ते रहें!",
+  celebBtn: "🎉 इसे सेलिब्रेट करें!",
+  history: "आपके जश्न",
+  emptyText: "अभी तक कोई जश्न नहीं। आपके पास सोच से ज्यादा सफलताएं हैं!",
+  label1: "उपलब्धि",
+label2: "साहस",
+label3: "विकास",
+label4: "दयालुता",
+label5: "लचीलापन",
+label6: "छोटी जीत",
+
+prompts: {
+  p1: "आज मुझे खुद पर गर्व है क्योंकि...",
+  p2: "मैंने साहस दिखाया जब मैंने...",
+  p3: "मैं एक व्यक्ति के रूप में विकसित हुआ/हुई जब मैंने...",
+  p4: "मैंने खुद के प्रति दयालुता दिखाई जब मैंने...",
+  p5: "चुनौतियों के बावजूद, मैंने यह कर लिया कि...",
+  p6: "आज मेरी एक छोटी जीत थी...",
+},
+},
+hin:{
+  title: "🌟 Self Congratulations",
+  subtitle: "Apni chhoti-badi wins celebrate karo. Aap recognition ke haqdar ho!",
+  promptsTitle: "Inspiration chahiye? Kisi prompt par click karein:",
+  selfCongrats: "Aaj aap kis baat ka celebration kar rahe ho?",
+  placeholder: "Category select karein...",
+  textPlaceholder: "Jo cheez par aapko proud feel ho raha hai, likhein...",
+  successText: "🎉 Celebrate ho gaya! Aise hi aage badhte raho!",
+  celebBtn: "🎉 Isse Celebrate karo!",
+  history: "Aapke Celebrations",
+  emptyText: "Abhi tak koi celebration nahi. Aapke paas soch se zyada wins hain!",
+  label1: "Achievement",
+label2: "Courage",
+label3: "Growth",
+label4: "Kindness",
+label5: "Resilience",
+label6: "Small Win",
+
+prompts: {
+  p1: "Aaj mujhe khud par proud hai kyunki...",
+  p2: "Maine courage dikhaya jab maine...",
+  p3: "Main ek person ke roop mein grow hua/hui jab maine...",
+  p4: "Maine khud ke saath kindness dikhayi jab maine...",
+  p5: "Challenges ke bawajood, maine yeh manage kiya ki...",
+  p6: "Aaj meri ek chhoti win thi...",
+}
+},
+
+
+},
+
+ // ══════════════════════════════════════════
+  // Reviews and Reflection
+  // ══════════════════════════════════════════
+
+reviews: {
+  en: {
+    title: "🔍 Reviews & Reflection",
+    subtitle: "Reflect on your week or month to track your growth over time.",
+    weekly: "   📅 Weekly Review",
+    monthly: "   📆 Monthly Review",
+    weeks: " This Week's",
+    months: "This Month's",
+    w:"week's",
+    m:"month's",
+    review: "Review",
+    over:"Overall",
+    rate:"rating",
+    highlight:"🌟 Highlight — Best moment this",
+    hplaceholder:"What was your best moment or achievement?",
+    challenge:"💪 Challenge — What was difficult?",
+    cplaceholder:"What challenged you most? How did you handle it?",
+    learned:"📚 Learned — What did you learn about yourself?",
+    placeholder:"What insight or lesson did you gain?",
+    Next:"🎯 Next",
+    goal:"goal:",
+    nextPlaceholder:"What is one thing you want to focus on next?",
+    reviews:"✅ Review saved!",
+    saveBtn:"   Save Review",
+    history:"Past Reviews",
+    emptyText:"No reviews yet. Start your first review!",
+    high:"🌟 Highlight",
+    chal:"💪 Challenge",
+    learn:"📚 Learned",
+    nextGoal:"🎯 Next Goal",
+
+  },
+  hi:{
+  title: "🔍 समीक्षा और चिंतन",
+  subtitle: "समय के साथ अपनी प्रगति को समझने के लिए अपने सप्ताह या महीने पर विचार करें।",
+  weekly: "📅 साप्ताहिक समीक्षा",
+  monthly: "📆 मासिक समीक्षा",
+  weeks: "इस सप्ताह की",
+  months: "इस महीने की",
+  w:"सप्ताह की",
+  m: "महीने की",
+  review: "समीक्षा",
+  over: "कुल",
+  rate: "रेटिंग",
+  highlight: "🌟 मुख्य क्षण — इस",
+  hplaceholder: "आपका सबसे अच्छा पल या उपलब्धि क्या थी?",
+  challenge: "💪 चुनौती — क्या कठिन था?",
+  cplaceholder: "आपके लिए सबसे कठिन क्या था? आपने उसे कैसे संभाला?",
+  learned: "📚 सीखा — आपने अपने बारे में क्या सीखा?",
+  placeholder: "आपने कौन सा अनुभव या सबक सीखा?",
+  Next: "🎯 अगला",
+  goal: "लक्ष्य:",
+  nextPlaceholder: "अगले के लिए आप किस एक चीज़ पर ध्यान देना चाहते हैं?",
+  reviews: "✅ समीक्षा सेव हो गई!",
+  saveBtn: "समीक्षा सेव करें",
+  history: "पिछली समीक्षाएं",
+  emptyText: "अभी तक कोई समीक्षा नहीं है। अपनी पहली समीक्षा शुरू करें!",
+  high: "🌟 मुख्य क्षण",
+  chal: "💪 चुनौती",
+  learnedShort: "📚 सीखा",
+  nextGoal: "🎯 अगला लक्ष्य"
+
+  },
+  hin: {
+  title: "🔍 Reviews & Reflection",
+  subtitle: "Apne week ya month par reflect karein taaki aap apni growth track kar sakein.",
+  weekly: "📅 Weekly Review",
+  monthly: "📆 Monthly Review",
+  weeks: "Is week ka",
+  months: "Is month ka",
+  w:"week ka",
+  m:"month ka",
+  review: "Review",
+  over: "Overall",
+  rate: "Rating",
+  highlight: "🌟 Highlight — Is",
+  hplaceholder: "Aapka best moment ya achievement kya tha?",
+  challenge: "💪 Challenge — Kya difficult tha?",
+  cplaceholder: "Sabse zyada kya challenging tha? Aapne kaise handle kiya?",
+  learned: "📚 Learned — Aapne apne baare mein kya seekha?",
+  placeholder: "Aapne kya insight ya lesson gain kiya?",
+  Next: "🎯 Next",
+  goal: "Goal:",
+  nextPlaceholder: "Agla focus kis ek cheez par rakhna chahte ho?",
+  reviews: "✅ Review save ho gaya!",
+  saveBtn: "Save Review",
+  history: "Past Reviews",
+  emptyText: "Abhi tak koi review nahi hai. Apna pehla review shuru karein!",
+  high: "🌟 Highlight",
+  chal: "💪 Challenge",
+  learnedShort: "📚 Learned",
+  nextGoal: "🎯 Next Goal"
+}
+
+},
+
+ // ══════════════════════════════════════════
+  // Therapy Notes
+  // ══════════════════════════════════════════
+notes: {
+  en: {
+    title: "🗒️ Therapy Notes",
+    subtitle: "Keep track of your therapy sessions, insights, and homework.",
+    security: "🔒 Stored privately on your device",
+    add: "Add New Note",
+    note: "Title",
+    nplaceholder: "e.g. Session with Dr. Sharma — 20 March",
+    category: "Category",
+    cnotes: "Notes",
+    placeholder: "Write your therapy notes here...",
+    saved: "✅ Note saved!",
+    saveBtn: "Save Note",
+    emptyText: "No therapy notes yet. Add your first note!",
+  },
+
+  hi: {
+    title: "🗒️ थेरेपी नोट्स",
+    subtitle: "अपनी थेरेपी सत्र, अनुभव और होमवर्क को ट्रैक करें।",
+    security: "🔒 आपके डिवाइस पर निजी रूप से सुरक्षित",
+    add: "नया नोट जोड़ें",
+    note: "शीर्षक",
+    nplaceholder: "जैसे: डॉ. शर्मा के साथ सत्र — 20 मार्च",
+    category: "श्रेणी",
+    cnotes: "नोट्स",
+    placeholder: "यहाँ अपने थेरेपी नोट्स लिखें...",
+    saved: "✅ नोट सेव हो गया!",
+    saveBtn: "नोट सेव करें",
+    emptyText: "अभी तक कोई थेरेपी नोट नहीं है। अपना पहला नोट जोड़ें!",
+  },
+
+  hin: {
+    title: "🗒️ Therapy Notes",
+    subtitle: "Apne therapy sessions, insights aur homework ka record rakhein.",
+    security: "🔒 Aapke device par privately save hai",
+    add: "Naya Note Add karein",
+    note: "Title",
+    nplaceholder: "Jaise: Dr. Sharma ke saath session — 20 March",
+    category: "Category",
+    cnotes: "Notes",
+    placeholder: "Yahan apne therapy notes likhein...",
+    saved: "✅ Note save ho gaya!",
+    saveBtn: "Note Save karein",
+    emptyText: "Abhi tak koi therapy note nahi hai. Apna pehla note add karein!",
+  }
+},
 
   // ══════════════════════════════════════════
   // HEADER NAV

@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./review.css";
+import {useLanguage} from "../context/LanguageContext";
+import translations from "../i18n/translations";
 
 function ReviewsReflection() {
   const [reviews, setReviews] = useState([]);
@@ -14,6 +16,7 @@ function ReviewsReflection() {
   });
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState("");
+  const {language,t} = useLanguage();
 
   useEffect(() => {
     const saved = localStorage.getItem("mindcare_reviews");
@@ -72,8 +75,8 @@ function ReviewsReflection() {
   return (
     <div className="reviewsPage">
       <div className="reviewsHeader">
-        <h1>🔍 Reviews & Reflection</h1>
-        <p>Reflect on your week or month to track your growth over time.</p>
+        <h1>{t("reviews.title")}</h1>
+        <p>{t("reviews.subtitle")}</p>
       </div>
 
       {/* Tab Selection */}
@@ -82,24 +85,24 @@ function ReviewsReflection() {
           className={`reviewTab ${activeTab === "weekly" ? "active" : ""}`}
           onClick={() => setActiveTab("weekly")}
         >
-          📅 Weekly Review
+        {t("reviews.weekly")}
         </button>
         <button
           className={`reviewTab ${activeTab === "monthly" ? "active" : ""}`}
           onClick={() => setActiveTab("monthly")}
         >
-          📆 Monthly Review
+         {t("reviews.monthly")}
         </button>
       </div>
 
       {/* Form */}
       <div className="reviewForm">
-        <h2>{activeTab === "weekly" ? "This Week's" : "This Month's"} Review</h2>
+        <h2>{activeTab === "weekly" ? t("reviews.weeks") : t("reviews.months")} {t("reviews.review")}</h2>
 
         {/* Rating */}
         <div className="ratingSection">
           <label>
-            Overall {activeTab === "weekly" ? "week" : "month"} rating:
+            {t("reviews.over")} {activeTab === "weekly" ? t("reviews.w") : t("reviews.m")} {t("reviews.rate")}:
             <span style={{ color: getRatingColor(formData.rating), fontWeight: 700 }}>
               {" "}{getRatingEmoji(formData.rating)} {formData.rating}/10
             </span>
@@ -113,9 +116,9 @@ function ReviewsReflection() {
         </div>
 
         <div className="formGroup">
-          <label>🌟 Highlight — Best moment this {activeTab === "weekly" ? "week" : "month"}:</label>
+          <label>{t("reviews.highlight")} {activeTab === "weekly" ? t("reviews.w") : t("reviews.m")}:</label>
           <textarea
-            placeholder="What was your best moment or achievement?"
+            placeholder={t("reviews.hplaceholder")}
             value={formData.highlight}
             onChange={(e) => handleChange("highlight", e.target.value)}
             rows={3}
@@ -123,9 +126,9 @@ function ReviewsReflection() {
         </div>
 
         <div className="formGroup">
-          <label>💪 Challenge — What was difficult?</label>
+          <label>{t("reviews.challenge")}</label>
           <textarea
-            placeholder="What challenged you most? How did you handle it?"
+            placeholder={t("reviews.cplaceholder")}
             value={formData.challenge}
             onChange={(e) => handleChange("challenge", e.target.value)}
             rows={3}
@@ -133,9 +136,9 @@ function ReviewsReflection() {
         </div>
 
         <div className="formGroup">
-          <label>📚 Learned — What did you learn about yourself?</label>
+          <label>{t("reviews.learned")}</label>
           <textarea
-            placeholder="What insight or lesson did you gain?"
+            placeholder={t("reviews.placeholder")}
             value={formData.learned}
             onChange={(e) => handleChange("learned", e.target.value)}
             rows={3}
@@ -143,9 +146,9 @@ function ReviewsReflection() {
         </div>
 
         <div className="formGroup">
-          <label>🎯 Next {activeTab === "weekly" ? "week's" : "month's"} goal:</label>
+          <label>{t("reviews.Next")} {activeTab === "weekly" ? t("reviews.w") : t("reviews.m")} {t("reviews.goal")}</label>
           <textarea
-            placeholder="What is one thing you want to focus on next?"
+            placeholder={t("reviews.nextPlaceholder")}
             value={formData.nextWeekGoal}
             onChange={(e) => handleChange("nextWeekGoal", e.target.value)}
             rows={2}
@@ -153,18 +156,18 @@ function ReviewsReflection() {
         </div>
 
         {error && <p className="errorText">{error}</p>}
-        {saved && <p className="successText">✅ Review saved!</p>}
+        {saved && <p className="successText">{t("reviews.reviews")}</p>}
 
         <button onClick={saveReview} className="saveBtn">
-          Save Review
+        {t("common.save")}
         </button>
       </div>
 
       {/* Past Reviews */}
       <div className="reviewsHistory">
-        <h2>Past Reviews ({reviews.length})</h2>
+        <h2>{t("reviews.history")} ({reviews.length})</h2>
         {reviews.length === 0 ? (
-          <p className="emptyText">No reviews yet. Start your first review!</p>
+          <p className="emptyText">{t("reviews.emptyText")}</p>
         ) : (
           reviews.map((review) => (
             <div key={review.id} className="reviewCard">
@@ -194,25 +197,25 @@ function ReviewsReflection() {
               <div className="reviewCardBody">
                 {review.highlight && (
                   <div className="reviewField">
-                    <p className="reviewFieldLabel">🌟 Highlight</p>
+                    <p className="reviewFieldLabel">{t("reviews.high")}</p>
                     <p className="reviewFieldText">{review.highlight}</p>
                   </div>
                 )}
                 {review.challenge && (
                   <div className="reviewField">
-                    <p className="reviewFieldLabel">💪 Challenge</p>
+                    <p className="reviewFieldLabel">{t("reviews.chal")}</p>
                     <p className="reviewFieldText">{review.challenge}</p>
                   </div>
                 )}
                 {review.learned && (
                   <div className="reviewField">
-                    <p className="reviewFieldLabel">📚 Learned</p>
+                    <p className="reviewFieldLabel">{t("reviews.learn")}</p>
                     <p className="reviewFieldText">{review.learned}</p>
                   </div>
                 )}
                 {review.nextWeekGoal && (
                   <div className="reviewField">
-                    <p className="reviewFieldLabel">🎯 Next Goal</p>
+                    <p className="reviewFieldLabel">{t("reviews.nextGoal")}</p>
                     <p className="reviewFieldText">{review.nextWeekGoal}</p>
                   </div>
                 )}
@@ -224,7 +227,7 @@ function ReviewsReflection() {
 
       <div className="navButtons">
         <Link to="/dashboard">
-          <button className="backBtn">← Back to Dashboard</button>
+          <button className="backBtn">{t("common.back")}</button>
         </Link>
       </div>
     </div>

@@ -2,29 +2,33 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./selfcongrats.css";
 import DropdownSelect from "../components/DropdownSelect";
+import {useLanguage} from "../context/LanguageContext";
+import translations from "../i18n/translations";
+
 function SelfCongrats() {
   const [congrats, setCongrats] = useState([]);
   const [text, setText] = useState("");
   const [category, setCategory] = useState("Achievement");
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState("");
+  const {language,t} = useLanguage();
 
   const categories = [
-    { label: "Achievement", emoji: "🏆" },
-    { label: "Courage", emoji: "💪" },
-    { label: "Growth", emoji: "🌱" },
-    { label: "Kindness", emoji: "💝" },
-    { label: "Resilience", emoji: "🔥" },
-    { label: "Small Win", emoji: "⭐" },
+    { label: t("congrats.label1"), emoji: "🏆" },
+    { label: t("congrats.label2"), emoji: "💪" },
+    { label: t("congrats.label3"), emoji: "🌱" },
+    { label: t("congrats.label4"), emoji: "💝" },
+    { label: t("congrats.label5"), emoji: "🔥" },
+    { label: t("congrats.label6"), emoji: "⭐" },
   ];
 
   const prompts = [
-    "Today I am proud of myself for...",
-    "I showed courage when I...",
-    "I grew as a person by...",
-    "I was kind to myself when...",
-    "Despite challenges, I managed to...",
-    "One small win I had today...",
+    t("congrats.prompts.p1"),
+    t("congrats.prompts.p2"),
+    t("congrats.prompts.p3"),
+   t("congrats.prompts.p4"),
+   t("congrats.prompts.p5"),
+    t("congrats.prompts.p6"),
   ];
 
   useEffect(() => {
@@ -73,13 +77,13 @@ function SelfCongrats() {
   return (
     <div className="selfcongratPage">
       <div className="selfcongratHeader">
-        <h1>🌟 Self Congratulations</h1>
-        <p>Celebrate your wins — big and small. You deserve recognition!</p>
+        <h1>{t("congrats.title")}</h1>
+        <p>{t("congrats.subtitle")}</p>
       </div>
 
       {/* Prompts */}
       <div className="promptsSection">
-        <p className="promptsTitle">Need inspiration? Click a prompt:</p>
+        <p className="promptsTitle">{t("congrats.promptsTitle")}</p>
         <div className="promptsGrid">
           {prompts.map((p, i) => (
             <button
@@ -95,7 +99,7 @@ function SelfCongrats() {
 
       {/* Form */}
       <div className="selfcongratForm">
-        <h2>What are you celebrating today?</h2>
+        <h2>{t("congrats.selfCongrats")}</h2>
 
         <div className="categorySelect">
   <DropdownSelect
@@ -106,14 +110,14 @@ function SelfCongrats() {
     }))}
     value={category}
     onChange={setCategory}
-    placeholder="Select category..."
+    placeholder={t("congrats.placeholder")}
     multiple={false}
   />
 </div>
 
         <textarea
           className="congratTextarea"
-          placeholder="Write what you are proud of..."
+          placeholder={t("congrats.textPlaceholder")}
           value={text}
           onChange={(e) => { setText(e.target.value); setError(""); }}
           rows={4}
@@ -121,19 +125,19 @@ function SelfCongrats() {
         />
 
         {error && <p className="errorText">{error}</p>}
-        {saved && <p className="successText">🎉 Celebrated! Keep going!</p>}
+        {saved && <p className="successText">{t("congrats.successText")}</p>}
 
         <button onClick={saveCongrat} className="saveBtn">
-          🎉 Celebrate This!
+         {t("congrats.celebBtn")}
         </button>
       </div>
 
       {/* History */}
       <div className="congratsHistory">
-        <h2>Your Celebrations ({congrats.length})</h2>
+        <h2>{t("congrats.history")} ({congrats.length})</h2>
         {congrats.length === 0 ? (
           <p className="emptyText">
-            No celebrations yet. You have more wins than you realize!
+            {t("congrats.emptyText")}
           </p>
         ) : (
           <div className="congratsList">
@@ -177,7 +181,7 @@ function SelfCongrats() {
 
       <div className="navButtons">
         <Link to="/dashboard">
-          <button className="backBtn">← Back to Dashboard</button>
+          <button className="backBtn">{t("common.back")}</button>
         </Link>
       </div>
     </div>

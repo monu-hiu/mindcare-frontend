@@ -5,6 +5,7 @@ import App from './App.jsx'
 import './index.css'
 
 import './master-responsive.css'
+import './darkmode.css'   
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

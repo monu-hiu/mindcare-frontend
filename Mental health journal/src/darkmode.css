@@ -1,0 +1,584 @@
+
+
+/* ── LIGHT MODE (default) ────────────────────────────────── */
+:root {
+  --bg-primary:     #ffffff;
+  --bg-secondary:   #f9fafb;
+  --bg-tertiary:    #f3f4f6;
+  --bg-card:        #ffffff;
+  --bg-input:       #ffffff;
+  --bg-header:      linear-gradient(135deg, #0f0c29, #1a1a3e, #24243e);
+
+  --text-primary:   #111827;
+  --text-secondary: #374151;
+  --text-muted:     #6b7280;
+  --text-hint:      #9ca3af;
+
+  --border-color:   #e5e7eb;
+  --border-focus:   #4f46e5;
+  --border-card:    #f3f4f6;
+
+  --accent:         #4f46e5;
+  --accent-light:   #eef2ff;
+  --accent-hover:   #4338ca;
+
+  --green:          #22c55e;
+  --green-bg:       #f0fdf4;
+  --green-border:   #bbf7d0;
+
+  --red:            #ef4444;
+  --red-bg:         #fef2f2;
+  --red-border:     #fecaca;
+
+  --yellow:         #f59e0b;
+  --yellow-bg:      #fffbeb;
+  --yellow-border:  #fde68a;
+
+  --purple:         #7c3aed;
+  --purple-light:   #f5f3ff;
+
+  --shadow-sm:      0 2px 8px rgba(0,0,0,0.06);
+  --shadow-md:      0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg:      0 8px 24px rgba(0,0,0,0.1);
+
+  --radius-sm:      8px;
+  --radius-md:      12px;
+  --radius-lg:      16px;
+  --radius-xl:      20px;
+}
+
+/* ── DARK MODE ───────────────────────────────────────────── */
+[data-theme="dark"] {
+  --bg-primary:     #111827;
+  --bg-secondary:   #1f2937;
+  --bg-tertiary:    #111827;
+  --bg-card:        #1f2937;
+  --bg-input:       #374151;
+  --bg-header:      linear-gradient(135deg, #030712, #0f0c29, #111827);
+
+  --text-primary:   #f9fafb;
+  --text-secondary: #e5e7eb;
+  --text-muted:     #9ca3af;
+  --text-hint:      #6b7280;
+
+  --border-color:   #374151;
+  --border-focus:   #818cf8;
+  --border-card:    #374151;
+
+  --accent:         #818cf8;
+  --accent-light:   #1e1b4b;
+  --accent-hover:   #6366f1;
+
+  --green:          #4ade80;
+  --green-bg:       #052e16;
+  --green-border:   #166534;
+
+  --red:            #f87171;
+  --red-bg:         #450a0a;
+  --red-border:     #991b1b;
+
+  --yellow:         #fbbf24;
+  --yellow-bg:      #422006;
+  --yellow-border:  #92400e;
+
+  --purple:         #a78bfa;
+  --purple-light:   #1e1b4b;
+
+  --shadow-sm:      0 2px 8px rgba(0,0,0,0.3);
+  --shadow-md:      0 4px 16px rgba(0,0,0,0.4);
+  --shadow-lg:      0 8px 24px rgba(0,0,0,0.5);
+}
+
+/* ── APPLY VARIABLES TO ALL ELEMENTS ─────────────────────── */
+
+body {
+  background: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* ── PAGE WRAPPERS ─────────────────────────────────────────── */
+.dashboardPage,
+.moodPage,
+.sleepPage,
+.gratitudePage,
+.goalPage,
+.energyPage,
+.anxietyPage,
+.improvementPage,
+.comboPage,
+.mindfulPage,
+.sugPage,
+.supportPage,
+.selfharmPage,
+.selfcarePage,
+.challengesPage,
+.therapyPage,
+.selfcongratPage,
+.reviewsPage,
+.cognitivePage,
+.ragePage,
+.fbViewerPage,
+.chatPage {
+  background: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+}
+
+/* ── HEADER ─────────────────────────────────────────────────── */
+.mcHeader {
+  background: var(--bg-header) !important;
+}
+
+/* ── ALL CARDS ──────────────────────────────────────────────── */
+.moodCard, .qualityCard, .sleepForm, .sleepStats,
+.energyForm, .energyHistory, .energyStatCard,
+.anxietyForm, .anxietyHistory, .anxietyStatCard,
+.gratitudeForm, .goalForm, .goalsList,
+.challengeCard, .historyCard, .timerCard,
+.medCard, .affCard, .affItem, .groundCard,
+.podCard, .videoCard, .articleCard, .bookCard, .stuCard, .exCard,
+.helplineCard, .onlineCard, .toolCard,
+.fbViewerCard, .fbStatCard, .fbRatingBreakdown,
+.quizCard, .quizResultCard, .challengeHistorySection,
+.bestDayCard, .comboPage .statCard, .completionCard, .improvementStats,
+.therapyForm, .therapyNotesList, .selfcongratCard,
+.reviewCard, .distortionCard, .rageForm, .rageTips,
+.selfcareCategory, .sleepCard, .energyCard,
+.anxietyCard, .journalEntry, .gratitudeCard,
+.goalCard, .cognitiveCard {
+  background: var(--bg-card) !important;
+  border-color: var(--border-card) !important;
+  color: var(--text-primary) !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+/* ── ALL HEADINGS ───────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6,
+.moodHeader h1, .sleepHeader h1, .energyHeader h1,
+.anxietyHeader h1, .mindfulHeader h1, .sugHeroTitle,
+.challengesHeader h1, .dashboardHeader h1,
+.goalHeader h1, .comboHeader h1,
+.cbAiName, .medTitle, .videoTitle, .bookTitle,
+.podTitle, .stuTitle, .exTitle, .challengeTitle,
+.historyDate, .fbViewerName, .onlineName,
+.toolName, .affText, .quizQuestion, .quizResultLabel {
+  color: var(--text-primary) !important;
+}
+
+/* ── ALL PARAGRAPHS / TEXT ──────────────────────────────────── */
+p, span, label, li,
+.moodLabel, .qualityLabel, .energyMood,
+.bookDesc, .podDesc, .videoHost, .articleTitle,
+.articleDesc, .exDesc, .stuDesc, .podHost,
+.challengeDesc, .historyChip,
+.cbBubbleText, .cbWelcome p, .quizOptionText,
+.tipsList li, .medDesc, .groundStepText,
+.affCategory, .affProgress, .fbViewerMsg,
+.supportSubtitle, .emergencyDesc,
+.loadingText, .emptyText, .errorText {
+  color: var(--text-secondary) !important;
+}
+
+.bookAuthor, .videoHost, .articleTime,
+.energyDate, .anxietyDate, .historyDate,
+.text-muted, .text-hint,
+.cbBubbleTime, .fbViewerDate, .quizProgressText,
+.sleepStatLabel, .energyStatLabel, .anxietyStatLabel,
+.challengeStatLabel, .challengeCategory,
+.energyTime, .energyMood {
+  color: var(--text-muted) !important;
+}
+
+/* ── INPUTS, TEXTAREAS, SELECTS ─────────────────────────────── */
+input, textarea, select,
+.formGroup input, .formGroup textarea, .formGroup select,
+.authInputWrap input, .sugSearch input,
+.cbInput, .fbTextarea {
+  background: var(--bg-input) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--text-hint) !important;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: var(--border-focus) !important;
+  box-shadow: 0 0 0 3px rgba(129,140,248,0.15) !important;
+}
+
+/* ── BUTTONS ──────────────────────────────────────────────────── */
+.backBtn, .historyToggleBtn, .retakeBtn,
+.quizPrevBtn, .sugCat, .categoryBtn,
+.filterBtn, .timerOption, .affCatBtn,
+.breathOption, .mindfulTab:not(.active),
+.tagBtn:not(.selected), .activityBtn:not(.selected),
+.fbCatBtn:not(.active), .fbFilterBtn:not(.active),
+.fbRecBtn:not(.yes):not(.no), .categoryChip:not(.active),
+.catBtn, .reviewTab:not(.active), .stuToggle,
+.exToggle, .medToggle, .groundToggle,
+.mcDrawerLangBtn {
+  background: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-secondary) !important;
+}
+
+.backBtn:hover { border-color: var(--accent) !important; color: var(--accent) !important; }
+
+/* ── NAV TABS ─────────────────────────────────────────────────── */
+.sugTabs, .mindfulTabs {
+  background: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+}
+
+.sugTab:not(.active), .mindfulTab:not(.active) {
+  color: var(--text-muted) !important;
+}
+
+.sugTab.active, .mindfulTab.active {
+  background: var(--bg-secondary) !important;
+  color: var(--accent) !important;
+}
+
+/* ── QUIZ ─────────────────────────────────────────────────────── */
+.quizOption {
+  background: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-secondary) !important;
+}
+
+.quizOption:hover {
+  border-color: var(--accent) !important;
+  background: var(--accent-light) !important;
+}
+
+.quizOption.selected {
+  border-color: var(--accent) !important;
+  background: var(--accent-light) !important;
+}
+
+.quizProgressBar {
+  background: var(--border-color) !important;
+}
+
+/* ── AUTH PAGES ───────────────────────────────────────────────── */
+.authRight, .authCard {
+  background: var(--bg-primary) !important;
+}
+
+.authCard {
+  box-shadow: var(--shadow-lg) !important;
+  border: 0.5px solid var(--border-color) !important;
+}
+
+.authCardHeader h2 {
+  color: var(--text-primary) !important;
+}
+
+.authCardHeader p, .authSwitch, .authFieldHint {
+  color: var(--text-muted) !important;
+}
+
+.authInputWrap {
+  border-color: var(--border-color) !important;
+  background: var(--bg-input) !important;
+}
+
+.authInputWrap.hasSuccess { border-color: var(--green) !important; }
+.authInputWrap.hasError   { border-color: var(--red) !important; }
+
+/* ── CHATBOT ──────────────────────────────────────────────────── */
+.cbPage {
+  background: var(--bg-secondary) !important;
+}
+
+.cbHeader, .cbInputArea {
+  background: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+}
+
+.aiBubble {
+  background: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+
+.cbInput {
+  background: var(--bg-secondary) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+
+.cbInput:focus {
+  background: var(--bg-card) !important;
+  border-color: var(--accent) !important;
+}
+
+.cbQuickBtn, .cbQuickPill {
+  background: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+  color: var(--accent) !important;
+}
+
+/* ── DROPDOWN SELECT ──────────────────────────────────────────── */
+.ddTrigger {
+  background: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-secondary) !important;
+}
+
+.ddMenu {
+  background: var(--bg-card) !important;
+  border-color: var(--accent) !important;
+}
+
+.ddOption {
+  background: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+
+.ddOption:hover  { background: var(--accent-light) !important; }
+.ddOption.selected { background: var(--accent-light) !important; }
+.ddOptionLabel   { color: var(--text-primary) !important; }
+
+/* ── LANGUAGE SELECTOR ────────────────────────────────────────── */
+.lsModal {
+  background: var(--bg-card) !important;
+}
+
+.lsOption {
+  background: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+}
+
+.lsOption:hover {
+  background: var(--accent-light) !important;
+  border-color: var(--accent) !important;
+}
+
+.lsOption.active {
+  background: var(--accent-light) !important;
+  border-color: var(--accent) !important;
+}
+
+.lsName  { color: var(--text-primary) !important; }
+.lsNative, .lsDesc, .lsNote { color: var(--text-muted) !important; }
+
+/* ── FEEDBACK MODAL ───────────────────────────────────────────── */
+.fbModal {
+  background: var(--bg-card) !important;
+}
+
+.fbTextarea {
+  background: var(--bg-input) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+
+.fbCatBtn {
+  background: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-muted) !important;
+}
+
+/* ── MOBILE DRAWER ────────────────────────────────────────────── */
+.mcDrawer {
+  background: var(--bg-card) !important;
+}
+
+.mcDrawerLink {
+  color: var(--text-secondary) !important;
+}
+
+.mcDrawerLink:hover,
+.mcDrawerLink.active {
+  background: var(--accent-light) !important;
+  color: var(--accent) !important;
+}
+
+.mcDrawerAuth {
+  border-color: var(--border-color) !important;
+}
+
+/* ── DASHBOARD SPECIFIC ───────────────────────────────────────── */
+.statCard, .sleepStat, .energyStat,
+.anxietyStat, .challengeStat,
+.improvementStatCard {
+  background: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+}
+
+.categorySection {
+  background: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+}
+
+.featureLabel { color: var(--text-secondary) !important; }
+
+/* ── HERO SECTIONS ────────────────────────────────────────────── */
+.sugHero {
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4a044e 100%) !important;
+}
+
+.studentBanner {
+  background: linear-gradient(135deg, #1e1b4b, #312e81) !important;
+}
+
+/* ── HISTORY ITEMS ────────────────────────────────────────────── */
+.historyItem, .historyCard, .historyChip {
+  background: var(--bg-secondary) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-secondary) !important;
+}
+
+/* ── TIPS BOXES ───────────────────────────────────────────────── */
+.anxietyTipsBox, .energyTipsSection {
+  background: var(--accent-light) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* ── CRISIS SECTION ───────────────────────────────────────────── */
+.crisisAlert {
+  background: var(--red-bg) !important;
+  border-color: var(--red-border) !important;
+}
+
+.crisisNumber {
+  background: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* ── GREEN BOXES ──────────────────────────────────────────────── */
+.groundingIntro, .fbSuccess {
+  background: var(--green-bg) !important;
+  border-color: var(--green-border) !important;
+}
+
+/* ── SCROLLBAR DARK ───────────────────────────────────────────── */
+[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: #374151;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* ── SMOOTH TRANSITION ────────────────────────────────────────── */
+*, *::before, *::after {
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease;
+}
+
+/* Except animations — don't transition them */
+.breathCircleInner, .cbTyping span, .cbLoadingDots span {
+  transition: none !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   UNIVERSAL DARK MODE FIX — covers all 24 pages
+   Add at the very END of your CSS file
+   ══════════════════════════════════════════════════════════ */
+
+/* Every direct text element inside any page wrapper */
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6 {
+  color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] p,
+[data-theme="dark"] span,
+[data-theme="dark"] label,
+[data-theme="dark"] li,
+[data-theme="dark"] a:not(.btn):not([class*="Btn"]) {
+  color: var(--text-secondary) !important;
+}
+
+/* All cards / containers — catch any missed ones */
+[data-theme="dark"] [class*="Card"],
+[data-theme="dark"] [class*="card"],
+[data-theme="dark"] [class*="Form"],
+[data-theme="dark"] [class*="form"],
+[data-theme="dark"] [class*="Box"],
+[data-theme="dark"] [class*="box"],
+[data-theme="dark"] [class*="Section"],
+[data-theme="dark"] [class*="Panel"],
+[data-theme="dark"] [class*="Container"],
+[data-theme="dark"] [class*="Wrapper"] {
+  background: var(--bg-card) !important;
+  border-color: var(--border-card) !important;
+  color: var(--text-primary) !important;
+}
+
+/* All badges / tags / chips / points */
+[data-theme="dark"] [class*="Badge"],
+[data-theme="dark"] [class*="badge"],
+[data-theme="dark"] [class*="Tag"],
+[data-theme="dark"] [class*="tag"],
+[data-theme="dark"] [class*="Chip"],
+[data-theme="dark"] [class*="chip"],
+[data-theme="dark"] [class*="pts"],
+[data-theme="dark"] [class*="Pts"],
+[data-theme="dark"] [class*="Points"],
+[data-theme="dark"] [class*="points"] {
+  color: var(--text-primary) !important;
+  background: var(--bg-tertiary) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* All inputs, selects, textareas */
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
+  background: var(--bg-input) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* All buttons that are NOT primary/accent */
+[data-theme="dark"] button:not([class*="primary"]):not([class*="submit"]):not([class*="sos"]):not([class*="SOS"]) {
+  background: var(--bg-card) !important;
+  color: var(--text-secondary) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* History / list items */
+[data-theme="dark"] [class*="history"],
+[data-theme="dark"] [class*="History"],
+[data-theme="dark"] [class*="item"],
+[data-theme="dark"] [class*="Item"]:not([class*="menu"]) {
+  background: var(--bg-secondary) !important;
+  color: var(--text-secondary) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* Stats / numbers */
+[data-theme="dark"] [class*="stat"],
+[data-theme="dark"] [class*="Stat"],
+[data-theme="dark"] [class*="score"],
+[data-theme="dark"] [class*="Score"],
+[data-theme="dark"] [class*="count"],
+[data-theme="dark"] [class*="Count"] {
+  color: var(--text-primary) !important;
+}
+
+/* Modals / overlays */
+[data-theme="dark"] [class*="modal"],
+[data-theme="dark"] [class*="Modal"],
+[data-theme="dark"] [class*="drawer"],
+[data-theme="dark"] [class*="Drawer"],
+[data-theme="dark"] [class*="popup"],
+[data-theme="dark"] [class*="Popup"] {
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
+}

@@ -5,17 +5,18 @@ import { useAuth } from "../context/AuthContext";
 import { useLanguage } from "../context/LanguageContext";
 import FeedbackModal from "./FeedbackModal";
 import LanguageSelector from "./LanguageSelector";
+import ThemeToggle from "./ThemeToggle";
 import logo from "../assets/Logo_mindcare.jpg";
 import "./Header.css";
 
 function Header() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [showFeedback, setShowFeedback] = useState(false);
-  const [showLangSelector, setShowLangSelector] = useState(false);
-  const { user, isLoggedIn, logout } = useAuth();
-  const { language, t } = useLanguage();
-  const location = useLocation();
-  const navigate = useNavigate();
+  const [menuOpen, setMenuOpen]           = useState(false);
+  const [showFeedback, setShowFeedback]   = useState(false);
+  const [showLangSel, setShowLangSel]     = useState(false);
+  const { user, isLoggedIn, logout }      = useAuth();
+  const { language, t }                   = useLanguage();
+  const location                          = useLocation();
+  const navigate                          = useNavigate();
 
   const handleLogout = () => {
     setMenuOpen(false);
@@ -64,12 +65,15 @@ function Header() {
           </Link>
         </nav>
 
-        {/* Desktop Auth + Language */}
+        {/* Desktop Right Side */}
         <div className="mcDesktopAuth">
-          {/* Language Toggle */}
+          {/* 🌙 Dark Mode Toggle */}
+          <ThemeToggle />
+
+          {/* 🌐 Language Button */}
           <button
             className="mcLangBtn"
-            onClick={() => setShowLangSelector(true)}
+            onClick={() => setShowLangSel(true)}
             title="Change Language"
           >
             {langLabels[language]}
@@ -131,6 +135,7 @@ function Header() {
               {link.label}
             </Link>
           ))}
+
           <Link
             to="/support"
             className="mcDrawerSupport"
@@ -139,13 +144,18 @@ function Header() {
             {t("nav.needSupport")}
           </Link>
 
-          {/* Language change option in drawer */}
+          {/* Dark mode in drawer */}
+          <div className="mcDrawerTheme">
+            <span className="mcDrawerThemeLabel">
+              Dark Mode
+            </span>
+            <ThemeToggle />
+          </div>
+
+          {/* Language in drawer */}
           <button
             className="mcDrawerLangBtn"
-            onClick={() => {
-              setMenuOpen(false);
-              setShowLangSelector(true);
-            }}
+            onClick={() => { setMenuOpen(false); setShowLangSel(true); }}
           >
             🌐 {langLabels[language]} — Change Language
           </button>
@@ -169,9 +179,9 @@ function Header() {
       </div>
 
       {/* Language Selector Modal */}
-      {showLangSelector && (
+      {showLangSel && (
         <LanguageSelector
-          onClose={() => setShowLangSelector(false)}
+          onClose={() => setShowLangSel(false)}
           isChange={true}
         />
       )}
