@@ -1,116 +1,106 @@
+// src/utils/notifications.js
+// Updated — uses Push API for phone notifications
 
+import { sendPushNotification } from "./pushNotifications";
 
-/**
- * Request notification permission
- */
-export const requestNotificationPermission = async () => {
-  if (!("Notification" in window)) return false;
-  if (Notification.permission === "granted") return true;
-  if (Notification.permission === "denied") return false;
-  const result = await Notification.requestPermission();
-  return result === "granted";
+// ── MOOD NOTIFICATION ─────────────────────────────────────
+export const sendMoodNotification = async (token, mood) => {
+  const messages = {
+    Happy:   { title: "😊 Great Mood Logged!", body: "You're feeling Happy today! Keep it up. Have a wonderful day! 🌟" },
+    Good:    { title: "🙂 Good Mood Logged!",  body: "Feeling good today! That's wonderful. Keep smiling! 😊" },
+    Neutral: { title: "😐 Mood Logged",         body: "Neutral day — that's okay! Every day is a new opportunity. 💙" },
+    Sad:     { title: "😔 Feeling Sad Today",   body: "It's okay to feel sad. Try a breathing exercise or talk to someone. 💙" },
+    Angry:   { title: "😡 Feeling Angry",       body: "Take a deep breath. Try our Rage Release tool to feel better. 💨" },
+    Anxious: { title: "😰 Feeling Anxious",     body: "You're not alone. Try 4-7-8 breathing to calm down right now. 🧘" },
+  };
+
+  const msg = messages[mood] || { title: "😊 Mood Logged!", body: "Your mood has been tracked successfully!" };
+  await sendPushNotification(token, msg.title, msg.body, "/mood-tracker");
 };
 
-/**
- * Send a notification (only if permitted)
- */
-export const sendNotification = (title, body, icon = "/Logo_mindcare.png") => {
-  if (!("Notification" in window)) return;
-  if (Notification.permission !== "granted") return;
-  new Notification(title, { body, icon });
+// ── ENERGY NOTIFICATION ───────────────────────────────────
+export const sendEnergyNotification = async (token, level) => {
+  const hour = new Date().getHours();
+  const time = hour < 12 ? "morning" : hour < 17 ? "afternoon" : "evening";
+
+  const msgs = {
+    low: {
+      morning:   { title: "⚡ Low Energy This Morning", body: "Start with a light breakfast and short walk. You've got this! 💪" },
+      afternoon: { title: "⚡ Low Afternoon Energy",    body: "Try a 10-minute walk or healthy snack to recharge! 🍎" },
+      evening:   { title: "⚡ Low Evening Energy",      body: "That's okay! Rest well tonight and recover. 🌙" },
+    },
+    moderate: {
+      morning:   { title: "⚡ Moderate Morning Energy", body: "Stay hydrated and tackle your tasks now! ☀️" },
+      afternoon: { title: "⚡ Moderate Afternoon",      body: "Keep moving and eat something nutritious! 🥗" },
+      evening:   { title: "⚡ Moderate Evening Energy", body: "Wind down gradually for a good night's sleep! 😊" },
+    },
+    high: {
+      morning:   { title: "🔥 Amazing Morning Energy!", body: "This is your peak time — tackle your most important goals now!" },
+      afternoon: { title: "🔥 High Afternoon Energy!",  body: "Great time for exercise or creative work. Keep the momentum!" },
+      evening:   { title: "🔥 High Evening Energy!",   body: "Channel it productively but start winding down by 9pm!" },
+    },
+  };
+
+  const cat = level <= 3 ? "low" : level <= 6 ? "moderate" : "high";
+  const msg = msgs[cat][time];
+  await sendPushNotification(token, msg.title, msg.body, "/energy-tracker");
 };
 
-/**
- * Daily reminder — check if user has logged today
- * Call this ONCE on app load (in App.jsx or Dashboard)
- * @param {string} token - Auth token
- */
-export const checkDailyReminder = async (token) => {
-  if (!("Notification" in window)) return;
-  if (Notification.permission !== "granted") return;
+// ── ANXIETY NOTIFICATION ──────────────────────────────────
+export const sendAnxietyNotification = async (token, level) => {
+  if (level < 4) return; // Low anxiety — no notification needed
 
-  // Only send reminder once per day
-  const today = new Date().toDateString();
-  const lastReminder = localStorage.getItem("mc_last_reminder");
-  if (lastReminder === today) return;
+  let title, body;
 
-  try {
-    // Check what user has logged today
-    const [moodRes, sleepRes, energyRes, anxietyRes] = await Promise.all([
-      fetch("https://mindcare-backend-v56a.onrender.com/api/mood/today", {
-        headers: { Authorization: `Bearer ${token}` },
-      }),
-      fetch("https://mindcare-backend-v56a.onrender.com/api/sleep/history", {
-        headers: { Authorization: `Bearer ${token}` },
-      }),
-      fetch("https://mindcare-backend-v56a.onrender.com/api/energy/history", {
-        headers: { Authorization: `Bearer ${token}` },
-      }),
-      fetch("https://mindcare-backend-v56a.onrender.com/api/anxiety/history", {
-        headers: { Authorization: `Bearer ${token}` },
-      }),
-    ]);
-
-    const [moodData, sleepData, energyData, anxietyData] = await Promise.all([
-      moodRes.json(),
-      sleepRes.json(),
-      energyRes.json(),
-      anxietyRes.json(),
-    ]);
-
-    const todayStr = new Date().toDateString();
-    const hasLoggedMood = !!moodData.todayMood;
-    const hasLoggedSleep = sleepData.sleepLogs?.some(
-      l => new Date(l.createdAt).toDateString() === todayStr
-    );
-    const hasLoggedEnergy = energyData.logs?.some(
-      l => new Date(l.createdAt).toDateString() === todayStr
-    );
-    const hasLoggedAnxiety = anxietyData.logs?.some(
-      l => new Date(l.createdAt).toDateString() === todayStr
-    );
-
-    const notLogged = [];
-    if (!hasLoggedMood) notLogged.push("Mood");
-    if (!hasLoggedSleep) notLogged.push("Sleep");
-    if (!hasLoggedEnergy) notLogged.push("Energy");
-    if (!hasLoggedAnxiety) notLogged.push("Anxiety");
-
-    // Only send if 2+ things not logged and it's after 9am
-    const hour = new Date().getHours();
-    if (notLogged.length >= 2 && hour >= 9) {
-      const missing = notLogged.join(", ");
-      sendNotification(
-        "📊 MindCare Daily Check-In",
-        `You haven't logged your ${missing} today. Take 2 minutes to track your wellness! 💙`
-      );
-      localStorage.setItem("mc_last_reminder", today);
-    }
-  } catch (err) {
-    console.log("Daily reminder check failed:", err.message);
+  if (level >= 8) {
+    title = "🆘 High Anxiety Alert";
+    body  = "Your anxiety is very high. Please try 4-7-8 breathing or call iCall: 9152987821. You are not alone. 💙";
+  } else if (level >= 6) {
+    title = "⚠️ Moderate-High Anxiety";
+    body  = "Feeling anxious? Try a short walk or deep breathing. Our chatbot is here for you! 🧘";
+  } else {
+    title = "💭 Moderate Anxiety";
+    body  = "You're feeling some anxiety today. Try a breathing exercise — it really helps! 💨";
   }
+
+  await sendPushNotification(token, title, body, "/anxiety-tracker");
 };
 
-/**
- * Combo Tracker score notification
- * Call ONLY when user saves combo — not on page open
- * @param {number} score - Score out of 20
- */
-export const sendComboNotification = (score) => {
+// ── COMBO NOTIFICATION ────────────────────────────────────
+export const sendComboNotification = async (token, score) => {
   if (score === null || score === undefined) return;
 
   let title, body;
 
   if (score < 7) {
     title = "💙 Tough Day Detected";
-    body = "Today seems like a tough day. Take care of yourself. Try a breathing exercise or talk to someone. You've got this! ❤️";
+    body  = "Today seems tough. Be gentle with yourself. Try a breathing exercise or talk to MindCare AI. ❤️";
   } else if (score < 14) {
-    title = "😊 You're Doing Okay";
-    body = "Your wellness score is moderate today. Keep using your coping strategies — you're doing great! 👍";
+    title = "😊 Moderate Wellness Score";
+    body  = `Your wellness score is ${score}/20 today. Keep using your coping strategies! 👍`;
   } else {
-    title = "🌟 Amazing Day!";
-    body = "Your wellness score is excellent today! You're thriving — keep up the great work! 🎉";
+    title = "🌟 Excellent Wellness Score!";
+    body  = `Amazing! Your wellness score is ${score}/20 today. You're thriving! Keep it up! 🎉`;
   }
 
-  sendNotification(title, body);
+  await sendPushNotification(token, title, body, "/combo");
+};
+
+// ── DAILY REMINDER ────────────────────────────────────────
+export const sendDailyReminder = async (token) => {
+  const today = new Date().toDateString();
+  const lastReminder = localStorage.getItem("mc_last_reminder");
+  if (lastReminder === today) return;
+
+  const hour = new Date().getHours();
+  if (hour < 9) return; // Don't send before 9am
+
+  await sendPushNotification(
+    token,
+    "📊 MindCare Daily Check-In",
+    "Don't forget to log your mood, sleep, energy and anxiety today! It takes just 2 minutes. 💙",
+    "/dashboard"
+  );
+
+  localStorage.setItem("mc_last_reminder", today);
 };

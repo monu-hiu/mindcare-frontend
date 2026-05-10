@@ -7,7 +7,7 @@ function SelfHarmSupport() {
     { name: "Vandrevala Foundation", number: "1860-2662-345", desc: "24/7 Free Helpline", color: "#ef4444" },
     { name: "AASRA", number: "9820466627", desc: "24/7 Suicide Prevention", color: "#10b981" },
     { name: "Snehi", number: "044-24640050", desc: "Mon-Sat, 8am-10pm", color: "#f59e0b" },
-    { name: "iCall WhatsApp", number: "9152987821", desc: "WhatsApp Support", color: "#22c55e" },
+    { name: "Madhusudhan", number: "8766344351", desc: "WhatsApp Support", color: "#22c55e" },
   ];
 
   const copingStrategies = [

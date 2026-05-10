@@ -434,8 +434,8 @@ function Suggestions() {
                     <p className="bookAuthor">by {b.author} · {b.year}</p>
                   </div>
                   <span className="bookLevel"
-                    style={{ background: b.level === "Beginner" ? "#f0fdf4" : b.level === "Intermediate" ? "#fffbeb" : "#fef2f2",
-                             color:      b.level === "Beginner" ? "#16a34a" : b.level === "Intermediate" ? "#d97706" : "#dc2626" }}>
+                    style={{ background: b.level === "Beginner" ? "yello" : b.level === "Intermediate" ? "yello" : "yello",
+                             color:      b.level === "Beginner" ? "black" : b.level === "Intermediate" ? "black" : "black" }}>
                     {b.level}
                   </span>
                 </div>

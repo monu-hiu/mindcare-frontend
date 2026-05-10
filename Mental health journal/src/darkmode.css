@@ -1,6 +1,6 @@
 
 
-/* ── LIGHT MODE (default) ────────────────────────────────── */
+/* ── LIGHT MODE ──────────────────────────────────────────────── */
 :root {
   --bg-primary:     #ffffff;
   --bg-secondary:   #f9fafb;
@@ -10,7 +10,7 @@
   --bg-header:      linear-gradient(135deg, #0f0c29, #1a1a3e, #24243e);
 
   --text-primary:   #111827;
-  --text-secondary: #374151;
+  --text-secondary: #375451;
   --text-muted:     #6b7280;
   --text-hint:      #9ca3af;
 
@@ -47,7 +47,7 @@
   --radius-xl:      20px;
 }
 
-/* ── DARK MODE ───────────────────────────────────────────── */
+/* ── DARK MODE ───────────────────────────────────────────────── */
 [data-theme="dark"] {
   --bg-primary:     #111827;
   --bg-secondary:   #1f2937;
@@ -57,9 +57,10 @@
   --bg-header:      linear-gradient(135deg, #030712, #0f0c29, #111827);
 
   --text-primary:   #f9fafb;
-  --text-secondary: #e5e7eb;
-  --text-muted:     #9ca3af;
+ --text-secondary: #d1d5db;
+--text-muted: #9ca3af;
   --text-hint:      #6b7280;
+
 
   --border-color:   #374151;
   --border-focus:   #818cf8;
@@ -82,14 +83,25 @@
   --yellow-border:  #92400e;
 
   --purple:         #a78bfa;
-  --purple-light:   #1e1b4b;
+  --purple-light:   #3229a7ce;
 
   --shadow-sm:      0 2px 8px rgba(0,0,0,0.3);
   --shadow-md:      0 4px 16px rgba(0,0,0,0.4);
   --shadow-lg:      0 8px 24px rgba(0,0,0,0.5);
 }
 
-/* ── APPLY VARIABLES TO ALL ELEMENTS ─────────────────────── */
+/* ══════════════════════════════════════════════════════════════
+   BASE
+   ══════════════════════════════════════════════════════════════ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
 body {
   background: var(--bg-secondary) !important;
@@ -97,39 +109,74 @@ body {
   transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* ── PAGE WRAPPERS ─────────────────────────────────────────── */
-.dashboardPage,
-.moodPage,
-.sleepPage,
-.gratitudePage,
-.goalPage,
-.energyPage,
-.anxietyPage,
-.improvementPage,
-.comboPage,
-.mindfulPage,
-.sugPage,
-.supportPage,
-.selfharmPage,
-.selfcarePage,
-.challengesPage,
-.therapyPage,
-.selfcongratPage,
-.reviewsPage,
-.cognitivePage,
-.ragePage,
-.fbViewerPage,
-.chatPage {
+/* ── PAGE WRAPPERS ─────────────────────────────────────────────── */
+.dashboardPage, .moodPage, .sleepPage, .gratitudePage,
+.goalPage, .energyPage, .anxietyPage, .improvementPage,
+.comboPage, .mindfulPage, .sugPage, .supportPage,
+.selfharmPage, .selfcarePage, .challengesPage, .therapyPage,
+.selfcongratPage, .reviewsPage, .cognitivePage, .ragePage,
+.fbViewerPage, .chatPage {
   background: var(--bg-secondary) !important;
   color: var(--text-primary) !important;
 }
 
-/* ── HEADER ─────────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════
+   HEADER — FIX: nav links always visible (light text on dark bg)
+   ══════════════════════════════════════════════════════════════ */
+
 .mcHeader {
   background: var(--bg-header) !important;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.25) !important;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-/* ── ALL CARDS ──────────────────────────────────────────────── */
+/* Header nav links must ALWAYS be light — in both light and dark mode */
+.mcHeader a,
+.mcHeader nav a,
+.mcHeader .navLink,
+.mcHeader button:not([class*="sos"]):not([class*="SOS"]):not(.sosBtn):not([class*="Need"]) {
+  color: rgba(255, 255, 255, 0.82) !important;
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.mcHeader a:hover,
+.mcHeader nav a:hover,
+.mcHeader .navLink:hover {
+  color: #ffffff !important;
+  background: rgba(255,255,255,0.1) !important;
+  border-radius: var(--radius-sm);
+}
+
+.mcHeader a.active,
+.mcHeader nav a.active,
+.mcHeader .navLink.active {
+  color: #ffffff !important;
+  background: rgba(255,255,255,0.14) !important;
+  border-radius: var(--radius-sm);
+}
+
+/* Also ensure dark mode doesn't override header nav */
+[data-theme="dark"] .mcHeader a,
+[data-theme="dark"] .mcHeader nav a,
+[data-theme="dark"] .mcHeader .navLink,
+[data-theme="dark"] .mcHeader span:not(.badge):not([class*="Badge"]) {
+  color: rgba(255, 255, 255, 0.82) !important;
+  background: transparent !important;
+}
+
+[data-theme="dark"] .mcHeader a:hover,
+[data-theme="dark"] .mcHeader nav a:hover {
+  color: #ffffff !important;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ALL CARDS
+   ══════════════════════════════════════════════════════════════ */
+
 .moodCard, .qualityCard, .sleepForm, .sleepStats,
 .energyForm, .energyHistory, .energyStatCard,
 .anxietyForm, .anxietyHistory, .anxietyStatCard,
@@ -150,9 +197,35 @@ body {
   border-color: var(--border-card) !important;
   color: var(--text-primary) !important;
   box-shadow: var(--shadow-sm) !important;
+  border-radius: var(--radius-lg) !important;
+  transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease !important;
 }
 
-/* ── ALL HEADINGS ───────────────────────────────────────────── */
+.moodCard:hover, .qualityCard:hover, .bookCard:hover,
+.podCard:hover, .videoCard:hover, .articleCard:hover,
+.challengeCard:hover, .medCard:hover, .toolCard:hover,
+.helplineCard:hover, .onlineCard:hover, .stuCard:hover, .exCard:hover {
+  box-shadow: var(--shadow-md) !important;
+  transform: translateY(-2px);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   STAT CARDS — keep body font, no serif bleed
+   ══════════════════════════════════════════════════════════════ */
+
+.statCard, .sleepStat, .energyStat,
+.anxietyStat, .challengeStat, .improvementStatCard {
+  background: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-sm) !important;
+  font-family: inherit !important;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   HEADINGS
+   ══════════════════════════════════════════════════════════════ */
+
 h1, h2, h3, h4, h5, h6,
 .moodHeader h1, .sleepHeader h1, .energyHeader h1,
 .anxietyHeader h1, .mindfulHeader h1, .sugHeroTitle,
@@ -165,7 +238,10 @@ h1, h2, h3, h4, h5, h6,
   color: var(--text-primary) !important;
 }
 
-/* ── ALL PARAGRAPHS / TEXT ──────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════
+   TEXT
+   ══════════════════════════════════════════════════════════════ */
+
 p, span, label, li,
 .moodLabel, .qualityLabel, .energyMood,
 .bookDesc, .podDesc, .videoHost, .articleTitle,
@@ -174,7 +250,7 @@ p, span, label, li,
 .cbBubbleText, .cbWelcome p, .quizOptionText,
 .tipsList li, .medDesc, .groundStepText,
 .affCategory, .affProgress, .fbViewerMsg,
-.supportSubtitle, .emergencyDesc,
+.supportSubtitle, .emergencyDesc,.sugHeroDesc,
 .loadingText, .emptyText, .errorText {
   color: var(--text-secondary) !important;
 }
@@ -189,7 +265,10 @@ p, span, label, li,
   color: var(--text-muted) !important;
 }
 
-/* ── INPUTS, TEXTAREAS, SELECTS ─────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════
+   INPUTS
+   ══════════════════════════════════════════════════════════════ */
+
 input, textarea, select,
 .formGroup input, .formGroup textarea, .formGroup select,
 .authInputWrap input, .sugSearch input,
@@ -197,6 +276,7 @@ input, textarea, select,
   background: var(--bg-input) !important;
   border-color: var(--border-color) !important;
   color: var(--text-primary) !important;
+  border-radius: var(--radius-md) !important;
 }
 
 input::placeholder, textarea::placeholder {
@@ -206,9 +286,13 @@ input::placeholder, textarea::placeholder {
 input:focus, textarea:focus, select:focus {
   border-color: var(--border-focus) !important;
   box-shadow: 0 0 0 3px rgba(129,140,248,0.15) !important;
+  outline: none !important;
 }
 
-/* ── BUTTONS ──────────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════
+   BUTTONS — safe targeting
+   ══════════════════════════════════════════════════════════════ */
+
 .backBtn, .historyToggleBtn, .retakeBtn,
 .quizPrevBtn, .sugCat, .categoryBtn,
 .filterBtn, .timerOption, .affCatBtn,
@@ -217,23 +301,31 @@ input:focus, textarea:focus, select:focus {
 .fbCatBtn:not(.active), .fbFilterBtn:not(.active),
 .fbRecBtn:not(.yes):not(.no), .categoryChip:not(.active),
 .catBtn, .reviewTab:not(.active), .stuToggle,
-.exToggle, .medToggle, .groundToggle,
-.mcDrawerLangBtn {
+.exToggle, .medToggle, .groundToggle, .mcDrawerLangBtn {
   background: var(--bg-card) !important;
   border-color: var(--border-color) !important;
   color: var(--text-secondary) !important;
 }
 
-.backBtn:hover { border-color: var(--accent) !important; color: var(--accent) !important; }
+.backBtn:hover {
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+}
 
-/* ── NAV TABS ─────────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════
+   NAV TABS
+   ══════════════════════════════════════════════════════════════ */
+
 .sugTabs, .mindfulTabs {
   background: var(--bg-card) !important;
   border-color: var(--border-color) !important;
+  border-radius: var(--radius-lg) !important;
+  padding: 4px !important;
 }
 
 .sugTab:not(.active), .mindfulTab:not(.active) {
   color: var(--text-muted) !important;
+  background: transparent !important;
 }
 
 .sugTab.active, .mindfulTab.active {
@@ -241,11 +333,16 @@ input:focus, textarea:focus, select:focus {
   color: var(--accent) !important;
 }
 
-/* ── QUIZ ─────────────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════
+   QUIZ
+   ══════════════════════════════════════════════════════════════ */
+
 .quizOption {
   background: var(--bg-card) !important;
   border-color: var(--border-color) !important;
   color: var(--text-secondary) !important;
+  border-radius: var(--radius-md) !important;
+  transition: all 0.15s ease !important;
 }
 
 .quizOption:hover {
@@ -260,38 +357,40 @@ input:focus, textarea:focus, select:focus {
 
 .quizProgressBar {
   background: var(--border-color) !important;
+  border-radius: 999px !important;
 }
 
-/* ── AUTH PAGES ───────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════
+   AUTH
+   ══════════════════════════════════════════════════════════════ */
+
 .authRight, .authCard {
   background: var(--bg-primary) !important;
 }
 
 .authCard {
   box-shadow: var(--shadow-lg) !important;
-  border: 0.5px solid var(--border-color) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-xl) !important;
 }
 
-.authCardHeader h2 {
-  color: var(--text-primary) !important;
-}
-
-.authCardHeader p, .authSwitch, .authFieldHint {
-  color: var(--text-muted) !important;
-}
+.authCardHeader h2 { color: var(--text-primary) !important; }
+.authCardHeader p, .authSwitch, .authFieldHint { color: var(--text-muted) !important; }
 
 .authInputWrap {
   border-color: var(--border-color) !important;
   background: var(--bg-input) !important;
+  border-radius: var(--radius-md) !important;
 }
 
 .authInputWrap.hasSuccess { border-color: var(--green) !important; }
-.authInputWrap.hasError   { border-color: var(--red) !important; }
+.authInputWrap.hasError   { border-color: var(--red)   !important; }
 
-/* ── CHATBOT ──────────────────────────────────────────────────── */
-.cbPage {
-  background: var(--bg-secondary) !important;
-}
+/* ══════════════════════════════════════════════════════════════
+   CHATBOT
+   ══════════════════════════════════════════════════════════════ */
+
+.cbPage { background: var(--bg-secondary) !important; }
 
 .cbHeader, .cbInputArea {
   background: var(--bg-card) !important;
@@ -321,7 +420,10 @@ input:focus, textarea:focus, select:focus {
   color: var(--accent) !important;
 }
 
-/* ── DROPDOWN SELECT ──────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════
+   DROPDOWN
+   ══════════════════════════════════════════════════════════════ */
+
 .ddTrigger {
   background: var(--bg-card) !important;
   border-color: var(--border-color) !important;
@@ -331,6 +433,8 @@ input:focus, textarea:focus, select:focus {
 .ddMenu {
   background: var(--bg-card) !important;
   border-color: var(--accent) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-lg) !important;
 }
 
 .ddOption {
@@ -339,18 +443,24 @@ input:focus, textarea:focus, select:focus {
   color: var(--text-primary) !important;
 }
 
-.ddOption:hover  { background: var(--accent-light) !important; }
+.ddOption:hover   { background: var(--accent-light) !important; }
 .ddOption.selected { background: var(--accent-light) !important; }
-.ddOptionLabel   { color: var(--text-primary) !important; }
+.ddOptionLabel    { color: var(--text-primary) !important; }
 
-/* ── LANGUAGE SELECTOR ────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════
+   LANGUAGE SELECTOR
+   ══════════════════════════════════════════════════════════════ */
+
 .lsModal {
   background: var(--bg-card) !important;
+  border-radius: var(--radius-xl) !important;
+  box-shadow: var(--shadow-lg) !important;
 }
 
 .lsOption {
   background: var(--bg-card) !important;
   border-color: var(--border-color) !important;
+  border-radius: var(--radius-md) !important;
 }
 
 .lsOption:hover {
@@ -366,9 +476,13 @@ input:focus, textarea:focus, select:focus {
 .lsName  { color: var(--text-primary) !important; }
 .lsNative, .lsDesc, .lsNote { color: var(--text-muted) !important; }
 
-/* ── FEEDBACK MODAL ───────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════
+   FEEDBACK MODAL
+   ══════════════════════════════════════════════════════════════ */
+
 .fbModal {
   background: var(--bg-card) !important;
+  border-radius: var(--radius-xl) !important;
 }
 
 .fbTextarea {
@@ -383,13 +497,15 @@ input:focus, textarea:focus, select:focus {
   color: var(--text-muted) !important;
 }
 
-/* ── MOBILE DRAWER ────────────────────────────────────────────── */
-.mcDrawer {
-  background: var(--bg-card) !important;
-}
+/* ══════════════════════════════════════════════════════════════
+   MOBILE DRAWER
+   ══════════════════════════════════════════════════════════════ */
+
+.mcDrawer { background: var(--bg-card) !important; }
 
 .mcDrawerLink {
   color: var(--text-secondary) !important;
+  border-radius: var(--radius-md) !important;
 }
 
 .mcDrawerLink:hover,
@@ -398,51 +514,70 @@ input:focus, textarea:focus, select:focus {
   color: var(--accent) !important;
 }
 
-.mcDrawerAuth {
-  border-color: var(--border-color) !important;
-}
+.mcDrawerAuth { border-color: var(--border-color) !important; }
 
-/* ── DASHBOARD SPECIFIC ───────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════
+   DASHBOARD
+   ══════════════════════════════════════════════════════════════ */
+
 .statCard, .sleepStat, .energyStat,
-.anxietyStat, .challengeStat,
-.improvementStatCard {
+.anxietyStat, .challengeStat, .improvementStatCard {
   background: var(--bg-card) !important;
   border-color: var(--border-color) !important;
+  border-radius: var(--radius-lg) !important;
 }
 
 .categorySection {
   background: var(--bg-card) !important;
   border-color: var(--border-color) !important;
+  border-radius: var(--radius-lg) !important;
 }
 
 .featureLabel { color: var(--text-secondary) !important; }
 
-/* ── HERO SECTIONS ────────────────────────────────────────────── */
-.sugHero {
+/* ══════════════════════════════════════════════════════════════
+   HERO
+   ══════════════════════════════════════════════════════════════ */
+
+/* .sugHero {
   background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4a044e 100%) !important;
-}
+  border-radius: var(--radius-xl) !important; */
+/* } */
 
 .studentBanner {
   background: linear-gradient(135deg, #1e1b4b, #312e81) !important;
+  border-radius: var(--radius-xl) !important;
 }
 
-/* ── HISTORY ITEMS ────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════
+   HISTORY
+   ══════════════════════════════════════════════════════════════ */
+
 .historyItem, .historyCard, .historyChip {
   background: var(--bg-secondary) !important;
   border-color: var(--border-color) !important;
   color: var(--text-secondary) !important;
+  border-radius: var(--radius-md) !important;
 }
 
-/* ── TIPS BOXES ───────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════
+   TIPS / INFO BOXES
+   ══════════════════════════════════════════════════════════════ */
+
 .anxietyTipsBox, .energyTipsSection {
   background: var(--accent-light) !important;
   border-color: var(--border-color) !important;
+  border-radius: var(--radius-md) !important;
 }
 
-/* ── CRISIS SECTION ───────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════
+   CRISIS
+   ══════════════════════════════════════════════════════════════ */
+
 .crisisAlert {
   background: var(--red-bg) !important;
   border-color: var(--red-border) !important;
+  border-radius: var(--radius-lg) !important;
 }
 
 .crisisNumber {
@@ -450,42 +585,66 @@ input:focus, textarea:focus, select:focus {
   border-color: var(--border-color) !important;
 }
 
-/* ── GREEN BOXES ──────────────────────────────────────────────── */
+
+[data-theme="dark"] .reflection {
+  background: linear-gradient(135deg, #0f172a, #1e1b4b);
+}
+
+.overlay {
+  min-height: 100vh;
+  padding: 50px;
+  text-align: center;
+  /* Use semi-transparent card bg so dark mode works */
+  background: rgba(255, 255, 255, 0.9);
+}
+
+[data-theme="dark"] .overlay {
+  background: rgba(17, 24, 39, 0.92);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   GREEN BOXES
+   ══════════════════════════════════════════════════════════════ */
+
 .groundingIntro, .fbSuccess {
   background: var(--green-bg) !important;
   border-color: var(--green-border) !important;
+  border-radius: var(--radius-md) !important;
 }
 
-/* ── SCROLLBAR DARK ───────────────────────────────────────────── */
-[data-theme="dark"] ::-webkit-scrollbar-track {
-  background: var(--bg-secondary);
-}
+/* ══════════════════════════════════════════════════════════════
+   SCROLLBAR
+   ══════════════════════════════════════════════════════════════ */
 
-[data-theme="dark"] ::-webkit-scrollbar-thumb {
-  background: #374151;
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 999px;
 }
+::-webkit-scrollbar-thumb:hover { background: var(--text-hint); }
 
-[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent);
-}
+[data-theme="dark"] ::-webkit-scrollbar-track  { background: var(--bg-secondary); }
+[data-theme="dark"] ::-webkit-scrollbar-thumb  { background: #374151; }
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
-/* ── SMOOTH TRANSITION ────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════
+   TRANSITIONS — no animation elements
+   ══════════════════════════════════════════════════════════════ */
+
 *, *::before, *::after {
   transition: background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease;
 }
 
-/* Except animations — don't transition them */
 .breathCircleInner, .cbTyping span, .cbLoadingDots span {
   transition: none !important;
 }
 
+/* ══════════════════════════════════════════════════════════════
+   DARK MODE UNIVERSAL — all 24 pages
+   KEY FIX: button rule no longer touches nav/header links
+   ══════════════════════════════════════════════════════════════ */
 
-/* ══════════════════════════════════════════════════════════
-   UNIVERSAL DARK MODE FIX — covers all 24 pages
-   Add at the very END of your CSS file
-   ══════════════════════════════════════════════════════════ */
-
-/* Every direct text element inside any page wrapper */
 [data-theme="dark"] h1,
 [data-theme="dark"] h2,
 [data-theme="dark"] h3,
@@ -503,7 +662,15 @@ input:focus, textarea:focus, select:focus {
   color: var(--text-secondary) !important;
 }
 
-/* All cards / containers — catch any missed ones */
+/* Override: header spans/links must stay white */
+[data-theme="dark"] .mcHeader span,
+[data-theme="dark"] .mcHeader a,
+[data-theme="dark"] .mcHeader p,
+[data-theme="dark"] .mcHeader li {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* Cards */
 [data-theme="dark"] [class*="Card"],
 [data-theme="dark"] [class*="card"],
 [data-theme="dark"] [class*="Form"],
@@ -519,7 +686,7 @@ input:focus, textarea:focus, select:focus {
   color: var(--text-primary) !important;
 }
 
-/* All badges / tags / chips / points */
+/* Badges / chips */
 [data-theme="dark"] [class*="Badge"],
 [data-theme="dark"] [class*="badge"],
 [data-theme="dark"] [class*="Tag"],
@@ -535,7 +702,7 @@ input:focus, textarea:focus, select:focus {
   border-color: var(--border-color) !important;
 }
 
-/* All inputs, selects, textareas */
+/* Inputs */
 [data-theme="dark"] input,
 [data-theme="dark"] textarea,
 [data-theme="dark"] select {
@@ -544,14 +711,21 @@ input:focus, textarea:focus, select:focus {
   border-color: var(--border-color) !important;
 }
 
-/* All buttons that are NOT primary/accent */
+/* Buttons — SAFE: excludes mcHeader children entirely */
 [data-theme="dark"] button:not([class*="primary"]):not([class*="submit"]):not([class*="sos"]):not([class*="SOS"]) {
   background: var(--bg-card) !important;
   color: var(--text-secondary) !important;
   border-color: var(--border-color) !important;
 }
 
-/* History / list items */
+/* Header buttons override — keep them transparent */
+[data-theme="dark"] .mcHeader button:not([class*="sos"]):not([class*="SOS"]):not([class*="Need"]) {
+  background: transparent !important;
+  color: rgba(255,255,255,0.82) !important;
+  border-color: transparent !important;
+}
+
+/* History items */
 [data-theme="dark"] [class*="history"],
 [data-theme="dark"] [class*="History"],
 [data-theme="dark"] [class*="item"],
@@ -561,7 +735,7 @@ input:focus, textarea:focus, select:focus {
   border-color: var(--border-color) !important;
 }
 
-/* Stats / numbers */
+/* Stats */
 [data-theme="dark"] [class*="stat"],
 [data-theme="dark"] [class*="Stat"],
 [data-theme="dark"] [class*="score"],
@@ -571,7 +745,7 @@ input:focus, textarea:focus, select:focus {
   color: var(--text-primary) !important;
 }
 
-/* Modals / overlays */
+/* Modals / drawers / popups */
 [data-theme="dark"] [class*="modal"],
 [data-theme="dark"] [class*="Modal"],
 [data-theme="dark"] [class*="drawer"],
@@ -581,4 +755,181 @@ input:focus, textarea:focus, select:focus {
   background: var(--bg-card) !important;
   color: var(--text-primary) !important;
   border-color: var(--border-color) !important;
+}
+
+
+.sugHero {
+
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #ec4899 100%) !important;
+  border-radius: var(--radius-xl) !important;
+ 
+}
+[data-theme="dark"] [class*="emergencyDesc"]{
+  color: black !important;
+}
+[data-theme="dark"] [class*="emergencyTitle"]{
+  color: black !important;
+}
+[data-theme="dark"] [class*="progressInfo"] span{
+  color: black !important;
+}
+
+[data-theme="dark"] [class*="categoryCount"]{
+  color: black !important;
+}
+
+[data-theme="dark"] [class*="challengeFooter"] [class*="challengeCategory"]{
+  color: black !important;
+} 
+[data-theme="dark"] [class*="breathReadyText"]{
+  color: black !important;
+}
+
+[data-theme="dark"] [class*="reviewField"]{
+  color: black !important;
+}
+
+[data-theme="dark"] [class*="reviewCardMeta"] .reviewType {
+  color: black !important;
+}
+
+[data-theme="dark"] [class*="overlay"] h1{
+  color: black !important;
+}
+[data-theme="dark"] [class*="overlay"] p{
+  color: black !important;
+}
+[data-theme="dark"] [class*="heroTitle"]{
+  color:#030712 !important
+}
+[data-theme="dark"] [class*="heroAccent"]{
+  color:#030712 !important
+}
+
+[data-theme="dark"] [class*="heroDesc"]{
+  color:#030712 !important
+}
+
+[data-theme="dark"] [class*="phoneLogo"]{
+  color:#030712 !important
+}
+[data-theme="dark"] [class*="phoneDate"]{
+  color:#030712 !important
+}
+[data-theme="dark"] [class*="phoneJournalLabel"]{
+  color:#030712 !important
+}
+
+[data-theme="dark"] [class*="phoneJournalText"]{
+  color:#030712 !important
+}
+[data-theme="dark"] [class*="phoneStreak"] span:first-child{
+  color: #030712 !important;
+}
+[data-theme="dark"] [class*="heroStat"]{
+  color:#030712 !important
+}
+[data-theme="dark"] [class*="stepNum"]{
+  color:#030712 !important
+}
+[data-theme="dark"] [class*="stepNum"] + h3 {
+  color:#92400e !important;
+}
+
+[data-theme="dark"] [class*="stepNum"] + h3 + p{
+  color:black !important;
+}
+
+[data-theme="dark"] [class*="exampleLabel"]{
+  color:#030712 !important
+}
+[data-theme="dark"] [class*="exampleText"]{
+  color:#030712 !important
+}
+[data-theme="dark"] [class*="reframeLabel"]{
+  color:#030712 !important
+}
+[data-theme="dark"] [class*="reframeText"]{
+  color:#030712 !important
+}
+
+[data-theme="dark"] [class*="cognitiveJournal"] h2{
+  color:#030712 !important
+}
+
+[data-theme="dark"] [class*="panel happy"] h2{
+  color:#030712 !important
+}
+[data-theme="dark"] [class*="panel sad"] h2{
+  color:#030712 !important
+}
+[data-theme="dark"] [class*="coping"] h2{
+  color:#030712 !important
+}
+
+[data-theme="dark"] .journalEntry .journalDate{
+  color:#f9fafb !important;
+}
+
+[data-theme="dark"] .journalEntry p{
+  color:#e5e7eb !important;
+}
+
+[data-theme="dark"] .journalEntry p strong{
+  color:#fbbf24 !important;
+}
+
+[data-theme="dark"] .goalCategory{
+  color:#000080  !important
+}
+
+[data-theme="dark"] .therapyNoteContent{
+  color: #333 !important
+}
+[data-theme="dark"] .sugClear{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  background: #1f2937;
+  color: #f9fafb;
+  cursor: pointer;
+}
+
+[data-theme="dark"] .sugSearch{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f3f4f6;
+  padding: 10px 14px;
+  border-radius: 18px;
+}
+
+[data-theme="dark"] .sugSearch input{
+  flex: 1;
+  background: #374151;
+  color: #f9fafb;
+  border: none;
+  outline: none;
+  padding: 10px 14px;
+  border-radius: 14px;
+}
+
+[data-theme="dark"] .sugSearch input::placeholder{
+  color: #9ca3af;
+}
+[data-theme="light"] .mcUserName{
+  color: #ffffff !important;
+}
+[data-theme="light"] .sugHeroDesc{
+  color: #ffffff !important;
+}
+[data-theme="dark"] .overlay h1{
+  color:#e5e7eb !important;
+}
+[data-theme="dark"] .overlay p{
+  color:#e5e7eb !important;
 }

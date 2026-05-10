@@ -789,7 +789,7 @@ export const translations = {
         Physical:"Physical",
         Social:"Social",
         Personal:"Personal",
-        Work:"Work/Study",
+        Work:"Work",
         Other:"Other",
         
       },
@@ -818,7 +818,7 @@ export const translations = {
         Physical:"शारीरिक",
         Social:"सामाजिक",
         Personal:"व्यक्तिगत",
-        Work:"काम/पढ़ाई",
+        Work:"काम",
         Other:"अन्य",
       },
       successText: "लक्ष्य सफलतापूर्वक बनाया गया!",
@@ -846,7 +846,7 @@ export const translations = {
         Physical:"Physical",
         Social:"Social",
         Personal:"Personal",
-        Work:"Work/Study",
+        Work:"Work",
         Other:"Other"
         
       },

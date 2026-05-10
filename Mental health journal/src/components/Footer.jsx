@@ -2,6 +2,7 @@ import "./footer.css";
 import { Link } from "react-router-dom";
 
 import { FaLinkedin, FaTwitter, FaInstagram, FaGithub } from "react-icons/fa";
+import logo from "../assets/Logo_mindcare.jpg";
 
 function Footer(){
 
@@ -13,7 +14,10 @@ return(
 
 <div className="footerBrand">
 
-<h2>🧠 MindCare</h2>
+ <Link to="/" className="fcLogo">
+          <img src={logo} alt="MindCare" className="mcLogoImg" />
+          <h2 className="mcLogoText">MindCare</h2>
+        </Link>
 
 <p>
 Supporting emotional wellbeing through reflection,

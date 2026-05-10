@@ -13,8 +13,6 @@ function SupportPage() {
 
   const onlineResources = [
     { name: "iCall Online Counselling", desc: "Book sessions with qualified therapists online.", link: "https://icallhelpline.org", color: "#4f46e5", emoji: "💻" },
-    { name: "Wysa — AI Mental Health", desc: "Anonymous 24/7 emotional support chatbot.", link: "https://www.wysa.io", color: "#06b6d4", emoji: "🤖" },
-    { name: "YourDOST", desc: "Online counselling platform with verified Indian therapists.", link: "https://yourdost.com", color: "#10b981", emoji: "🧑‍⚕️" },
     { name: "Vandrevala Foundation", desc: "Free online and phone counselling 24/7.", link: "https://www.vandrevalafoundation.com", color: "#ef4444", emoji: "🆘" },
     { name: "NIMHANS", desc: "National Institute of Mental Health and Neurosciences.", link: "https://nimhans.ac.in", color: "#f59e0b", emoji: "🏥" },
     { name: "Manastha", desc: "Mental health awareness and resources for Indians.", link: "https://manastha.com", color: "#8b5cf6", emoji: "🧘" },
