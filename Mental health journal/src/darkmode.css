@@ -933,3 +933,22 @@ input:focus, textarea:focus, select:focus {
 [data-theme="dark"] .overlay p{
   color:#e5e7eb !important;
 }
+[data-theme="light"] .footerLinks h4{
+  color: #ffffff !important;
+}
+[data-theme="dark"] .footerLinks h4{
+  color: #ffffff !important;
+}
+[data-theme="light"] .footerContact h4{
+  color: #ffffff !important;
+}
+[data-theme="dark"] .footerContact h4{
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .footerHelp h4{
+  color: #ffffff !important;
+}
+[data-theme="dark"] .footerHelp h4{
+  color: #ffffff !important;
+}

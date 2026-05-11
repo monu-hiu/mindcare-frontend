@@ -252,10 +252,11 @@
   font-size: 3rem;
 }
 
-/* Show fallback when image fails (set via JS onError) */
+ /*Show fallback when image fails (set via JS onError) */
 .bookCoverImg[style*="display: none"] + .bookCoverFallback {
   display: flex;
-}
+ 
+} 
 
 .bookStripe {
   width: 5px;
@@ -318,6 +319,8 @@
   font-size: 14px;
   letter-spacing: 1px;
 }
+
+
 
 /* ── VIDEO CARD ──────────────────────── */
 .videoCard {
