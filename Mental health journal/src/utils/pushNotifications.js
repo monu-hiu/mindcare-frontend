@@ -2,7 +2,7 @@
 // Frontend push notification setup
 
 // ⚠️ APNI PUBLIC KEY YAHAN DAALO
-const VAPID_PUBLIC_KEY = "BP1zdHIqPOa9joi0qhevZcGlketbaKT28E00Q13X2I8gDqes7AC7CQ_aFdGdFynaxMCzqSXP48cSFr9ADkHf0Vw";
+const VAPID_PUBLIC_KEY = "BN933kjAjeNMPxtl2Ky-IRs-1K9tGI-Yr07oyUBD8RTiggczSmvItDvuPEV5ySMwcQgMRsuPkz81TKsQo8WQ1qM";
 
 
 // Convert VAPID key to Uint8Array
