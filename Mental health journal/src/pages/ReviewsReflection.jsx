@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./review.css";
 import {useLanguage} from "../context/LanguageContext";
 import translations from "../i18n/translations";
+import VoiceTextarea from "../components/VoiceTextarea";
 
 function ReviewsReflection() {
   const [reviews, setReviews] = useState([]);
@@ -117,40 +118,47 @@ function ReviewsReflection() {
 
         <div className="formGroup">
           <label>{t("reviews.highlight")} {activeTab === "weekly" ? t("reviews.w") : t("reviews.m")}:</label>
-          <textarea
-            placeholder={t("reviews.hplaceholder")}
+          <VoiceTextarea
             value={formData.highlight}
-            onChange={(e) => handleChange("highlight", e.target.value)}
+            onChange={(val) => handleChange("highlight", val)}  
+
+            placeholder={t("reviews.hplaceholder")}
             rows={3}
+            
           />
         </div>
 
         <div className="formGroup">
           <label>{t("reviews.challenge")}</label>
-          <textarea
-            placeholder={t("reviews.cplaceholder")}
+          <VoiceTextarea
+
             value={formData.challenge}
-            onChange={(e) => handleChange("challenge", e.target.value)}
+            onChange={(val) => handleChange("challenge", val)}
+            placeholder={t("reviews.cplaceholder")}
+          
+         
             rows={3}
           />
         </div>
 
         <div className="formGroup">
           <label>{t("reviews.learned")}</label>
-          <textarea
+          <VoiceTextarea
+                    value={formData.learned}
+            onChange={(val) => handleChange("learned", val)}
             placeholder={t("reviews.placeholder")}
-            value={formData.learned}
-            onChange={(e) => handleChange("learned", e.target.value)}
+  
             rows={3}
           />
         </div>
 
         <div className="formGroup">
           <label>{t("reviews.Next")} {activeTab === "weekly" ? t("reviews.w") : t("reviews.m")} {t("reviews.goal")}</label>
-          <textarea
-            placeholder={t("reviews.nextPlaceholder")}
+          <VoiceTextarea
             value={formData.nextWeekGoal}
-            onChange={(e) => handleChange("nextWeekGoal", e.target.value)}
+            onChange={(val) => handleChange("nextWeekGoal", val)}
+            placeholder={t("reviews.nextPlaceholder")}
+    
             rows={2}
           />
         </div>

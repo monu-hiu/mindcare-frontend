@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import {useLanguage} from "../context/LanguageContext";
 import translations from "../i18n/translations";
 import "./goal.css";
+import VoiceTextarea from "../components/VoiceTextarea";
 
 function Goal() {
   const { token } = useAuth();
@@ -165,11 +166,12 @@ function Goal() {
 
         <div className="formGroup">
           <label>{t("goals.descLabel")}</label>
-          <textarea
-            placeholder={t("goals.descPlaceholder")}
+          <VoiceTextarea
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={(val) => setDescription(val)}
+            placeholder={t("goals.descPlaceholder")}
             maxLength={500}
+            rows={3}
           />
         </div>
 

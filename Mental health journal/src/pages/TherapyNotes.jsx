@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import {useLanguage} from "../context/LanguageContext";
+import { useLanguage } from "../context/LanguageContext";
 import translations from "../i18n/translations";
+import VoiceTextarea from "../components/VoiceTextarea";
 import "./therapy.css";
 
 function TherapyNotes() {
@@ -16,14 +17,23 @@ function TherapyNotes() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [expandedNote, setExpandedNote] = useState(null);
-  const {language,t} = useLanguage();
+  const { language, t } = useLanguage();
 
   const categories = [
     "Session Notes", "Homework", "Insights",
     "Triggers", "Coping Strategies", "Goals",
   ];
 
-  // Use localStorage for therapy notes (private and sensitive)
+  const categoryColors = {
+    "Session Notes":    "#4f46e5",
+    "Homework":         "#f59e0b",
+    "Insights":         "#10b981",
+    "Triggers":         "#ef4444",
+    "Coping Strategies":"#06b6d4",
+    "Goals":            "#8b5cf6",
+  };
+
+  // Load notes from localStorage on mount
   useEffect(() => {
     const saved = localStorage.getItem("mindcare_therapy_notes");
     if (saved) setNotes(JSON.parse(saved));
@@ -64,15 +74,6 @@ function TherapyNotes() {
     localStorage.setItem("mindcare_therapy_notes", JSON.stringify(updatedNotes));
   };
 
-  const categoryColors = {
-    "Session Notes": "#4f46e5",
-    "Homework": "#f59e0b",
-    "Insights": "#10b981",
-    "Triggers": "#ef4444",
-    "Coping Strategies": "#06b6d4",
-    "Goals": "#8b5cf6",
-  };
-
   return (
     <div className="therapyPage">
       <div className="therapyHeader">
@@ -83,21 +84,22 @@ function TherapyNotes() {
         </div>
       </div>
 
-      {/* Add Note Form */}
+      {/* ── Add Note Form ── */}
       <div className="therapyForm">
         <h2>{t("notes.add")}</h2>
 
+        {/* Title */}
         <div className="formGroup">
           <label>{t("notes.note")}</label>
-          <input
-            type="text"
+          <VoiceTextarea
             placeholder={t("notes.nplaceholder")}
             value={title}
-            onChange={(e) => { setTitle(e.target.value); setError(""); }}
+            onChange={(val) => { setTitle(val); setError(""); }}
             maxLength={100}
           />
         </div>
 
+        {/* Category */}
         <div className="formGroup">
           <label>{t("notes.category")}</label>
           <select
@@ -111,12 +113,13 @@ function TherapyNotes() {
           </select>
         </div>
 
+        {/* Content — VoiceTextarea for voice input */}
         <div className="formGroup">
           <label>{t("notes.cnotes")}</label>
-          <textarea
+          <VoiceTextarea
             placeholder={t("notes.placeholder")}
             value={content}
-            onChange={(e) => { setContent(e.target.value); setError(""); }}
+            onChange={(val) => { setContent(val); setError(""); }}
             rows={6}
           />
         </div>
@@ -133,9 +136,10 @@ function TherapyNotes() {
         </button>
       </div>
 
-      {/* Notes List */}
+      {/* ── Notes List ── */}
       <div className="therapyNotesList">
         <h2>Your Notes ({notes.length})</h2>
+
         {loading ? (
           <p className="loadingText">{t("common.loading")}</p>
         ) : notes.length === 0 ? (
@@ -163,9 +167,9 @@ function TherapyNotes() {
                 <div className="therapyNoteActions">
                   <button
                     className="expandBtn"
-                    onClick={() => setExpandedNote(
-                      expandedNote === note.id ? null : note.id
-                    )}
+                    onClick={() =>
+                      setExpandedNote(expandedNote === note.id ? null : note.id)
+                    }
                   >
                     {expandedNote === note.id ? "▲" : "▼"}
                   </button>
@@ -177,11 +181,14 @@ function TherapyNotes() {
                   </button>
                 </div>
               </div>
-              <h3 className="therapyNoteTitle"
+
+              <h3
+                className="therapyNoteTitle"
                 style={{ borderLeft: `3px solid ${categoryColors[note.category]}` }}
               >
                 {note.title}
               </h3>
+
               {expandedNote === note.id && (
                 <p className="therapyNoteContent">{note.content}</p>
               )}

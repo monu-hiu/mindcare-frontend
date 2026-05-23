@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import {useLanguage} from "../context/LanguageContext";
 import translations from "../i18n/translations";
+import VoiceTextarea from "../components/VoiceTextarea";
 
 function Reflection() {
   const { token } = useAuth();
@@ -106,29 +107,36 @@ function Reflection() {
         <div className="panels">
           <div className="panel happy">
             <h2>{t("journal.happypannel")}</h2>
-            <textarea
+            <VoiceTextarea
+             value={happy}
+             onChange={(val) => setHappy(val)}
               placeholder={t("journal.happyPlaceholder")}
-              value={happy}
-              onChange={(e) => setHappy(e.target.value)}
+              rows={4}
+              maxLength={500}
+
             />
           </div>
 
           <div className="panel sad">
             <h2>{t("journal.unhappyPannel")}</h2>
-            <textarea
-              placeholder={t("journal.unhappyPlaceholder")}
+            <VoiceTextarea
               value={sad}
-              onChange={(e) => setSad(e.target.value)}
+              onChange={(val) => setSad(val)}
+              placeholder={t("journal.unhappyPlaceholder")}
+              rows={4}
+              maxLength={500}
             />
           </div>
         </div>
 
         <div className="coping">
           <h2>{t("journal.coping")}</h2>
-          <textarea
-            placeholder={t("journal.copingPlaceholder")}
+          <VoiceTextarea
             value={cope}
-            onChange={(e) => setCope(e.target.value)}
+            onChange={(val) => setCope(val)}
+            placeholder={t("journal.copingPlaceholder")}
+            rows={4}
+            maxLength={500}
           />
         </div>
 

@@ -1,0 +1,116 @@
+/* VoiceButton.css */
+
+.voiceWrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Mic Button */
+.voiceBtn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px solid #e0e7ff;
+  background: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  padding: 0;
+  min-height: unset;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.voiceBtn:hover {
+  border-color: #4f46e5;
+  background: #eef2ff;
+  transform: scale(1.05);
+}
+
+/* Listening state — pulsing red */
+.voiceBtn.listening {
+  background: #ef4444;
+  border-color: #ef4444;
+  box-shadow: 0 0 0 4px rgba(239,68,68,0.2);
+  animation: voicePulse 1.2s ease infinite;
+}
+
+@keyframes voicePulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(239,68,68,0.2); }
+  50%       { box-shadow: 0 0 0 10px rgba(239,68,68,0.05); }
+}
+
+.voiceIcon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* Live transcript */
+.voiceLive {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 99px;
+  padding: 6px 14px;
+  animation: voiceFadeIn 0.2s ease;
+}
+
+@keyframes voiceFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.voiceDot {
+  width: 8px;
+  height: 8px;
+  background: #ef4444;
+  border-radius: 50%;
+  animation: voiceBlink 0.8s ease infinite;
+  flex-shrink: 0;
+}
+
+@keyframes voiceBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.2; }
+}
+
+.voiceLiveText {
+  font-size: 13px;
+  color: #dc2626;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Error */
+.voiceError {
+  font-size: 12px;
+  color: #ef4444;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Dark mode */
+[data-theme="dark"] .voiceBtn {
+  background: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .voiceBtn:hover {
+  background: var(--accent-light) !important;
+  border-color: var(--accent) !important;
+}
+
+[data-theme="dark"] .voiceLive {
+  background: var(--red-bg) !important;
+  border-color: var(--red-border) !important;
+}

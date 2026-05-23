@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useLanguage } from "../context/LanguageContext";
 import translations from "../i18n/translations";
+import VoiceTextarea from "../components/VoiceTextarea";
 import "./sleep.css";
 
 function SleepTracker() {
@@ -257,10 +258,10 @@ function SleepTracker() {
         {/* Notes */}
         <div className="formGroup">
           <label>{t("sleepTracker.notesLabel")}</label>
-          <textarea
+          <VoiceTextarea
             placeholder={t("sleepTracker.notesPlaceholder")}
             value={notes}
-            onChange={(e) => setNotes(e.target.value)}
+            onChange={(val) => setNotes(val)}
             maxLength={300}
           />
         </div>

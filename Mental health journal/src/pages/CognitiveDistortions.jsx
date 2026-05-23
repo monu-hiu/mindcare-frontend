@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./cognitive.css";
+import VoiceTextarea from "../components/VoiceTextarea";
 
 function CognitiveDistortions() {
   const [selectedDistortion, setSelectedDistortion] = useState(null);
@@ -177,10 +178,11 @@ function CognitiveDistortions() {
 
           <div className="formGroup">
             <label>Reframed thought:</label>
-            <textarea
-              placeholder={`Try: ${selectedDistortion.reframeTip}`}
+            <VoiceTextarea
               value={reframe}
-              onChange={(e) => setReframe(e.target.value)}
+                onChange={(val) => setReframe(val)}
+              placeholder={`Try: ${selectedDistortion.reframeTip}`}
+              maxLength={300}
               rows={3}
             />
           </div>

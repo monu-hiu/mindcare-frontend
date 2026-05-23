@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useLanguage } from "../context/LanguageContext";
 import translations from "../i18n/translations";
+import VoiceTextarea from "../components/VoiceTextarea";
 import "./anxiety.css";
 
 function AnxietyTracker() {
@@ -149,7 +150,7 @@ function AnxietyTracker() {
     checkConsecutiveHighAnxiety(level);
   };
 
- const checkConsecutiveHighAnxiety = async (todayLevel) => {
+  const checkConsecutiveHighAnxiety = async (todayLevel) => {
     if (todayLevel < 7) return;
     try {
       const res = await fetch("https://mindcare-backend-v56a.onrender.com/api/anixety/history", {
@@ -175,7 +176,7 @@ function AnxietyTracker() {
     triggerSupportCall();
   };
 
- const triggerSupportCall = async () => {
+  const triggerSupportCall = async () => {
     try {
       await fetch("https://mindcare-backend-v56a.onrender.com/api/support/trigger-call", {
         method: "POST",
@@ -395,7 +396,6 @@ function AnxietyTracker() {
             <div className="tagSection">
               <label>{t("anxietyQuiz.triggers")}</label>
               <div className="tagGrid">
-                {/* ✅ renamed (t) to (item) to avoid shadowing the t() function */}
                 {triggerOptions.map((item) => (
                   <button key={item}
                     className={`tagBtn ${triggers.includes(item) ? "selected" : ""}`}
@@ -438,13 +438,16 @@ function AnxietyTracker() {
               </div>
             </div>
 
+            {/* ✅ CHANGED: <textarea> → <VoiceTextarea> */}
+            {/* onChange now receives string directly, NOT an event object */}
             <div className="formGroup">
               <label>{t("common.notes")} {t("common.optional")}</label>
-              <textarea
-                placeholder={t("moodTracker.notePlaceholder")}
+              <VoiceTextarea
                 value={notes}
-                onChange={(e) => setNotes(e.target.value)}
+                onChange={(val) => setNotes(val)}
+                placeholder={t("moodTracker.notePlaceholder")}
                 maxLength={300}
+                rows={4}
               />
             </div>
 
@@ -483,7 +486,6 @@ function AnxietyTracker() {
                   {log.triggers?.length > 0 && (
                     <div className="tagRow">
                       <span className="tagRowLabel">{t("anxietyQuiz.triggers")}: </span>
-                      {/* ✅ renamed (t, i) to (item, i) to avoid shadowing */}
                       {log.triggers.map((item, i) => (
                         <span key={i} className="triggerTag">{item}</span>
                       ))}

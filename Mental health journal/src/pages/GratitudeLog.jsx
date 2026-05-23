@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { useLanguage } from "../context/LanguageContext";
 import translations from "../i18n/translations";
 import "./gratitude.css";
+import VoiceTextarea from "../components/VoiceTextarea";
 
 function GratitudeLog() {
   const { token } = useAuth();
@@ -162,12 +163,14 @@ const {language, t} = useLanguage();
 
         <div className="formGroup">
           <label>{t("common.additionalNote")} {t("common.optional")}</label>
-          <textarea
-            placeholder={t("gratitude.addtionalThought")}
+        
+        <VoiceTextarea
             value={note}
-            onChange={(e) => setNote(e.target.value)}
-            maxLength={300}
-          />
+            onChange={(val) => setNote(val)}
+            placeholder="Any additional thoughts..."
+             rows={4}
+             maxLength={300}
+        />
         </div>
 
         {error && <p className="errorText">{error}</p>}

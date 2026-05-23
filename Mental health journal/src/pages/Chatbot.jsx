@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useLanguage } from "../context/LanguageContext";
+import VoiceButton from "../components/VoiceButton";
 import "./chatbot.css";
 
 function Chatbot() {
@@ -289,6 +290,10 @@ function Chatbot() {
           </div>
         </div>
       )}
+  <VoiceButton
+  onResult={(text) => setInput(prev => prev + " " + text)}
+/>
+
 
       {/* ── QUICK REPLIES — pill row after conversation ── */}
       {messages.length > 0 && !sending && (
@@ -305,6 +310,7 @@ function Chatbot() {
           ))}
         </div>
       )}
+
 
       {/* ── INPUT ── */}
       <div className="cbInputArea">

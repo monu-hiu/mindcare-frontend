@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { useLanguage } from "../context/LanguageContext";
 import translations from "../i18n/translations";
 import "./energy.css";
+import VoiceTextarea from "../components/VoiceTextarea";
 
 function EnergyTracker() {
   const { token } = useAuth();
@@ -409,11 +410,12 @@ function EnergyTracker() {
 
             <div className="formGroup" style={{ marginTop: "16px" }}>
               <label>{t("common.notes")} {t("common.optional")}</label>
-              <textarea
-                placeholder={t("sleepTracker.notesLabel")}
+                 <VoiceTextarea
                 value={notes}
-                onChange={(e) => setNotes(e.target.value)}
+                onChange={(val) => setNotes(val)}
+                placeholder="how is your energy right now..."
                 maxLength={300}
+                rows={4}
               />
             </div>
 

@@ -112,29 +112,98 @@
 }
 
 /* ── SEARCH BAR ──────────────────────── */
-.sugSearch {
+/* ─────────────────────────────────────────────────────────
+   ADD THESE RULES TO suggestions.css
+   (replace the old .sugSearch block and add the new ones)
+   ───────────────────────────────────────────────────────── */
+
+/* ── SEARCH WRAPPER (label + search box together) ── */
+.sugSearchWrap {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  background: white;
-  border: 1.5px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 10px 16px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  flex-direction: column;
+  gap: 5px;
   flex: 1;
   min-width: 200px;
   align-self: flex-end;
 }
 
-.sugSearch input {
-  flex: 1;
-  border: none;
-  outline: none;
-  font-size: 14px;
-  font-family: 'Poppins', sans-serif;
+/* ── SEARCH BOX PILL ── */
+.sugSearch {
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  position: relative;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  padding: 0;
+  gap: 0;
 }
 
-.sugClear {
+/* Highlight pill border when VoiceTextarea is focused */
+.sugSearch:focus-within {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* Red pulse border when mic is listening */
+.sugSearch:has(.vtBox.vtListening) {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+  animation: sugPulse 1.5s ease infinite;
+}
+
+@keyframes sugPulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1); }
+  50%       { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0.05); }
+}
+
+/* ── STRIP VoiceTextarea's own borders inside .sugSearch ── */
+.sugSearch .vtWrapper {
+  flex: 1;
+  width: 100%;
+}
+
+.sugSearch .vtBox {
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+.sugSearch .vtBox:focus-within {
+  box-shadow: none !important;
+}
+
+.sugSearch .vtBox.vtListening {
+  box-shadow: none !important;
+  animation: none !important;
+}
+
+/* Match textarea font to the page */
+.sugSearch .vtTextarea {
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  padding: 12px 52px 12px 16px;
+  min-height: unset;
+  height: auto;
+  rows: 1;
+}
+
+/* Hide the footer (char count + listening status) — looks odd in search */
+.sugSearch .vtFooter {
+  display: none !important;
+}
+
+/* ── CLEAR BUTTON — sits left of the mic button ── */
+.sugSearch .sugClear {
+  position: absolute;
+  right: 48px;   /* mic button is ~34px wide + 10px from right = 44px; add 4px gap */
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
   background: #f3f4f6;
   border: none;
   border-radius: 50%;
@@ -143,7 +212,22 @@
   cursor: pointer;
   font-size: 11px;
   color: #6b7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
+
+.sugSearch .sugClear:hover {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 560px) {
+  .sugSearchWrap { width: 100%; min-width: unset; }
+}
+
 
 .sugCount {
   font-size: 12px;

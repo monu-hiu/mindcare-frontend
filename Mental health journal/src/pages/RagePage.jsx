@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import {useLanguage} from "../context/LanguageContext";
 import translations from "../i18n/translations";
 import "./rage.css";
+import VoiceTextarea from "../components/VoiceTextarea";
 
 const QUIZ_QUESTIONS = [
   {
@@ -216,10 +217,11 @@ function RagePage() {
           {/* Write and Release */}
           <div className="rageForm">
             <h2>{t("ragePage.rageform")}</h2>
-            <textarea
+            <VoiceTextarea
+               value={text}
+              onChange={(val) => setText(val)}
               placeholder={t("ragePage.placeholder")}
-              value={text}
-              onChange={(e) => setText(e.target.value)}
+              maxLength={500}
               className="rageTextarea"
             />
             {released ? (

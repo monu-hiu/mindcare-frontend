@@ -4,6 +4,7 @@ import "./selfcongrats.css";
 import DropdownSelect from "../components/DropdownSelect";
 import {useLanguage} from "../context/LanguageContext";
 import translations from "../i18n/translations";
+import VoiceTextarea from "../components/VoiceTextarea";
 
 function SelfCongrats() {
   const [congrats, setCongrats] = useState([]);
@@ -115,11 +116,11 @@ function SelfCongrats() {
   />
 </div>
 
-        <textarea
+        <VoiceTextarea
           className="congratTextarea"
           placeholder={t("congrats.textPlaceholder")}
           value={text}
-          onChange={(e) => { setText(e.target.value); setError(""); }}
+          onChange={(val) => { setText(val); setError(""); }}
           rows={4}
           maxLength={300}
         />

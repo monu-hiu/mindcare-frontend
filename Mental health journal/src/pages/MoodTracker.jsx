@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useLanguage } from "../context/LanguageContext";
+import VoiceTextarea from "../components/VoiceTextarea";
 
 function MoodTracker() {
   const { token } = useAuth();
@@ -110,11 +111,12 @@ function MoodTracker() {
       {/* Note */}
       {selectedMood && (
         <div className="noteSection">
-          <textarea
+          <VoiceTextarea
+             value={note}
+            onChange={(val) => setNote(val)}
             placeholder={t("moodTracker.notePlaceholder")} // ✅ fixed
-            value={note}
-            onChange={(e) => setNote(e.target.value)}
             maxLength={500}
+            rows={4}
           />
         </div>
       )}
