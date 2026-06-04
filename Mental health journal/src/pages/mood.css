@@ -1,183 +1,198 @@
-.moodPage{
+/* ═══════════════════════════════════════════
+   MOOD TRACKER CSS — With Selected State Fix
+═══════════════════════════════════════════ */
 
-min-height:100vh;
-
-background:linear-gradient(135deg,#fff7ed,#dbeafe);
-
-font-family:'Poppins',sans-serif;
-
-text-align:center;
-
-padding:40px;
-
+.moodPage {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 30px 20px 80px;
+  font-family: 'Poppins', sans-serif;
+  background: transparent;
+  min-height: 100vh;
 }
 
-.subtitle{
-
-color:#555;
-
-margin-bottom:35px;
-
-font-size:18px;
-
+h1 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #111827;
+  text-align: center;
+  margin-bottom: 6px;
 }
 
-.moodGrid{
-
-display:flex;
-
-justify-content:center;
-
-gap:25px;
-
-flex-wrap:wrap;
-
-margin-bottom:30px;
-
+.subtitle {
+  color: #6b7280;
+  margin-bottom: 28px;
+  font-size: 14px;
+  text-align: center;
 }
 
-.moodCard{
-
-width:130px;
-
-height:130px;
-
-background:white;
-
-border-radius:18px;
-
-display:flex;
-
-flex-direction:column;
-
-justify-content:center;
-
-align-items:center;
-
-box-shadow:0 10px 25px rgba(0,0,0,0.1);
-
-cursor:pointer;
-
-transition:0.3s;
-
-border:3px solid transparent;
-
+/* ── MOOD GRID ─────────────────────────── */
+.moodGrid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+  justify-content: center;
 }
 
-.moodCard:hover{
-
-transform:translateY(-6px);
-
+.moodCard {
+  position: relative;
+  width: 100%;
+  background: white;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 18px 8px 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid #e5e7eb;
+  gap: 8px;
 }
 
-.emoji{
-
-font-size:42px;
-
-margin-bottom:8px;
-
+.moodCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
 }
 
-.moodCard p{
-
-font-weight:500;
-
+/* ✅ SELECTED STATE — checkmark badge */
+.moodCheckmark {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  color: white;
+  font-size: 12px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  z-index: 2;
+  animation: popIn 0.2s ease;
 }
 
-.active{
-
-transform:scale(1.05);
-
+@keyframes popIn {
+  from { transform: scale(0); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
 }
 
-.selected{
-
-margin-top:20px;
-
-font-size:18px;
-
+.emoji {
+  font-size: 38px;
+  margin-bottom: 2px;
+  transition: transform 0.2s ease;
+  line-height: 1;
 }
 
-.saveBtn{
-
-margin-top:10px;
-
-background:#6366f1;
-
-color:white;
-
-border:none;
-
-padding:10px 20px;
-
-border-radius:8px;
-
-cursor:pointer;
-
+.moodCard:hover .emoji {
+  transform: scale(1.1);
 }
 
-.saveBtn:hover{
-
-background:#4f46e5;
-
+.moodCard p {
+  font-size: 12px;
+  font-weight: 500;
+  color: #374151;
+  text-align: center;
+  margin: 0;
 }
 
-.result{
-
-margin-top:25px;
-
-font-size:18px;
-
-color:#333;
-
+/* ✅ Selected indicator bar */
+.moodSelectedBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 20px;
+  border-radius: 12px;
+  border: 1.5px solid;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  animation: slideDown 0.2s ease;
 }
 
-.nav{
-
-margin-top:35px;
-
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.backBtn{
-
-background:#6366f1;
-
-color:white;
-
-border:none;
-
-padding:12px 25px;
-
-border-radius:10px;
-
-cursor:pointer;
-
-}
-
-.backBtn:hover{
-
-background:whitesmoke;
-
-}
 /* Note Section */
 .noteSection {
-  margin: 16px 0;
+  margin: 0 0 16px 0;
 }
 
-.noteSection textarea {
-  width: 100%;
-  padding: 12px;
-  border: 1.5px solid #e5e7eb;
+/* Selected + Save */
+.selected {
+  margin-top: 10px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.saveBtn {
+  margin-top: 10px;
+  background: #6366f1;
+  color: white;
+  border: none;
+  padding: 12px 28px;
   border-radius: 10px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  width: 100%;
+  transition: all 0.15s ease;
+  box-shadow: 0 4px 12px rgba(99,102,241,0.3);
+}
+
+.saveBtn:hover:not(:disabled) { opacity: 0.9; transform: scale(1.01); }
+.saveBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.result {
+  margin-top: 16px;
+  font-size: 15px;
+  color: #22c55e;
+  text-align: center;
+  font-weight: 600;
+  padding: 10px;
+  background: #f0fdf4;
+  border-radius: 10px;
+  border: 1px solid #bbf7d0;
+}
+
+.errorText {
+  color: #ef4444;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  margin: 8px 0;
+}
+
+/* Nav */
+.nav {
+  margin-top: 35px;
+  text-align: center;
+}
+
+.backBtn {
+  background: transparent;
+  color: #374151;
+  border: 1.5px solid #e5e7eb;
+  padding: 10px 24px;
+  border-radius: 10px;
+  cursor: pointer;
   font-family: 'Poppins', sans-serif;
   font-size: 14px;
-  resize: vertical;
-  min-height: 80px;
-  outline: none;
+  transition: 0.15s;
+  width: 100%;
 }
 
-.noteSection textarea:focus {
+.backBtn:hover {
   border-color: #6366f1;
+  color: #6366f1;
 }
 
 /* History Section */
@@ -190,6 +205,7 @@ background:whitesmoke;
   font-weight: 600;
   color: #111827;
   margin-bottom: 16px;
+  text-align: left;
 }
 
 .historyList {
@@ -205,22 +221,20 @@ background:whitesmoke;
   background: white;
   border-radius: 12px;
   padding: 14px 16px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   border-left: 4px solid #6366f1;
+  transition: 0.15s;
 }
 
-.historyEmoji {
-  font-size: 28px;
-  flex-shrink: 0;
-}
+.historyItem:hover { transform: translateX(3px); }
 
-.historyInfo {
-  flex: 1;
-}
+.historyEmoji { font-size: 28px; flex-shrink: 0; }
+
+.historyInfo { flex: 1; }
 
 .historyMood {
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
   color: #111827;
   margin-bottom: 2px;
 }
@@ -232,7 +246,29 @@ background:whitesmoke;
   line-height: 1.5;
 }
 
-.historyDate {
-  font-size: 11px;
-  color: #9ca3af;
+.historyDate { font-size: 11px; color: #9ca3af; }
+
+/* Dark mode */
+[data-theme="dark"] .moodPage { background: transparent !important; }
+[data-theme="dark"] h1 { color: var(--text-primary) !important; }
+[data-theme="dark"] .subtitle { color: var(--text-muted) !important; }
+[data-theme="dark"] .moodCard { background: var(--bg-card) !important; }
+[data-theme="dark"] .moodCard p { color: var(--text-secondary) !important; }
+[data-theme="dark"] .historyItem { background: var(--bg-card) !important; }
+[data-theme="dark"] .historyMood { color: var(--text-primary) !important; }
+[data-theme="dark"] .historySection h2 { color: var(--text-primary) !important; }
+
+/* ── RESPONSIVE ────────────────────────── */
+@media (max-width: 768px) {
+  .moodPage { padding: 20px 14px 80px; text-align: center; }
+  .moodGrid { grid-template-columns: repeat(3, 1fr) !important; gap: 10px !important; }
+  .moodCard { padding: 14px 6px 12px !important; }
+  .emoji { font-size: 30px !important; }
+  .moodCard p { font-size: 11px !important; }
+  .moodCheckmark { width: 18px !important; height: 18px !important; font-size: 10px !important; }
+  .historyItem { flex-direction: row; }
+}
+
+@media (max-width: 400px) {
+  .moodGrid { grid-template-columns: repeat(2, 1fr) !important; }
 }
