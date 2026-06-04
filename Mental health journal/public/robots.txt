@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mindcare.in/sitemap.xml
+Sitemap: https://mindcare-wellness.in/sitemap.xml
