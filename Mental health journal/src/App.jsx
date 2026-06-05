@@ -32,6 +32,9 @@ import Chatbot from "./pages/Chatbot";
 import Header from "./components/Header_final";
 import Footer from "./components/Footer";
 import { ThemeProvider } from "./context/ThemeContext";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
+
 
 function App() {
   return (
@@ -68,6 +71,8 @@ function App() {
             <Route path="/self-harm-support"   element={<SelfHarmSupport />} />
             <Route path="/chatbot"             element={<Chatbot />} />
             <Route path="/feedback-admin"      element={<FeedbackViewer />} />
+            <Route path="/blog"               element={<Blog />} />
+   <Route path="/blog/:slug" element={<BlogPost />} />
           </Routes>
           <Footer />
         </Router>

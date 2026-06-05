@@ -38,6 +38,7 @@ function Header() {
     { to: "/mindfulness", label: t("nav.mindfulness")  },
     { to: "/goal",        label: t("nav.goals")        },
     { to: "/suggestions", label: t("nav.resources")    },
+    { to: "/blog",        label: t("nav.blog")         },
   ];
 
   return (
