@@ -952,3 +952,21 @@ input:focus, textarea:focus, select:focus {
 [data-theme="dark"] .footerHelp h4{
   color: #ffffff !important;
 }
+
+[data-theme="light"] .authLeftSub {
+  color: #ffffff !important;
+}
+
+
+[data-theme="light"] .authFeatureTitle {
+  color: #ffffff !important;
+}
+[data-theme="light"] .authFeatureSub {
+  color: #ffffff !important;
+}
+[data-theme="light"] .authTestimonialQuote {
+  color: #ffffff !important;
+}
+[data-theme="light"] .authLeftFoot {
+  color: #ffffff !important;
+}
