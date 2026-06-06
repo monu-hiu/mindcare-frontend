@@ -6,6 +6,7 @@ import { LanguageProvider } from "./context/LanguageContext";
 import Home from "./pages/Home";
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
+import ForgotPassword from "./pages/auth/ForgotPassword";   // ✅ NEW
 import Dashboard from "./pages/Dashboard";
 import Mindfulness from "./pages/Mindfulness";
 import Suggestions from "./pages/Suggestions";
@@ -34,51 +35,53 @@ import Footer from "./components/Footer";
 import { ThemeProvider } from "./context/ThemeContext";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import VerifyOtp from "./pages/auth/VerifyOtp";
 
 
 function App() {
   return (
-    // LanguageProvider wraps everything so all pages can access language
-    <ThemeProvider> 
-    <LanguageProvider>
-      <AuthProvider>
-        <Router>
-          <Header />
-          <Routes>
-            <Route path="/"                    element={<Home />} />
-            <Route path="/login"               element={<Login />} />
-            <Route path="/signup"              element={<Signup />} />
-            <Route path="/dashboard"           element={<Dashboard />} />
-            <Route path="/mindfulness"         element={<Mindfulness />} />
-            <Route path="/suggestions"         element={<Suggestions />} />
-            <Route path="/goal"                element={<Goal />} />
-            <Route path="/challenges"          element={<Challenges />} />
-            <Route path="/selfcare"            element={<SelfCare />} />
-            <Route path="/reflection"          element={<Reflection />} />
-            <Route path="/cognitive-distortions" element={<CognitiveDistortions />} />
-            <Route path="/combo"               element={<ComboTracker />} />
-            <Route path="/anxiety-tracker"     element={<AnxietyTracker />} />
-            <Route path="/mood-tracker"        element={<MoodTracker />} />
-            <Route path="/gratitude-log"       element={<GratitudeLog />} />
-            <Route path="/self-congrats"       element={<SelfCongrats />} />
-            <Route path="/sleep-tracker"       element={<SleepTracker />} />
-            <Route path="/improvement-tracker" element={<ImprovementTracker />} />
-            <Route path="/energy-tracker"      element={<EnergyTracker />} />
-            <Route path="/rage"                element={<RagePage />} />
-            <Route path="/therapy-notes"       element={<TherapyNotes />} />
-            <Route path="/reviews-reflection"  element={<ReviewsReflection />} />
-            <Route path="/support"             element={<SupportPage />} />
-            <Route path="/self-harm-support"   element={<SelfHarmSupport />} />
-            <Route path="/chatbot"             element={<Chatbot />} />
-            <Route path="/feedback-admin"      element={<FeedbackViewer />} />
-            <Route path="/blog"               element={<Blog />} />
-   <Route path="/blog/:slug" element={<BlogPost />} />
-          </Routes>
-          <Footer />
-        </Router>
-      </AuthProvider>
-    </LanguageProvider>
-     </ThemeProvider>
+    <ThemeProvider>
+      <LanguageProvider>
+        <AuthProvider>
+          <Router>
+            <Header />
+            <Routes>
+              <Route path="/"                      element={<Home />} />
+              <Route path="/login"                 element={<Login />} />
+              <Route path="/signup"                element={<Signup />} />
+              <Route path="/forgot-password"       element={<ForgotPassword />} />  {/* ✅ NEW */}
+              <Route path="/dashboard"             element={<Dashboard />} />
+              <Route path="/mindfulness"           element={<Mindfulness />} />
+              <Route path="/suggestions"           element={<Suggestions />} />
+              <Route path="/goal"                  element={<Goal />} />
+              <Route path="/challenges"            element={<Challenges />} />
+              <Route path="/selfcare"              element={<SelfCare />} />
+              <Route path="/reflection"            element={<Reflection />} />
+              <Route path="/cognitive-distortions" element={<CognitiveDistortions />} />
+              <Route path="/combo"                 element={<ComboTracker />} />
+              <Route path="/anxiety-tracker"       element={<AnxietyTracker />} />
+              <Route path="/mood-tracker"          element={<MoodTracker />} />
+              <Route path="/gratitude-log"         element={<GratitudeLog />} />
+              <Route path="/self-congrats"         element={<SelfCongrats />} />
+              <Route path="/sleep-tracker"         element={<SleepTracker />} />
+              <Route path="/improvement-tracker"   element={<ImprovementTracker />} />
+              <Route path="/energy-tracker"        element={<EnergyTracker />} />
+              <Route path="/rage"                  element={<RagePage />} />
+              <Route path="/therapy-notes"         element={<TherapyNotes />} />
+              <Route path="/reviews-reflection"    element={<ReviewsReflection />} />
+              <Route path="/support"               element={<SupportPage />} />
+              <Route path="/self-harm-support"     element={<SelfHarmSupport />} />
+              <Route path="/chatbot"               element={<Chatbot />} />
+              <Route path="/feedback-admin"        element={<FeedbackViewer />} />
+              <Route path="/blog"                  element={<Blog />} />
+              <Route path="/blog/:slug"            element={<BlogPost />} />
+              <Route path="/verify-otp"            element={<VerifyOtp />} />  {/* ✅ NEW */}
+            </Routes>
+            <Footer />
+          </Router>
+        </AuthProvider>
+      </LanguageProvider>
+    </ThemeProvider>
   );
 }
 
