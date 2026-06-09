@@ -135,146 +135,147 @@ MindCare is the best free mental health app for you in 2026. It offers comprehen
     `
   },
   {
-    slug: "breathing-exercises-anxiety-hindi",
-    title: "Anxiety Ke Liye Best Breathing Exercises — Hindi Guide",
-    desc: "4-7-8 breathing, box breathing aur calm breathing — yeh techniques anxiety ko 5 minute mein kam kar sakti hain.",
+    slug: "breathing-exercises-anxiety-English",
+    title: "Breathing Exercises for Anxiety — English Guide",
+    desc: "4-7-8 breathing, box breathing and calm breathing — these techniques can reduce anxiety in just 5 minutes.",
     date: "May 31, 2026",
     readTime: "3 min",
     tag: "Wellness",
     emoji: "💨",
     content: `
-## Breathing Exercises Kyun Kaam Karte Hain?
+## Breathing Exercises Why They Work?
 
-Jab anxiety hoti hai, body "fight or flight" mode mein chali jaati hai. Deep breathing directly nervous system ko calm karti hai.
+Breathing exercises help regulate the nervous system and reduce the physical symptoms of anxiety. They can lower heart rate, relax muscles, and calm the mind.
 
 ## Top 3 Breathing Exercises
 
 ### 1. 4-7-8 Breathing (Best for anxiety)
 
-**Kaise karein:**
-1. Naak se 4 second mein saans lo
-2. 7 second tak rokho
-3. Muh se 8 second mein chodo
-4. 4 baar repeat karo
+**How to do it:**
+1. Inhale through the nose for 4 seconds
+2. Hold the breath for 7 seconds
+3. Exhale through the mouth for 8 seconds
+4. Repeat 4 times
 
-**Best for:** Anxiety, panic attacks, neend na aana
+**Best for:** Anxiety, panic attacks, sleep problems
 
 ### 2. Box Breathing (Best for stress)
 
-**Kaise karein:**
-1. 4 second saans lo
-2. 4 second rokho
-3. 4 second chodo
-4. 4 second rokho
-5. Repeat karo
+**How to do it:**
+1. Inhale for 4 seconds
+2. Hold for 4 seconds
+3. Exhale for 4 seconds
+4. Hold for 4 seconds
+5. Repeat
+
 
 **Best for:** Stress, focus, work pressure
 
 ### 3. Calm Breathing (Best for relaxation)
 
-**Kaise karein:**
-1. 5 second saans lo
-2. 5 second chodo
-3. Koi roko nahi
-4. 10 baar repeat karo
+**How to do it:**
+1. Inhale for 5 seconds
+2. Hold for 5 seconds
+3. Exhale for 5 seconds
+4. Hold for 10 seconds
+5. Repeat 10 times
 
 **Best for:** General relaxation, sleep
 
-## Kab Karein?
+## When to Do It?
 
-- Subah uthke — din ki shuruat ke liye
-- Anxiety feel hone par — turant relief
-- Sone se pehle — better sleep
+- after waking up in the morning — starting the day with calm mind
+- during work breaks — to reduce stress and improve focus
+- before going to bed — for better sleep
+- during anxiety attacks — to quickly calm down
 
-## MindCare Mein Try Karo
+## In MindCare Try it For Free
 
-MindCare app mein yeh teeno breathing exercises guided animation ke saath available hain — bilkul free!
+All three of these breathing exercises are available in the MindCare app with guided animation — absolutely free!
 
-[Breathing Exercises Try Karo →](/mindfulness)
+[Breathing Exercises Try it For Free →](/mindfulness)
     `
   },
   {
-    slug: "student-anxiety-india",
-    title: "Students Mein Anxiety — Causes, Symptoms aur Solutions",
-    desc: "India mein students anxiety se kyun pareshan hain? Exam stress, career pressure — sab handle karne ke practical tips.",
+    slug: "Student-anxiety",
+    title: "Anxiety in Students — Causes, Symptoms, and Solutions",
+    desc: "Many students  face high levels of anxiety due to academic pressure, competition, and social expectations. Learn how to manage it effectively.",
     date: "June 5, 2026",
     readTime: "6 min",
     tag: "Students",
     emoji: "🎓",
     content: `
-## Indian Students Mein Anxiety Kyun Zyada Hai?
+## Why is anxiety higher among  students?
 
-India mein students pe pressure bohot zyada hota hai:
+There is a lot of pressure on students:
 
-- Board exams ka pressure
+- Board exams  pressure
 - IIT/NEET competition
-- Parents ki expectations
+- Parents  expectations
 - Career uncertainty
 - Social media comparison
 
-## Common Symptoms Students Mein
+## Common Symptoms in Students 
 
-- Exam se pehle panic attacks
-- Concentration mein takleef
-- Neend na aana
-- Appetite khatam hona
+- Constant worrying about exams and future
+- Restlessness and inability to focus on studies
+- Sleep disturbances — trouble falling asleep or staying asleep
+- Physical symptoms like headaches, stomachaches, or fatigue
 - Social withdrawal
 
 ## Practical Solutions
 
-### 1. Study Schedule Banao
-Random padhne se anxiety badhti hai. Fixed schedule se control milta hai.
+### 1.Create a Study ScheduleStudying randomly increases anxiety. A fixed schedule gives you control.
 
 ### 2. Pomodoro Technique
-25 min padho, 5 min break lo. Repeat. Brain ko rest milna zaroori hai.
+25 min Study, take 5 min break. Repeat. It is important for the brain to get rest.
 
-### 3. Daily Mood Track Karo
-MindCare app se daily mood track karo. Patterns pata chalenge.
+### 3. Track Your Daily Mood
+Track your daily mood with the MindCare app to discover patterns.
 
-### 4. Exercise Zarur Karo
-Rozana 20 min walk se concentration 30% badhti hai.
+### 4. Exercise Regularly
+A daily 20-minute walk increases concentration by 30%.
 
-### 5. Kisi Se Baat Karo
-Friend, family ya counselor — akele mat raho.
+### 5. Talk to Someone
+Friend, family, or counselor — don't stay alone.
 
-## Parents Ke Liye
-
-Bacchon par pressure kam karo. Marks se zyada mental health important hai.
+## For Parents
+Reduce the pressure on your children. Mental health is more important than marks.
 
 ## Conclusion
 
-Student anxiety normal hai lekin manageable hai. MindCare app try karo — free anxiety tracker aur AI chatbot available hai.
+Student anxiety is normal but manageable. Try the MindCare app — a free anxiety tracker and AI chatbot are available.
 
-[MindCare Try Karo →](/)
+[MindCare Try it For Free →](/)
     `
   },
   {
-    slug: "mood-tracker-kaise-use-karein",
-    title: "Mood Tracker Kaise Use Karein — Beginner's Guide",
-    desc: "Daily mood tracking se aap apne emotional patterns samajh sakte hain. Step by step guide.",
+    slug: "mood-tracker-how-to-use",
+    title: "How to Use the Mood Tracker — Beginner's Guide",
+    desc: "Daily track your daily mood with the MindCare app. Step by step guide.",
     date: "June 7, 2026",
     readTime: "4 min",
     tag: "Mood",
     emoji: "😊",
     content: `
-## Mood Tracker Kya Hota Hai?
+## How to Use the Mood Tracker
 
-Mood tracker ek tool hai jisse aap rozana apni emotional state record karte hain. Jaise ek diary — lekin smarter.
+The mood tracker is a tool that helps you record your daily emotional state. It's like a diary, but smarter.
 
-## Mood Tracking Ke Fayde
+## Benefits of Mood Tracking
 
-- **Patterns pata chalte hain** — kab aur kyun mood kharab hota hai
-- **Triggers identify hote hain** — kaunsi cheez mood affect karti hai
-- **Progress dikhta hai** — time ke saath improvement
-- **Therapy mein help** — doctor ko better bata sakte ho
+- **Patterns are revealed — when and why your mood goes off.**
+- **Triggers are identified** —  what exactly affects your mood.
+- **Progress is visible** — improvements over time
+- **Therapy is more effective** — better communication with the doctor
 
-## MindCare Mein Mood Tracker Kaise Use Karein
+## How to Use the Mood Tracker in MindCare
 
 ### Step 1
-MindCare app kholo — Mood Tracker page par jao
+Open the MindCare app — go to the Mood Tracker page
 
 ### Step 2
-Apna aaj ka mood select karo:
+Select your mood for today:
 - 😄 Happy
 - 🙂 Good
 - 😐 Neutral
@@ -283,23 +284,23 @@ Apna aaj ka mood select karo:
 - 😰 Anxious
 
 ### Step 3
-Optional note likhein — kya chal raha hai aaj?
+ Write an optional note — what's on your mind?
 
 ### Step 4
-Save karo — aur kal phir aao!
+Save it — Come back tomorrow!
 
 ## Best Practices
 
-- **Rozana ek hi time par karo** — subah ya raat
-- **Honest raho** — koi judge nahi karega
-- **Note zarur likhein** — context important hota hai
-- **Weekly review karo** — patterns dekhein
+- **Track consistently** — Day or night, just do it daily
+- **Be honest** — not anyone judging you, so be truthful to yourself
+- **Note regularly** — write a note whenever you feel something important
+- **Review weekly** — check your mood patterns every week
 
 ## Conclusion
 
-Mood tracking ek chota sa habit hai jiska bada impact hota hai. MindCare mein bilkul free — koi limit nahi!
+Mood tracking is a small habit with a big impact. In MindCare it is free — no limit!
 
-[Mood Tracker Try Karo →](/mood-tracker)
+[Mood Tracker Try it For Free →](/mood-tracker)
     `
   },
 ];

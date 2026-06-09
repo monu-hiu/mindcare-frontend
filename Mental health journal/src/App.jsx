@@ -1,12 +1,17 @@
-// src/App.jsx
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { LanguageProvider } from "./context/LanguageContext";
+import { ThemeProvider } from "./context/ThemeContext";
+
+import ProtectedRoute from "./components/ProtectedRoute";
+import Header from "./components/Header_final";
+import Footer from "./components/Footer";
 
 import Home from "./pages/Home";
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
-import ForgotPassword from "./pages/auth/ForgotPassword";   // ✅ NEW
+import ForgotPassword from "./pages/auth/ForgotPassword";
+import VerifyOtp from "./pages/auth/VerifyOtp";
 import Dashboard from "./pages/Dashboard";
 import Mindfulness from "./pages/Mindfulness";
 import Suggestions from "./pages/Suggestions";
@@ -30,13 +35,8 @@ import SupportPage from "./pages/SupportPage";
 import SelfHarmSupport from "./pages/SelfHarmSupport";
 import FeedbackViewer from "./pages/FeedbackViewer";
 import Chatbot from "./pages/Chatbot";
-import Header from "./components/Header_final";
-import Footer from "./components/Footer";
-import { ThemeProvider } from "./context/ThemeContext";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
-import VerifyOtp from "./pages/auth/VerifyOtp";
-
 
 function App() {
   return (
@@ -46,36 +46,41 @@ function App() {
           <Router>
             <Header />
             <Routes>
-              <Route path="/"                      element={<Home />} />
-              <Route path="/login"                 element={<Login />} />
-              <Route path="/signup"                element={<Signup />} />
-              <Route path="/forgot-password"       element={<ForgotPassword />} />  {/* ✅ NEW */}
-              <Route path="/dashboard"             element={<Dashboard />} />
-              <Route path="/mindfulness"           element={<Mindfulness />} />
-              <Route path="/suggestions"           element={<Suggestions />} />
-              <Route path="/goal"                  element={<Goal />} />
-              <Route path="/challenges"            element={<Challenges />} />
-              <Route path="/selfcare"              element={<SelfCare />} />
-              <Route path="/reflection"            element={<Reflection />} />
-              <Route path="/cognitive-distortions" element={<CognitiveDistortions />} />
-              <Route path="/combo"                 element={<ComboTracker />} />
-              <Route path="/anxiety-tracker"       element={<AnxietyTracker />} />
-              <Route path="/mood-tracker"          element={<MoodTracker />} />
-              <Route path="/gratitude-log"         element={<GratitudeLog />} />
-              <Route path="/self-congrats"         element={<SelfCongrats />} />
-              <Route path="/sleep-tracker"         element={<SleepTracker />} />
-              <Route path="/improvement-tracker"   element={<ImprovementTracker />} />
-              <Route path="/energy-tracker"        element={<EnergyTracker />} />
-              <Route path="/rage"                  element={<RagePage />} />
-              <Route path="/therapy-notes"         element={<TherapyNotes />} />
-              <Route path="/reviews-reflection"    element={<ReviewsReflection />} />
-              <Route path="/support"               element={<SupportPage />} />
-              <Route path="/self-harm-support"     element={<SelfHarmSupport />} />
-              <Route path="/chatbot"               element={<Chatbot />} />
-              <Route path="/feedback-admin"        element={<FeedbackViewer />} />
-              <Route path="/blog"                  element={<Blog />} />
-              <Route path="/blog/:slug"            element={<BlogPost />} />
-              <Route path="/verify-otp"            element={<VerifyOtp />} />  {/* ✅ NEW */}
+
+              {/* ── PUBLIC ── */}
+              <Route path="/"                  element={<Home />} />
+              <Route path="/login"             element={<Login />} />
+              <Route path="/signup"            element={<Signup />} />
+              <Route path="/forgot-password"   element={<ForgotPassword />} />
+              <Route path="/verify-otp"        element={<VerifyOtp />} />
+              <Route path="/blog"              element={<Blog />} />
+              <Route path="/blog/:slug"        element={<BlogPost />} />
+              <Route path="/support"           element={<SupportPage />} />
+              <Route path="/self-harm-support" element={<SelfHarmSupport />} />
+
+              {/* ── PROTECTED ── */}
+              <Route path="/dashboard"             element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+              <Route path="/mindfulness"           element={<ProtectedRoute><Mindfulness /></ProtectedRoute>} />
+              <Route path="/suggestions"           element={<ProtectedRoute><Suggestions /></ProtectedRoute>} />
+              <Route path="/goal"                  element={<ProtectedRoute><Goal /></ProtectedRoute>} />
+              <Route path="/challenges"            element={<ProtectedRoute><Challenges /></ProtectedRoute>} />
+              <Route path="/selfcare"              element={<ProtectedRoute><SelfCare /></ProtectedRoute>} />
+              <Route path="/reflection"            element={<ProtectedRoute><Reflection /></ProtectedRoute>} />
+              <Route path="/cognitive-distortions" element={<ProtectedRoute><CognitiveDistortions /></ProtectedRoute>} />
+              <Route path="/combo"                 element={<ProtectedRoute><ComboTracker /></ProtectedRoute>} />
+              <Route path="/anxiety-tracker"       element={<ProtectedRoute><AnxietyTracker /></ProtectedRoute>} />
+              <Route path="/mood-tracker"          element={<ProtectedRoute><MoodTracker /></ProtectedRoute>} />
+              <Route path="/gratitude-log"         element={<ProtectedRoute><GratitudeLog /></ProtectedRoute>} />
+              <Route path="/self-congrats"         element={<ProtectedRoute><SelfCongrats /></ProtectedRoute>} />
+              <Route path="/sleep-tracker"         element={<ProtectedRoute><SleepTracker /></ProtectedRoute>} />
+              <Route path="/improvement-tracker"   element={<ProtectedRoute><ImprovementTracker /></ProtectedRoute>} />
+              <Route path="/energy-tracker"        element={<ProtectedRoute><EnergyTracker /></ProtectedRoute>} />
+              <Route path="/rage"                  element={<ProtectedRoute><RagePage /></ProtectedRoute>} />
+              <Route path="/therapy-notes"         element={<ProtectedRoute><TherapyNotes /></ProtectedRoute>} />
+              <Route path="/reviews-reflection"    element={<ProtectedRoute><ReviewsReflection /></ProtectedRoute>} />
+              <Route path="/chatbot"               element={<ProtectedRoute><Chatbot /></ProtectedRoute>} />
+              <Route path="/feedback-admin"        element={<ProtectedRoute><FeedbackViewer /></ProtectedRoute>} />
+
             </Routes>
             <Footer />
           </Router>
