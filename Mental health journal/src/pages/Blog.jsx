@@ -8,81 +8,89 @@ import "./blog.css";
 // ══════════════════════════════════════════
 export const blogPosts = [
   {
-    slug: "anxiety-kya-hota-hai",
-    title: "Anxiety Kya Hota Hai — Complete Hindi Guide",
-    desc: "Anxiety ke symptoms, causes aur solutions — sab kuch simple language mein samjhein. Aap akele nahi hain.",
-    date: "June 10, 2025",
+    slug: "what-is-anxiety",
+    title: "What is Anxiety? — Complete English Guide",
+    desc: "Understand the symptoms, causes, and solutions of anxiety — all explained in simple language. You are not alone.",
+    date: "May 25, 2026",
     readTime: "5 min",
     tag: "Anxiety",
     emoji: "😰",
     content: `
-## Anxiety Kya Hota Hai?
+## what is Anxiety?
 
-Anxiety ek aisi feeling hai jisme aap bina kisi khaas wajah ke darr, ghabrahat ya bechain feel karte hain. Yeh ek normal human emotion hai — lekin jab yeh zyada ho jaaye toh problem ban jaati hai.
+Anxiety is a feeling in which you experience fear, nervousness, or restlessness without any specific reason. It is a normal human emotion — but when it becomes excessive, it can turn into a problem.
 
-## Anxiety Ke Symptoms
+## Symptoms of Anxiety
 
-Anxiety ke common symptoms yeh hain:
+These are the common symptoms of anxiety:
 
-- **Dil ki dharkan tez hona** — Heart racing without reason
-- **Haath kaampna** — Trembling hands
-- **Neend na aana** — Difficulty sleeping
-- **Zyada sochna** — Overthinking everything
-- **Pet mein dard** — Stomach problems
-- **Thakaan** — Constant fatigue
+- Rapid heartbeat — Heart racing without any apparent reason.
+- Trembling hands — Shaking or unsteady hands
+- Difficulty sleeping — Trouble falling or staying asleep
+- Overthinking everything — Excessive worrying or analyzing situations
+- Stomach problems — Discomfort, pain, or digestive issues
+- Constant fatigue** — Feeling tired or exhausted most of the time
 
-## Anxiety Kyun Hoti Hai?
+## what causes Anxiety?
 
-Anxiety ke main causes:
+Anxiety can be caused by a combination of factors:
 
-1. **Exam pressure** — Students mein bahut common
-2. **Kaam ka tanaav** — Work stress
-3. **Rishton ki takleef** — Relationship problems
-4. **Paison ki chinta** — Financial stress
-5. **Social situations** — Log kya sochenge
 
-## Anxiety Ko Kaise Manage Karein?
+
+1. **Exam pressure** — Students facing intense pressure to perform well in exams
+2. **Work stress** — Work-related pressure and demands
+3. **Relationship problems** — Issues in personal relationships
+4. **Financial stress** — Concerns about money and finances
+5. **Social situations** — Anxiety in social settings
+
+##how to manage Anxiety?
+
+Here are some practical tips to manage anxiety:
 
 ### 1. Breathing Exercise
-4-7-8 technique try karo:
-- 4 second saans lo
-- 7 second rokho
-- 8 second mein chodo
+4-7-8 technique try:
+- 4 second breath inhale
+- 7 second hold
+- 8 second exhale
+Repeat 4 times for instant calm.
 
 ### 2. Daily Tracking
-Apni anxiety ko track karo — MindCare app mein anxiety tracker free mein available hai.
+Use MindCare app to track your anxiety daily. Identify patterns and triggers over time.
 
 ### 3. Exercise
-Rozana 20-30 minute walk anxiety ko 40% tak kam kar sakti hai.
+Regular physical activity releases endorphins that improve mood and reduce anxiety.
 
-### 4. Sleep
-7-8 ghante ki neend anxiety ke liye zaruri hai.
+### 4. Sleep.
+Good sleep is crucial. Try to maintain a consistent sleep schedule and create a relaxing bedtime routine.
 
-## Kab Doctor Ke Paas Jaayein?
+### 5. Talk to Someone
+Share your feelings with a trusted friend, family member, or counselor. You don't have to face anxiety alone.
 
-Agar anxiety aapki daily life affect kar rahi hai — kaam, padhai ya rishte — toh ek professional se milna zaroori hai.
+## When to Seek Professional Help or go to a Doctor?
+
+If anxiety is interfering with your daily life, causing significant distress, or leading to physical symptoms, it may be time to seek professional help. A mental health professional can provide therapy, medication, or a combination of both to help manage anxiety effectively.
 
 ## Conclusion
 
-Anxiety normal hai. Aap akele nahi hain. MindCare app se apni anxiety daily track karo aur patterns samjho.
+Anxiety is normal. You are not alone. Track your anxiety daily with the MindCare app and understand your patterns.
 
-[Anxiety Tracker Try Karo →](/anxiety-tracker)
+[Anxiety Tracker Try it →](/anxiety-tracker)
     `
   },
   {
-    slug: "free-mental-health-app-india-2025",
-    title: "Best Free Mental Health App India 2025 — Complete Guide",
-    desc: "India mein free mental health apps kaunse hain? MindCare kyun sabse better hai? Honest comparison.",
-    date: "June 12, 2025",
+    slug: "free-mental-health-app-2025",
+    title: "Best Free Mental Health App For You — Complete Guide",
+    desc: "Discover the best free mental health apps available for you in 2026. Learn about their features and how they can help you on your wellness journey.",
+    date: "May 28, 2026",
     readTime: "4 min",
     tag: "Apps",
     emoji: "📱",
     content: `
-## Free Mental Health Apps India 2025
+## Free Mental Health Apps For You in 2026
 
-India mein mental health apps ki demand tezi se badh rahi hai. Lekin sabse badi problem — zyada apps expensive hain ya English only hain.
+The demand for mental health apps is growing rapidly in the world. However, the biggest problem is that most apps are expensive or available only in English.
 
-## Top Free Mental Health Apps in India
+## Top Free Mental Health Apps in 2026
 
 ### 1. MindCare (mindcare-wellness.in)
 - 100% Free — forever
@@ -107,7 +115,7 @@ India mein mental health apps ki demand tezi se badh rahi hai. Lekin sabse badi 
 - Mostly paid
 - English only
 
-## MindCare Kyun Best Hai?
+## why MindCare is the Best for You?
 
 | Feature | MindCare | Others |
 |---------|----------|--------|
@@ -121,7 +129,7 @@ India mein mental health apps ki demand tezi se badh rahi hai. Lekin sabse badi 
 
 ## Conclusion
 
-Agar aap India mein free mental health support dhundh rahe hain — MindCare sabse complete option hai.
+MindCare is the best free mental health app for you in 2026. It offers comprehensive tracking, AI support, and is built for everyone in the world.
 
 [MindCare Try Karo — Free →](/)
     `
@@ -130,7 +138,7 @@ Agar aap India mein free mental health support dhundh rahe hain — MindCare sab
     slug: "breathing-exercises-anxiety-hindi",
     title: "Anxiety Ke Liye Best Breathing Exercises — Hindi Guide",
     desc: "4-7-8 breathing, box breathing aur calm breathing — yeh techniques anxiety ko 5 minute mein kam kar sakti hain.",
-    date: "June 14, 2025",
+    date: "May 31, 2026",
     readTime: "3 min",
     tag: "Wellness",
     emoji: "💨",
@@ -189,7 +197,7 @@ MindCare app mein yeh teeno breathing exercises guided animation ke saath availa
     slug: "student-anxiety-india",
     title: "Students Mein Anxiety — Causes, Symptoms aur Solutions",
     desc: "India mein students anxiety se kyun pareshan hain? Exam stress, career pressure — sab handle karne ke practical tips.",
-    date: "June 16, 2025",
+    date: "June 5, 2026",
     readTime: "6 min",
     tag: "Students",
     emoji: "🎓",
@@ -244,7 +252,7 @@ Student anxiety normal hai lekin manageable hai. MindCare app try karo — free 
     slug: "mood-tracker-kaise-use-karein",
     title: "Mood Tracker Kaise Use Karein — Beginner's Guide",
     desc: "Daily mood tracking se aap apne emotional patterns samajh sakte hain. Step by step guide.",
-    date: "June 18, 2025",
+    date: "June 7, 2026",
     readTime: "4 min",
     tag: "Mood",
     emoji: "😊",

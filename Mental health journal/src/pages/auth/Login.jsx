@@ -25,18 +25,14 @@ function Login() {
       return;
     }
     setLoading(true);
-    try {
-      const result = await login(email.trim().toLowerCase(), password);
-      if (result.success) {
-        const savedLang = localStorage.getItem("mc_language");
-        if (!savedLang) setShowLangSelector(true);
-        else navigate("/dashboard");
-      } else {
-        setError(result.message || "Invalid email or password.");
-      }
-    } catch {
-      setError("Something went wrong. Please try again.");
-    } finally {
+   try {
+  await login(email.trim().toLowerCase(), password);
+  const savedLang = localStorage.getItem("mc_language");
+  if (!savedLang) setShowLangSelector(true);
+  else window.location.href = "/dashboard"; // ✅
+} catch (err) {
+  setError(err.message || "Invalid email or password."); // ✅
+}finally {
       setLoading(false);
     }
   };
@@ -49,11 +45,11 @@ function Login() {
         body: JSON.stringify({ token: credentialResponse.credential }),
       });
       const data = await res.json();
-      if (data.success) {
-        localStorage.setItem("mindcare_token", data.token);
-        localStorage.setItem("mindcare_user", JSON.stringify(data.user));
-        navigate("/dashboard");
-      } else {
+    if (data.success) {
+  localStorage.setItem("mindcare_token", data.token);
+  localStorage.setItem("mindcare_user", JSON.stringify(data.user));
+  window.location.href = "/dashboard"; // ✅
+} else {
         setError(data.message || "Google login failed.");
       }
     } catch {

@@ -92,9 +92,9 @@ function Signup() {
       });
       const data = await res.json();
       if (!res.ok) { setServerError(data.message || "Invalid OTP."); return; }
-      localStorage.setItem("mindcare_token", data.token);
-      localStorage.setItem("mindcare_user", JSON.stringify(data.user));
-      navigate("/dashboard");
+     localStorage.setItem("mindcare_token", data.token);
+localStorage.setItem("mindcare_user", JSON.stringify(data.user));
+window.location.href = "/dashboard"; // ✅
     } catch { setServerError("Something went wrong. Please try again."); }
     finally { setLoading(false); }
   };
@@ -107,11 +107,11 @@ function Signup() {
         body: JSON.stringify({ token: credentialResponse.credential }),
       });
       const data = await res.json();
-      if (data.success) {
-        localStorage.setItem("mindcare_token", data.token);
-        localStorage.setItem("mindcare_user", JSON.stringify(data.user));
-        navigate("/dashboard");
-      } else { setServerError(data.message || "Google signup failed."); }
+   if (data.success) {
+  localStorage.setItem("mindcare_token", data.token);
+  localStorage.setItem("mindcare_user", JSON.stringify(data.user));
+  window.location.href = "/dashboard"; // ✅
+}else { setServerError(data.message || "Google signup failed."); }
     } catch { setServerError("Google signup failed. Please try again."); }
   };
 

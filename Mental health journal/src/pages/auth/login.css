@@ -1,13 +1,8 @@
-/* ================================================================
-   AUTH PAGES — login.css
-   Covers: Login, Signup, ForgotPassword, VerifyOtp
-   Fixes: eyeBtn overlap, mobile gaps, responsiveness
-================================================================ */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Bricolage+Grotesque:wght@400;500;600;700&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ── PAGE SHELL ───────────────────────────────────────── */
+/* ── PAGE SHELL ── */
 .authPage {
   min-height: 100vh;
   display: flex;
@@ -31,7 +26,6 @@
   min-height: 100vh;
 }
 
-/* Decorative blobs */
 .authLeft::before {
   content: '';
   position: absolute;
@@ -309,7 +303,7 @@
   background: #f3f4f6;
 }
 
-/* Error & Success messages */
+/* Error & Success */
 .authError {
   font-size: 13px;
   color: #dc2626;
@@ -377,11 +371,9 @@
 }
 .forgotLink:hover { text-decoration: underline; }
 
-/* ─────────────────────────────────────────
-   INPUT WRAPPER — FIX for eyeBtn overlap
-   Key: input gets right padding = 44px so
-   text never slides under the eye button.
-───────────────────────────────────────── */
+/* ══════════════════════════════════════
+   INPUT WRAPPER — eye button fix
+══════════════════════════════════════ */
 .inputWrap {
   position: relative;
   display: flex;
@@ -400,10 +392,10 @@
   line-height: 1;
 }
 
-/* Default input (no eye button) */
+/* All inputs */
 .inputWrap input {
   width: 100%;
-  padding: 11px 14px 11px 40px; /* left room for icon */
+  padding: 11px 14px 11px 40px;
   border: 1.5px solid #e5e7eb;
   border-radius: 10px;
   font-size: 14px;
@@ -412,13 +404,12 @@
   background: #fafafa;
   outline: none;
   transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
-  /* ✅ ensures text never disappears under eye button */
   box-sizing: border-box;
 }
 
-/* Input that has an eye button — extra right padding */
+/* ✅ Password input with eye button — enough right padding */
 .inputWrap.hasEye input {
-  padding-right: 44px;
+  padding-right: 52px;
 }
 
 .inputWrap input::placeholder { color: #9ca3af; }
@@ -432,7 +423,7 @@
   background: #fff5f5;
 }
 
-/* ✅ Eye toggle button — properly positioned, no overlap */
+/* ✅ Eye button — fixed size, no overlap */
 .eyeBtn {
   position: absolute;
   right: 12px;
@@ -442,7 +433,7 @@
   border: none;
   cursor: pointer;
   font-size: 16px;
-  padding: 4px;
+  padding: 0;
   line-height: 1;
   opacity: 0.45;
   transition: opacity 0.15s;
@@ -450,11 +441,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 32px;
+  height: 32px;
   flex-shrink: 0;
 }
 .eyeBtn:hover { opacity: 0.85; }
 
-/* Field error text */
+/* Field error */
 .fieldError {
   font-size: 12px;
   color: #dc2626;
@@ -531,7 +524,7 @@
 .authSubmitBtn:active { transform: translateY(0); }
 .authSubmitBtn:disabled { opacity: 0.62; cursor: not-allowed; box-shadow: none; }
 
-/* Ghost button (back/resend) */
+/* Ghost button */
 .authGhostBtn {
   width: 100%;
   padding: 12px;
@@ -556,7 +549,7 @@
   cursor: not-allowed;
 }
 
-/* Spinner inside button */
+/* Spinner */
 .btnSpinner {
   width: 17px; height: 17px;
   border: 2.5px solid rgba(255,255,255,0.32);
@@ -600,7 +593,7 @@
   transition: background 0.3s;
 }
 
-/* OTP boxes (VerifyOtp page) */
+/* OTP boxes */
 .otpBoxRow {
   display: flex;
   gap: 10px;
@@ -630,7 +623,7 @@
   background: #f9f7ff;
 }
 
-/* OTP hint text */
+/* OTP hint */
 .otpHint {
   font-size: 12px;
   color: #9ca3af;
@@ -640,7 +633,7 @@
 }
 .otpHint strong { color: #7c3aed; font-weight: 600; }
 
-/* Timer text */
+/* Timer */
 .otpTimer {
   text-align: center;
   font-size: 13px;
@@ -680,7 +673,7 @@
   transition: width 0.45s cubic-bezier(0.4,0,0.2,1);
 }
 
-/* Left panel pills (ForgotPassword / VerifyOtp) */
+/* Left panel pills */
 .authPills {
   display: flex;
   flex-direction: column;
@@ -703,7 +696,7 @@
   flex-shrink: 0;
 }
 
-/* Signup step tracker (left panel) */
+/* Signup step tracker */
 .signupSteps {
   display: flex;
   flex-direction: column;
@@ -749,13 +742,6 @@
   color: rgba(255,255,255,0.42);
 }
 
-/* Field inline error (signup) */
-.fieldInlineErr {
-  font-size: 11px;
-  color: #dc2626;
-  margin-top: 2px;
-}
-
 /* ══════════════════════════════════════
    RESPONSIVE
 ══════════════════════════════════════ */
@@ -771,7 +757,7 @@
   .authRight { padding: 40px 28px; }
 }
 
-/* ✅ Mobile — full width form, zero gap issues */
+/* ✅ Mobile — complete fix */
 @media (max-width: 640px) {
   .authPage {
     flex-direction: column;
@@ -780,8 +766,8 @@
   .authLeft { display: none; }
   .authRight {
     width: 100%;
-    min-height: 100svh; /* use svh to avoid mobile browser bar gap */
-    padding: 32px 20px 48px; /* bottom padding prevents content hiding behind bar */
+    min-height: 100svh;
+    padding: 32px 20px 48px;
     align-items: flex-start;
     justify-content: flex-start;
   }
@@ -789,23 +775,29 @@
     max-width: 100%;
     width: 100%;
   }
-  .authCardHeader {
-    margin-bottom: 24px;
-  }
+  .authCardHeader { margin-bottom: 24px; }
   .authCardHeader h2 { font-size: 24px; }
 
-  /* Prevent zoom on iOS — keep font-size 16px on inputs */
+  /* ✅ Prevent iOS zoom */
   .inputWrap input {
     font-size: 16px;
     padding: 12px 14px 12px 40px;
   }
+
+  /* ✅ THE FIX — more right padding on mobile for eye button */
   .inputWrap.hasEye input {
-    padding-right: 44px;
+    padding-right: 52px !important;
   }
+
+  /* ✅ Eye button fixed size on mobile */
   .eyeBtn {
+    right: 10px;
+    width: 36px;
+    height: 36px;
     font-size: 18px;
-    right: 11px;
+    padding: 0;
   }
+
   .otpBox {
     width: 42px; height: 46px;
     font-size: 18px;
@@ -822,4 +814,14 @@
   .authCardHeader h2 { font-size: 22px; }
   .otpBox { width: 38px; height: 42px; font-size: 16px; }
   .otpBoxRow { gap: 6px; }
+
+  /* ✅ Extra small phones */
+  .inputWrap.hasEye input {
+    padding-right: 52px !important;
+  }
+  .eyeBtn {
+    right: 8px;
+    width: 34px;
+    height: 34px;
+  }
 }

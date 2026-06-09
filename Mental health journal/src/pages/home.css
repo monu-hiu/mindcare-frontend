@@ -504,3 +504,193 @@
   .hero { padding: 60px 16px 40px; }
   .featuresSection, .howSection, .ctaSection { padding: 60px 16px; }
 }
+/* ── ANNOUNCEMENT BAR ── */
+.announcementBar {
+  background: #4f46e5;
+  color: white;
+  text-align: center;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.announceBannerLink {
+  background: white;
+  color: #4f46e5;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 12px;
+  text-decoration: none;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.announceBannerLink:hover {
+  background: #eef2ff;
+}
+
+/* ── TRUST ROW ── */
+.trustRow {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+  font-size: 13px;
+  color: #4b5563;
+  font-weight: 500;
+}
+
+/* ── PROBLEM SECTION ── */
+.problemSection {
+  background: #f9fafb;
+  padding: 60px 20px;
+}
+
+.problemGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.problemCard {
+  border-radius: 16px;
+  padding: 28px 20px;
+  text-align: center;
+  border: 1.5px solid transparent;
+}
+
+.problemCard.red    { background: #fff5f5; border-color: #fecaca; }
+.problemCard.orange { background: #fff7ed; border-color: #fed7aa; }
+.problemCard.purple { background: #f5f3ff; border-color: #ddd6fe; }
+.problemCard.green  { background: #f0fdf4; border-color: #bbf7d0; }
+
+.problemEmoji { font-size: 32px; display: block; margin-bottom: 12px; }
+
+.problemStat {
+  font-size: 26px;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 6px;
+}
+
+.problemLabel {
+  font-size: 13px;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+/* ── TESTIMONIALS ── */
+.testimonialsSection {
+  background: white;
+  padding: 80px 20px;
+}
+
+.testimonialsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.testimonialCard {
+  background: #f9fafb;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: all 0.2s;
+}
+
+.testimonialCard:hover {
+  border-color: #a5b4fc;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(99,102,241,0.1);
+}
+
+.testimonialText {
+  font-size: 14px;
+  color: #374151;
+  line-height: 1.7;
+  font-style: italic;
+  flex: 1;
+}
+
+.testimonialAuthor {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.testimonialEmoji { font-size: 22px; }
+
+.testimonialName {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4f46e5;
+}
+
+/* ── CTA IMPROVEMENTS ── */
+.ctaBadge {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  color: white;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.ctaTrustRow {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.85);
+}
+
+.ctaMainBtn {
+  font-size: 17px !important;
+  padding: 18px 40px !important;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2) !important;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .problemGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .testimonialsGrid {
+    grid-template-columns: 1fr;
+  }
+  .trustRow {
+    justify-content: center;
+  }
+  .ctaTrustRow {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .problemGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .problemStat { font-size: 20px; }
+  .announcementBar { font-size: 12px; }
+  .trustRow { font-size: 12px; gap: 10px; }
+}
