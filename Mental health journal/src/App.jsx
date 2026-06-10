@@ -37,6 +37,8 @@ import FeedbackViewer from "./pages/FeedbackViewer";
 import Chatbot from "./pages/Chatbot";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import Terms from "./pages/Terms";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 function App() {
   return (
@@ -57,6 +59,8 @@ function App() {
               <Route path="/blog/:slug"        element={<BlogPost />} />
               <Route path="/support"           element={<SupportPage />} />
               <Route path="/self-harm-support" element={<SelfHarmSupport />} />
+              <Route path="/terms"             element={<Terms />} />
+              <Route path="/privacy-policy"     element={<PrivacyPolicy />} />
 
               {/* ── PROTECTED ── */}
               <Route path="/dashboard"             element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
