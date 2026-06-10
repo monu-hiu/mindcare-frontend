@@ -303,6 +303,96 @@ Mood tracking is a small habit with a big impact. In MindCare it is free — no 
 [Mood Tracker Try it For Free →](/mood-tracker)
     `
   },
+  {
+    slug: "sleep-tracker-how-to-use",
+    title: "How to Use the Sleep Tracker — Beginner's Guide",
+    desc: "Track your sleep patterns with the MindCare app. Step by step guide.",
+    date: "June 10, 2026",
+    readTime: "4 min",
+    tag: "Sleep wellness",
+    emoji: "😴",
+    content: `
+## How to Use the Sleep Tracker
+
+The sleep tracker is a tool that helps you record your daily sleep patterns. It's like a diary, but smarter.
+
+## Benefits of Sleep Tracking
+
+- **Patterns are revealed — when and why your sleep quality changes.**
+- **Triggers are identified** — what exactly affects your sleep.
+- **Progress is visible** — improvements over time
+- **Therapy is more effective** — better communication with the doctor
+
+## How to Use the Sleep Tracker in MindCare
+
+### Step 1
+Open the MindCare app — go to the Sleep Tracker page
+
+### Step 2
+Enter your sleep duration for today:
+- bedtime entered
+- wake-up time entered 
+
+
+### Step 3
+Select your sleep quality for today:
+- 😴 Excellent
+- 😴 Good
+- 😴 Fair
+- 😴 Poor
+
+### Step 4
+Write an optional note — what's on your mind?
+
+### Step 5
+Save it — Come back tomorrow!
+### In MindCare it is calculated automatically — just enter your sleep and wake-up time, and it will calculate the duration for you! and give you insights on your sleep patterns and will also weekly reports on how your sleep is improving or declining over time. 
+
+## Best Practices
+
+- **Track consistently** — Day or night, just do it daily
+- **Be honest** — not anyone judging you, so be truthful to yourself
+- **Note regularly** — write a note whenever you feel something important
+- **Review weekly** — check your sleep patterns every week
+
+## Conclusion
+
+Sleep tracking is a small habit with a big impact. In MindCare it is free — no limit!
+
+[Sleep Tracker Try it For Free →](/sleep-tracker)
+    `
+  },
+  {
+    slug: "Best-sleep-habits-for-students",
+    title: "Best Sleep Habits for Students — Complete Guide",
+    desc: "Good sleep is crucial for students' mental health and academic performance. Learn the best sleep habits to improve your sleep quality.",
+    date: "June 12, 2026",
+    readTime: "5 min",
+    tag: "Sleep wellness",
+    emoji: "😴",
+    content: `## Best Sleep Habits for Students
+
+Good sleep is crucial for students' mental health and academic performance. Here are some of the best sleep habits to improve your sleep quality:
+### 1. Maintain a Consistent Sleep Schedule
+Go to bed and wake up at the same time every day, even on weekends. This helps regulate your body's internal clock.
+### 2. Create a Relaxing Bedtime Routine
+Engage in calming activities before bed, such as reading, listening to soothing music, or practicing relaxation techniques like deep breathing.
+### 3. Limit Screen Time Before Bed
+Avoid using electronic devices at least an hour before bedtime, as the blue light emitted can interfere with your sleep.
+### 4. Create a Comfortable Sleep Environment
+Make sure your bedroom is cool, dark, and quiet. Invest in a comfortable mattress and pillows to enhance your sleep quality.
+### 5. Avoid Caffeine and Heavy Meals Before Bed
+Limit your intake of caffeine and avoid heavy meals close to bedtime, as they can disrupt your sleep.
+### 6. Get Regular Exercise
+Engaging in regular physical activity can help you fall asleep faster and enjoy deeper sleep. However, avoid vigorous exercise close to bedtime.
+### 7. Manage Stress
+Practice stress-reducing techniques such as mindfulness, meditation, or journaling to calm your mind before bed.
+## Conclusion
+Good sleep is essential for students' mental health and academic success. By adopting these sleep habits, you can improve your sleep quality and overall well-being.
+[Sleep Tracker Try it For Free →](/sleep-tracker)`
+
+  },
+
 ];
 
 const tags = ["All", "Anxiety", "Apps", "Wellness", "Students", "Mood"];

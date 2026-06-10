@@ -54,9 +54,9 @@ function BlogPost() {
   if (!post) {
     return (
       <div className="blogNotFound">
-        <h2>Article nahi mila 😕</h2>
-        <p>Yeh article exist nahi karta.</p>
-        <Link to="/blog" className="backToBlog">← Blog par wapas jao</Link>
+        <h2>Article are not found 😕</h2>
+        <p>The article you are looking for does not exist.</p>
+        <Link to="/blog" className="backToBlog">← Back to Blog</Link>
       </div>
     );
   }
@@ -89,8 +89,8 @@ function BlogPost() {
       {/* CTA Banner */}
       <div className="blogCTA">
         <div className="blogCTALeft">
-          <h3>🧠 MindCare App Try Karo — Free!</h3>
-          <p>Anxiety tracker, mood tracker, breathing exercises aur AI chatbot — sab free mein.</p>
+          <h3>🧠 MindCare App Try it — Free!</h3>
+          <p>Anxiety tracker, mood tracker, breathing exercises and AI chatbot — all free.</p>
         </div>
         <Link to="/" className="blogCTABtn">Get Started Free →</Link>
       </div>
